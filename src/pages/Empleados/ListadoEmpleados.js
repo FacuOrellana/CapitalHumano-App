@@ -12,14 +12,14 @@ const ListadoEmplados = () => {
     const [Empleados, setEmpleados] = useState([]);
     const [loadingData, setLoadingData] = useState(false);
     const [selectionModel, setSelectionModel] = useState([]);
- 
+
 
     const columns = [
-        { field: 'id', headerName: 'ID Empleado', width: 100, headerAlign: 'center', hidden: true },
+        { field: 'id', headerName: 'ID', width: 50, headerAlign: 'center', hidden: true },
         {
             field: 'nombre',
             headerName: 'Nombre',
-            width: 150,
+            width: 125,
         },
         {
             field: 'apellido',
@@ -35,12 +35,27 @@ const ListadoEmplados = () => {
         {
             field: 'celular',
             headerName: 'Celular',
+            width: 150,
+        },
+        {
+            field: 'idObrasocial',
+            headerName: 'Obra Social',
+            width: 150,
+        },
+        {
+            field: 'idSindicato',
+            headerName: 'Sindicato',
+            width: 250,
+        },
+        {
+            field: 'idPuestoTrabajo',
+            headerName: 'Puesto de Trabajo',
+            width: 380,
+        },
+        {
+            field: 'idEquipoTrabajo',
+            headerName: 'Equipo de Trabajo',
             width: 200,
-        }, 
-         {
-            field: 'domicilio',
-            headerName: 'Domicilio',
-            width: 500,
         },
         {
             field: 'acciones',
@@ -77,7 +92,10 @@ const ListadoEmplados = () => {
                     apellido: Empleado.apellido,
                     dni: Empleado.dni,
                     celular: Empleado.celular,
-                    domicilio:Empleado.direccion
+                    idObrasocial: Empleado.obraSocial.descripcion,
+                    idSindicato: Empleado.sindicato.descripcion,
+                    idPuestoTrabajo: Empleado.puestoTrabajo.descripcion,
+                    idEquipoTrabajo: Empleado.equipoTrabajo.descripcion
                 };
             });
             setEmpleados(parsedData);
@@ -92,11 +110,6 @@ const ListadoEmplados = () => {
     const goToNewEmpleado = () => {
         history.push(rootPath + '/Empleados/NewEmpleado')
     };
-
-    
-
-
-
     return (
         <Box>
             <Breadcrumbs aria-label="breadcrumb" style={{ margin: 15 }}>
@@ -125,7 +138,6 @@ const ListadoEmplados = () => {
                     />
                 </Box>
             }
-
         </Box>
     );
 }

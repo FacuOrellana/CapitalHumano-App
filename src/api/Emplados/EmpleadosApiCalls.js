@@ -5,7 +5,6 @@ const rootApiPath = "https://localhost:7145/api/empleados"
 export const getAllEmpleados = async () =>{
     try {
         const response = await axios.get(rootApiPath);
-        console.log(response);
         return response.data;
        
     } catch (error) {

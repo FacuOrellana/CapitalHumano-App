@@ -1,10 +1,15 @@
-import { Box, Breadcrumbs, Button, FormControl, Grid, Stack, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import { Autocomplete, Box, Breadcrumbs, Button, Chip, FormControl, Grid, Stack, TextField, Typography } from '@mui/material'
+import React, { useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2';
 import { rootPath } from '../../App'
 import { postNewEmpleado } from '../../api/Emplados/EmpleadosApiCalls';
 import { MobileDatePicker } from '@mui/x-date-pickers';
+import { getAllPuestosTrabajo } from '../../api/PuestosTrabajo/PuestosTrabajoApiCalls';
+import { logDOM } from '@testing-library/react';
+import { getAllEquiposTrabajo } from '../../api/EquiposTrabajo/EquiposTrabajoApiCalls';
+import { getAllSindicatos } from '../../api/Sindicatos/SindicatosApiCalls';
+import { getAllObras } from '../../api/ObraSocial/ObraSocialApiCalls';
 
 const NewEmpleado = () => {
 
@@ -18,35 +23,94 @@ const NewEmpleado = () => {
     const [Celular, setCelular] = useState();
     const [telFijo, settelFijo] = useState();
     const [Edad, setEdad] = useState();
-    const [Image,setImage] = useState();
+    const [Image, setImage] = useState();
+    const [PuestosTrabajo, setPuestosTrabajo] = useState([]);
+    const [PuestoTrabajoValue, setPuestoTrabajoValue] = React.useState([]);
+    const [EquiposTrabajo, setEquiposTrabajo] = useState([]);
+    const [EquiposTrabajoValue, setEquiposTrabajoValue] = React.useState([]);
+    const [Sindicatos, setSindicatos] = useState([])
+    const [ObraSocial, setObraSocial] = useState([])
+    const setError = (error, header) => {
+        console.log(error);
+    };
 
+
+
+    useEffect(() => {
+        getAllPuestosTrabajo().then((response) => {
+            const parsedData = response.map((Puesto) => {
+                return {
+                    idPuestoTrabajo: Puesto.idPuestoTrabajo,
+                    nombrePuesto: Puesto.nombre,
+                    descripcionPuesto: Puesto.descripcion
+                };
+            });
+            setPuestosTrabajo(parsedData);
+        }).catch((error) => {
+            setError(error, 'Error al listar Puestos.');
+        });
+        getAllEquiposTrabajo().then((response) => {
+            const parsedData = response.map((Equipo) => {
+                return {
+                    idEquipoTrabajo: Equipo.idEquipoTrabajo,
+                    descripcionEquipoTrabajo: Equipo.descripcion
+                };
+            });
+            setEquiposTrabajo(parsedData);
+        }).catch((error) => {
+            setError(error, 'Error al listar Equipos.');
+        });
+        getAllSindicatos().then((response) => {
+            const parsedData = response.map((Sindicato) => {
+                return {
+                    idSindicato: Sindicato.idSindicato,
+                    descripcion: Sindicato.descripcion
+                };
+            });
+            setSindicatos(parsedData);
+        }).catch((error) => {
+            setError(error, 'Error al listar Sindicatos.');
+        });
+        getAllObras().then((response) => {
+            const parsedData = response.map((Obra) => {
+                return {
+                    idObraSocial: Obra.idObraSocial,
+                    descripcion: Obra.descripcion
+                };
+            });
+            setObraSocial(parsedData);
+        }).catch((error) => {
+            setError(error, 'Error al listar Obras Sociales.');
+        });
+
+    }, []);
     const handleChangeNombre = (event) => {
-        setNombre(event.target.value);
+        setNombre(event.target.PuestoTrabajoValue);
     };
     const handleChangeDescripcion = (event) => {
-        setApellido(event.target.value);
+        setApellido(event.target.PuestoTrabajoValue);
     };
     const handleChangeDomicilio = (event) => {
-        setDomicilio(event.target.value);
+        setDomicilio(event.target.PuestoTrabajoValue);
     };
 
     const handleChangeEmail = (event) => {
-        setEmail(event.target.value);
+        setEmail(event.target.PuestoTrabajoValue);
     };
 
     const handleChangeDNI = (event) => {
-        setDNI(event.target.value);
+        setDNI(event.target.PuestoTrabajoValue);
     };
     const handleChangeCelular = (event) => {
-        setCelular(event.target.value);
+        setCelular(event.target.PuestoTrabajoValue);
     };
 
     const handleChangeTelFijo = (event) => {
-        settelFijo(event.target.value);
+        settelFijo(event.target.PuestoTrabajoValue);
     };
 
     const handleChangeEdad = (event) => {
-        setEdad(event.target.value);
+        setEdad(event.target.PuestoTrabajoValue);
     };
 
     const handleImage = (event) => {
@@ -60,43 +124,43 @@ const NewEmpleado = () => {
 
 
     function AddSocio() {
-        if (Nombre===undefined) {
+        if (Nombre === undefined) {
             return Swal.fire({
                 title: 'Por favor ingresar nombre del socio.',
                 icon: 'error',
 
             })
         }
-        if (Apellido===undefined) {
+        if (Apellido === undefined) {
             return Swal.fire({
                 title: 'Por favor ingresar apellido del socio.',
                 icon: 'error',
 
             })
         }
-        if (Domicilio===undefined) {
+        if (Domicilio === undefined) {
             return Swal.fire({
                 title: 'Por favor ingresar domicilio del socio.',
                 icon: 'error',
 
             })
         }
-        if (Edad===undefined) {
+        if (Edad === undefined) {
             return Swal.fire({
                 title: 'Por favor ingresar edad del socio.',
                 icon: 'error',
 
             })
         }
-   
-        if (fechaNacimiento==='') {
+
+        if (fechaNacimiento === '') {
             return Swal.fire({
                 title: 'Por favor ingresar fecha de nacimiento del socio.',
                 icon: 'error',
 
             })
         }
-        if (DNI===undefined) {
+        if (DNI === undefined) {
             return Swal.fire({
                 title: 'Por favor ingresar DNI del socio.',
                 icon: 'error',
@@ -113,7 +177,7 @@ const NewEmpleado = () => {
                     }, 1500);
                 }
             })
-            
+
             console.log(response);
         })
 
@@ -146,7 +210,7 @@ const NewEmpleado = () => {
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },
-                        }} helperText="Ingrese el nombre" value={Nombre} onChange={handleChangeNombre} />
+                        }} helperText="Ingrese el nombre" PuestoTrabajoValue={Nombre} onChange={handleChangeNombre} />
                     </FormControl>
                 </Grid>
                 <Grid md={6} xs={10}  >
@@ -155,7 +219,7 @@ const NewEmpleado = () => {
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },
-                        }} helperText="Ingrese apellido" variant="filled" value={Apellido} onChange={handleChangeDescripcion} />
+                        }} helperText="Ingrese apellido" variant="filled" PuestoTrabajoValue={Apellido} onChange={handleChangeDescripcion} />
                     </FormControl>
                 </Grid>
 
@@ -167,7 +231,7 @@ const NewEmpleado = () => {
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },
-                        }} helperText="Ingrese el e-mail" value={Email} onChange={handleChangeEmail} />
+                        }} helperText="Ingrese el e-mail" PuestoTrabajoValue={Email} onChange={handleChangeEmail} />
                     </FormControl>
                 </Grid>
                 <Grid md={6} xs={10}  >
@@ -176,7 +240,7 @@ const NewEmpleado = () => {
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },
-                        }} helperText="Ingrese domicilio" variant="filled" value={Domicilio} onChange={handleChangeDomicilio} />
+                        }} helperText="Ingrese domicilio" variant="filled" PuestoTrabajoValue={Domicilio} onChange={handleChangeDomicilio} />
                     </FormControl>
                 </Grid>
 
@@ -189,7 +253,7 @@ const NewEmpleado = () => {
                                 label="Fecha de Nacimiento"
                                 openTo='year'
                                 views={['year','month','day']}
-                                value={fechaNacimiento}
+                                PuestoTrabajoValue={fechaNacimiento}
                                 onChange={(newValue) => {
                                     setfechaNacimiento(newValue);
                                 }}
@@ -205,7 +269,7 @@ const NewEmpleado = () => {
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },
-                        }} helperText="Ingrese DNI" variant="filled" value={DNI} onChange={handleChangeDNI} />
+                        }} helperText="Ingrese DNI" variant="filled" PuestoTrabajoValue={DNI} onChange={handleChangeDNI} />
                     </FormControl>
                 </Grid>
                 <FormControl >
@@ -213,7 +277,7 @@ const NewEmpleado = () => {
                         ".css-1wc848c-MuiFormHelperText-root": {
                             fontSize: "1rem",
                         },
-                    }} helperText="Ingrese Edad" variant="filled" value={Edad} onChange={handleChangeEdad} />
+                    }} helperText="Ingrese Edad" variant="filled" PuestoTrabajoValue={Edad} onChange={handleChangeEdad} />
                 </FormControl>
             </Grid>
 
@@ -224,7 +288,7 @@ const NewEmpleado = () => {
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },
-                        }} helperText="Ingrese Nro. Celular" value={Celular} onChange={handleChangeCelular} />
+                        }} helperText="Ingrese Nro. Celular" PuestoTrabajoValue={Celular} onChange={handleChangeCelular} />
                     </FormControl>
                 </Grid>
                 <Grid md={6} xs={10}  >
@@ -233,30 +297,87 @@ const NewEmpleado = () => {
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },
-                        }} helperText="Ingrese Tel. Fijo" variant="filled" value={telFijo} onChange={handleChangeTelFijo} />
+                        }} helperText="Ingrese Tel. Fijo" variant="filled" PuestoTrabajoValue={telFijo} onChange={handleChangeTelFijo} />
                     </FormControl>
                 </Grid>
 
             </Grid>
 
-            {/* <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
-                <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
-                    <Button
-                        variant="contained"
-                        component="label"
-                    >
-                        Foto del Socio
-                        <input
-                            onChange={handleImage}
-                            type="file"
-                            hidden
-                        />
-                    </Button>
+            <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
+                <Grid xs={12} md={6} style={{ marginBottom: 10 }} >
+                    <Autocomplete
+                        multiple
+                        id="fixed-tags-demo"
+                        PuestoTrabajoValue={PuestoTrabajoValue}
+                        onChange={(event, newValue) => {
+                            setPuestoTrabajoValue(newValue);
+                        }}
+
+                        options={PuestosTrabajo}
+                        getOptionLabel={(option) => option.nombrePuesto}
+                        renderTags={(tagValue, getTagProps) =>
+                            tagValue.map((option, index) => (
+                                <Chip
+                                    label={option.nombrePuesto}
+                                    {...getTagProps({ index })}
+                                />
+                            ))
+                        }
+                        style={{ width: 500 }}
+                        renderInput={(params) => (
+                            <TextField {...params} placeholder="Puestos" />
+                        )}
+                    />
                 </Grid>
-                <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
-                <Typography>{Image? Image.name: null}</Typography>
+                <Grid xs={12} md={6} style={{ marginBottom: 10 }} >
+                    <Autocomplete
+                        multiple
+                        id="fixed-tags-demo"
+                        EquiposTrabajoValue={EquiposTrabajoValue}
+                        onChange={(event, newValue) => {
+                            setEquiposTrabajoValue(newValue);
+                        }}
+
+                        options={EquiposTrabajo}
+                        getOptionLabel={(option) => option.descripcionEquipoTrabajo}
+                        renderTags={(tagValue, getTagProps) =>
+                            tagValue.map((option, index) => (
+                                <Chip
+                                    label={option.descripcionEquipoTrabajo}
+                                    {...getTagProps({ index })}
+                                />
+                            ))
+                        }
+                        style={{ width: 500 }}
+                        renderInput={(params) => (
+                            <TextField {...params} placeholder="Equipos" />
+                        )}
+                    />
                 </Grid>
-            </Grid> */}
+            </Grid>
+            <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
+                <Grid xs={12} md={6} style={{ marginBottom: 10 }} >
+                    <Autocomplete
+                        disablePortal
+                        id="combo-box-demo"
+                        options={Sindicatos}
+                        getOptionLabel={(option) => typeof option === 'object' ? option.descripcion || '' : option}
+                        sx={{ width: 300 }}
+                        renderInput={(params) => <TextField {...params} label="Sindicatos" />}
+                    />
+
+                </Grid>
+                <Grid xs={12} md={6} style={{ marginBottom: 10 }} >
+                <Autocomplete
+                        disablePortal
+                        id="combo-box-demo"
+                        options={ObraSocial}
+                        getOptionLabel={(option) => typeof option === 'object' ? option.descripcion || '' : option}
+                        sx={{ width: 300 }}
+                        renderInput={(params) => <TextField {...params} label="Obras Sociales" />}
+                    />
+                </Grid>
+            </Grid>
 
 
 
