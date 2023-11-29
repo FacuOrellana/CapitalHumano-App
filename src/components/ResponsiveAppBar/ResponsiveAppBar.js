@@ -5,6 +5,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
 import { useHistory } from 'react-router-dom';
 import { rootPath } from '../../App';
+import { Link } from 'react-router-dom/cjs/react-router-dom';
 
 const pages = ['Empleados', 'Asistencias', 'Entrada'];
 const settings = ['Logout'];
@@ -52,6 +53,8 @@ function ResponsiveAppBar() {
           >
             CAPITAL-HUMANO
           </Typography>
+
+          <Link to={'/login'}>login</Link>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton

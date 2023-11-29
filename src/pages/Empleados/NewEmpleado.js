@@ -4,9 +4,7 @@ import { Link, useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2';
 import { rootPath } from '../../App'
 import { postNewEmpleado } from '../../api/Emplados/EmpleadosApiCalls';
-import { MobileDatePicker } from '@mui/x-date-pickers';
 import { getAllPuestosTrabajo } from '../../api/PuestosTrabajo/PuestosTrabajoApiCalls';
-import { logDOM } from '@testing-library/react';
 import { getAllEquiposTrabajo } from '../../api/EquiposTrabajo/EquiposTrabajoApiCalls';
 import { getAllSindicatos } from '../../api/Sindicatos/SindicatosApiCalls';
 import { getAllObras } from '../../api/ObraSocial/ObraSocialApiCalls';
