@@ -4,12 +4,13 @@ import { Link, useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2';
 import { rootPath } from '../../App'
 import { postNewEmpleado } from '../../api/Emplados/EmpleadosApiCalls';
-import { MobileDatePicker } from '@mui/x-date-pickers';
 import { getAllPuestosTrabajo } from '../../api/PuestosTrabajo/PuestosTrabajoApiCalls';
-import { logDOM } from '@testing-library/react';
 import { getAllEquiposTrabajo } from '../../api/EquiposTrabajo/EquiposTrabajoApiCalls';
 import { getAllSindicatos } from '../../api/Sindicatos/SindicatosApiCalls';
 import { getAllObras } from '../../api/ObraSocial/ObraSocialApiCalls';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { MobileDatePicker } from '@mui/x-date-pickers';
 
 const NewEmpleado = () => {
 
@@ -17,13 +18,13 @@ const NewEmpleado = () => {
     const [Nombre, setNombre] = useState();
     const [Apellido, setApellido] = useState();
     const [Email, setEmail] = useState();
-    const [Domicilio, setDomicilio] = useState();
+    const [Direccion, setDireccion] = useState();
+    const [Ciudad, setCiudad] = useState();
     const [fechaNacimiento, setfechaNacimiento] = useState('');
     const [DNI, setDNI] = useState();
     const [Celular, setCelular] = useState();
     const [telFijo, settelFijo] = useState();
     const [Edad, setEdad] = useState();
-    const [Image, setImage] = useState();
     const [PuestosTrabajo, setPuestosTrabajo] = useState([]);
     const [PuestoTrabajoValue, setPuestoTrabajoValue] = React.useState([]);
     const [EquiposTrabajo, setEquiposTrabajo] = useState([]);
@@ -85,39 +86,36 @@ const NewEmpleado = () => {
 
     }, []);
     const handleChangeNombre = (event) => {
-        setNombre(event.target.PuestoTrabajoValue);
+        setNombre(event.target.value);
     };
     const handleChangeDescripcion = (event) => {
-        setApellido(event.target.PuestoTrabajoValue);
+        setApellido(event.target.value);
     };
-    const handleChangeDomicilio = (event) => {
-        setDomicilio(event.target.PuestoTrabajoValue);
+    const handleChangeDireccion = (event) => {
+        setDireccion(event.target.value);
     };
-
+    const handleChangeCiudad = (event) => {
+        setCiudad(event.target.value);
+    };
     const handleChangeEmail = (event) => {
-        setEmail(event.target.PuestoTrabajoValue);
+        setEmail(event.target.value);
     };
 
     const handleChangeDNI = (event) => {
-        setDNI(event.target.PuestoTrabajoValue);
+        setDNI(event.target.value);
     };
     const handleChangeCelular = (event) => {
-        setCelular(event.target.PuestoTrabajoValue);
+        setCelular(event.target.value);
     };
 
     const handleChangeTelFijo = (event) => {
-        settelFijo(event.target.PuestoTrabajoValue);
+        settelFijo(event.target.value);
     };
 
     const handleChangeEdad = (event) => {
-        setEdad(event.target.PuestoTrabajoValue);
+        setEdad(event.target.value);
     };
 
-    const handleImage = (event) => {
-        console.log(event.target.files);
-        console.log(event.target.files[0]);
-        setImage(event.target.files[0]);
-    };
 
 
 
@@ -138,9 +136,9 @@ const NewEmpleado = () => {
 
             })
         }
-        if (Domicilio === undefined) {
+        if (Direccion === undefined) {
             return Swal.fire({
-                title: 'Por favor ingresar domicilio del socio.',
+                title: 'Por favor ingresar Direccion del socio.',
                 icon: 'error',
 
             })
@@ -167,7 +165,7 @@ const NewEmpleado = () => {
 
             })
         }
-        postNewEmpleado(Nombre, Apellido, Email, Edad, Domicilio, fechaNacimiento, DNI, Celular, telFijo, "ACTIVO").then((response) => {
+        postNewEmpleado(Nombre, Apellido, Email, Edad, Direccion, fechaNacimiento, DNI, Celular, telFijo, "ACTIVO").then((response) => {
             Swal.fire({
                 title: "Socio registrado con exito!",
                 icon: 'success',
@@ -210,7 +208,7 @@ const NewEmpleado = () => {
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },
-                        }} helperText="Ingrese el nombre" PuestoTrabajoValue={Nombre} onChange={handleChangeNombre} />
+                        }} helperText="Ingrese el nombre" value={Nombre} onChange={handleChangeNombre} />
                     </FormControl>
                 </Grid>
                 <Grid md={6} xs={10}  >
@@ -219,7 +217,7 @@ const NewEmpleado = () => {
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },
-                        }} helperText="Ingrese apellido" variant="filled" PuestoTrabajoValue={Apellido} onChange={handleChangeDescripcion} />
+                        }} helperText="Ingrese apellido" variant="filled" value={Apellido} onChange={handleChangeDescripcion} />
                     </FormControl>
                 </Grid>
 
@@ -231,16 +229,25 @@ const NewEmpleado = () => {
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },
-                        }} helperText="Ingrese el e-mail" PuestoTrabajoValue={Email} onChange={handleChangeEmail} />
+                        }} helperText="Ingrese el e-mail" value={Email} onChange={handleChangeEmail} />
                     </FormControl>
                 </Grid>
-                <Grid md={6} xs={10}  >
-                    <FormControl fullWidth>
-                        <TextField id="domicilio" label="Domicilio" sx={{
+                <Grid md={3} xs={10}  >
+                    <FormControl sx={{ width: '20rem' }} fullWidth>
+                        <TextField id="Ciudad" label="Ciudad" sx={{
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },
-                        }} helperText="Ingrese domicilio" variant="filled" PuestoTrabajoValue={Domicilio} onChange={handleChangeDomicilio} />
+                        }} helperText="Ingrese Ciudad" variant="filled" value={Ciudad} onChange={handleChangeCiudad} />
+                    </FormControl>
+                </Grid>
+                <Grid md={3} xs={10}  >
+                    <FormControl fullWidth>
+                        <TextField id="Direccion" label="Direccion" sx={{
+                            ".css-1wc848c-MuiFormHelperText-root": {
+                                fontSize: "1rem",
+                            },
+                        }} helperText="Ingrese Direccion" variant="filled" value={Direccion} onChange={handleChangeDireccion} />
                     </FormControl>
                 </Grid>
 
@@ -248,19 +255,19 @@ const NewEmpleado = () => {
             <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
                 <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
                     <FormControl sx={{ width: '20rem' }} >
-                        {/* <LocalizationProvider dateAdapter={AdapterDayjs}> */}
-                        {/* <MobileDatePicker
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <MobileDatePicker
                                 label="Fecha de Nacimiento"
                                 openTo='year'
                                 views={['year','month','day']}
-                                PuestoTrabajoValue={fechaNacimiento}
+                                value={fechaNacimiento}
                                 onChange={(newValue) => {
                                     setfechaNacimiento(newValue);
                                 }}
                                 inputFormat='DD/MM/YYYY'
                                 renderInput={(params) => <TextField {...params}  helperText='Ingrese fecha de nacimiento'/>}
-                            /> */}
-                        {/* </LocalizationProvider> */}
+                            />
+                        </LocalizationProvider>
                     </FormControl>
                 </Grid>
                 <Grid md={3} xs={10}  >
@@ -269,16 +276,10 @@ const NewEmpleado = () => {
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },
-                        }} helperText="Ingrese DNI" variant="filled" PuestoTrabajoValue={DNI} onChange={handleChangeDNI} />
+                        }} helperText="Ingrese DNI" variant="filled" value={DNI} onChange={handleChangeDNI} />
                     </FormControl>
                 </Grid>
-                <FormControl >
-                    <TextField id="edad" type={'number'} label="Edad" sx={{
-                        ".css-1wc848c-MuiFormHelperText-root": {
-                            fontSize: "1rem",
-                        },
-                    }} helperText="Ingrese Edad" variant="filled" PuestoTrabajoValue={Edad} onChange={handleChangeEdad} />
-                </FormControl>
+
             </Grid>
 
             <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
@@ -288,19 +289,9 @@ const NewEmpleado = () => {
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },
-                        }} helperText="Ingrese Nro. Celular" PuestoTrabajoValue={Celular} onChange={handleChangeCelular} />
+                        }} helperText="Ingrese Nro. Celular" value={Celular} onChange={handleChangeCelular} />
                     </FormControl>
                 </Grid>
-                <Grid md={6} xs={10}  >
-                    <FormControl fullWidth>
-                        <TextField id="telFijo" label="Tel. Fijo" sx={{
-                            ".css-1wc848c-MuiFormHelperText-root": {
-                                fontSize: "1rem",
-                            },
-                        }} helperText="Ingrese Tel. Fijo" variant="filled" PuestoTrabajoValue={telFijo} onChange={handleChangeTelFijo} />
-                    </FormControl>
-                </Grid>
-
             </Grid>
 
             <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
@@ -368,7 +359,7 @@ const NewEmpleado = () => {
 
                 </Grid>
                 <Grid xs={12} md={6} style={{ marginBottom: 10 }} >
-                <Autocomplete
+                    <Autocomplete
                         disablePortal
                         id="combo-box-demo"
                         options={ObraSocial}
