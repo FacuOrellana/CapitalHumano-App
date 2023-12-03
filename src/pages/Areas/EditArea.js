@@ -14,6 +14,7 @@ const EditArea = () => {
         console.log(error);
     };
     const { id } = useParams();
+    /*
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.get("https://localhost:7145/api/areas/" + id);
@@ -22,6 +23,7 @@ const EditArea = () => {
         }
         if (id) fetchData();
     }, [id])
+    */
 
     const handleChangeDescripcion = (event) => {
         setDescripcion(event.target.value);

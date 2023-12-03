@@ -12,6 +12,17 @@ export const getAllAreas = async () => {
     }
 }
 
+export const getAreaById = async (id) => {
+    try {
+        const response = await axios.get(rootApiPath + "/" + id);
+        //d/ebugger;
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
 export const postNewArea = async ( descripcion ) => {
     const body = {
         descripcion: descripcion

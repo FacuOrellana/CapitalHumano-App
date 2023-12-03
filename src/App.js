@@ -10,6 +10,8 @@ import ListadoContratos from './pages/Contratos/ListadoContratos';
 import ListadoAreas from './pages/Areas/ListadoAreas';
 import NewArea from './pages/Areas/NewArea';
 import EditArea from './pages/Areas/EditArea';
+import ListadoSindicatos from './pages/Sindicato/ListadoSindicatos';
+import NewSindicato from './pages/Sindicato/NewSindicato';
 
 
 
@@ -28,7 +30,9 @@ function App() {
         <Route path='/contratos' element={<ListadoContratos />} />
         <Route path='/areas' element={<ListadoAreas />} />        
         <Route path='/areas/newarea' element={<NewArea />} />        
-        <Route exact path={'/areas/:id'} element={<EditArea />} />
+        <Route exact path={'/areas/:id'} element={<EditArea />} />        
+        <Route path='/sindicatos' element={<ListadoSindicatos />} />        
+        <Route path='/sindicatos/newsindicato' element={<NewSindicato />} />
       </Routes>
     </>
   );

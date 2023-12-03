@@ -1,6 +1,6 @@
 import { Autocomplete, Box, Breadcrumbs, Button, Chip, FormControl, Grid, Stack, TextField, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2';
 import { getEmpleadoById, postNewEmpleado } from '../../api/Emplados/EmpleadosApiCalls';
 import { getAllPuestosTrabajo } from '../../api/PuestosTrabajo/PuestosTrabajoApiCalls';
@@ -41,10 +41,7 @@ const EditEmpleado = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            // debugger;
             const response = await axios.get("https://localhost:7145/api/empleados/"+id);
-        //d/ebugger;
-            const empleadoo =  getEmpleadoById(id);
             setEmpleado(response.data);            
             setNombre(empleado.nombre);
             setApellido(empleado.apellido);

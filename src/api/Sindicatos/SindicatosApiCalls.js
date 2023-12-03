@@ -14,4 +14,32 @@ export const getAllSindicatos = async () =>{
     }
 }
 
+export const getSindicatoById = async (id) => {
+    try {
+        const response = await axios.get(rootApiPath + "/" + id);
+        //d/ebugger;
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
 
+
+
+export const postNewSindicato = async (descripcion,aporte) => {
+    const body = {
+        descripcion: descripcion,        
+        aporte: aporte            
+    }
+    try {
+        console.log(rootApiPath,body)
+        const response = await axios.post(rootApiPath, body);
+        return response;
+
+    } catch (error) {
+        console.log(error);
+        throw error;
+
+    }
+}
