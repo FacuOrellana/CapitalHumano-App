@@ -1,9 +1,8 @@
 import { Autocomplete, Box, Breadcrumbs, Button, Chip, FormControl, Grid, Stack, TextField, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2';
-import { rootPath } from '../../App'
-import { postNewEmpleado } from '../../api/Emplados/EmpleadosApiCalls';
+import { getEmpleadoById, postNewEmpleado } from '../../api/Emplados/EmpleadosApiCalls';
 import { getAllPuestosTrabajo } from '../../api/PuestosTrabajo/PuestosTrabajoApiCalls';
 import { getAllEquiposTrabajo } from '../../api/EquiposTrabajo/EquiposTrabajoApiCalls';
 import { getAllSindicatos } from '../../api/Sindicatos/SindicatosApiCalls';
@@ -11,10 +10,13 @@ import { getAllObras } from '../../api/ObraSocial/ObraSocialApiCalls';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDatePicker } from '@mui/x-date-pickers';
+import { useParams } from 'react-router-dom';
+import axios from "axios";
 
-const NewEmpleado = () => {
 
-    // const history = useHistory()
+const EditEmpleado = () => {
+
+    const [empleado, setEmpleado] = useState({});
     const [Nombre, setNombre] = useState();
     const [Apellido, setApellido] = useState();
     const [Email, setEmail] = useState();
@@ -31,12 +33,32 @@ const NewEmpleado = () => {
     const [EquiposTrabajoValue, setEquiposTrabajoValue] = React.useState([]);
     const [Sindicatos, setSindicatos] = useState([])
     const [ObraSocial, setObraSocial] = useState([])
-
     const setError = (error, header) => {
         console.log(error);
     };
 
+    const { id } = useParams();
 
+    useEffect(() => {
+        const fetchData = async () => {
+            // debugger;
+            const response = await axios.get("https://localhost:7145/api/empleados/"+id);
+        //d/ebugger;
+            const empleadoo =  getEmpleadoById(id);
+            setEmpleado(response.data);            
+            setNombre(empleado.nombre);
+            setApellido(empleado.apellido);
+            setEmail(empleado.email);
+            setCelular(empleado.celular);
+            setDNI(empleado.dni);
+            setCiudad(empleado.ciudad);
+            setDireccion(empleado.direccion);
+            setfechaNacimiento(empleado.fechaNacimiento);
+        }
+
+        if (id) fetchData();
+    }, [id])
+    console.log(empleado);
 
     useEffect(() => {
         getAllPuestosTrabajo().then((response) => {
@@ -108,14 +130,11 @@ const NewEmpleado = () => {
     const handleChangeCelular = (event) => {
         setCelular(event.target.value);
     };
-
-    const handleChangeTelFijo = (event) => {
-        settelFijo(event.target.value);
-    };
-
+    
     const handleChangeEdad = (event) => {
         setEdad(event.target.value);
     };
+
 
     function AddSocio() {
         if (Nombre === undefined) {
@@ -163,7 +182,7 @@ const NewEmpleado = () => {
         }
         postNewEmpleado(Nombre, Apellido, Email, Edad, Direccion, fechaNacimiento, DNI, Celular, telFijo, "ACTIVO").then((response) => {
             Swal.fire({
-                title: "Empleado registrado con exito!",
+                title: "Socio registrado con exito!",
                 icon: 'success',
                 willClose: () => {
                     setTimeout(() => {
@@ -184,9 +203,6 @@ const NewEmpleado = () => {
             });
 
     }
-    function goToBack() {
-        // history.push(rootPath + '/Empleados')
-    }
 
     return (
         <Box>
@@ -194,7 +210,7 @@ const NewEmpleado = () => {
                 <Link underline="hover" color="inherit" onClick={goToBack}>
                     Listado de Empleados
                 </Link>
-                <Typography color="text.primary">Nuevo Empleado</Typography>
+                <Typography color="text.primary">Editar Empleado</Typography>
             </Breadcrumbs>
 
             <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
@@ -204,7 +220,7 @@ const NewEmpleado = () => {
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },
-                        }} helperText="Ingrese el nombre" value={Nombre} onChange={handleChangeNombre} />
+                        }} helperText="Ingrese el nombre" value={empleado.nombre} onChange={handleChangeNombre} />
                     </FormControl>
                 </Grid>
                 <Grid md={6} xs={10}  >
@@ -213,7 +229,7 @@ const NewEmpleado = () => {
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },
-                        }} helperText="Ingrese apellido" variant="filled" value={Apellido} onChange={handleChangeDescripcion} />
+                        }} helperText="Ingrese apellido" variant="filled" value={empleado.apellido} onChange={handleChangeDescripcion} />
                     </FormControl>
                 </Grid>
 
@@ -225,7 +241,7 @@ const NewEmpleado = () => {
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },
-                        }} helperText="Ingrese el e-mail" value={Email} onChange={handleChangeEmail} />
+                        }} helperText="Ingrese el e-mail" value={empleado.email} onChange={handleChangeEmail} />
                     </FormControl>
                 </Grid>
                 <Grid md={3} xs={10}  >
@@ -234,7 +250,7 @@ const NewEmpleado = () => {
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },
-                        }} helperText="Ingrese Ciudad" variant="filled" value={Ciudad} onChange={handleChangeCiudad} />
+                        }} helperText="Ingrese Ciudad" variant="filled" value={empleado.ciudad} onChange={handleChangeCiudad} />
                     </FormControl>
                 </Grid>
                 <Grid md={3} xs={10}  >
@@ -243,7 +259,7 @@ const NewEmpleado = () => {
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },
-                        }} helperText="Ingrese Direccion" variant="filled" value={Direccion} onChange={handleChangeDireccion} />
+                        }} helperText="Ingrese Direccion" variant="filled" value={empleado.direccion} onChange={handleChangeDireccion} />
                     </FormControl>
                 </Grid>
 
@@ -256,7 +272,7 @@ const NewEmpleado = () => {
                                 label="Fecha de Nacimiento"
                                 openTo='year'
                                 views={['year', 'month', 'day']}
-                                value={fechaNacimiento}
+                                value={empleado.fechaNacimiento}
                                 onChange={(newValue) => {
                                     setfechaNacimiento(newValue);
                                 }}
@@ -272,17 +288,7 @@ const NewEmpleado = () => {
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },
-                        }} helperText="Ingrese DNI" variant="filled" value={DNI} onChange={handleChangeDNI} />
-                    </FormControl>
-                </Grid>
-
-                <Grid md={3} xs={10}  >
-                    <FormControl >
-                        <TextField id="edad" label="Edad" type={'number'} sx={{
-                            ".css-1wc848c-MuiFormHelperText-root": {
-                                fontSize: "1rem",
-                            },
-                        }} helperText="Ingrese la edad" variant="filled" value={Edad} onChange={handleChangeEdad} />
+                        }} helperText="Ingrese DNI" variant="filled" value={empleado.dni} onChange={handleChangeDNI} />
                     </FormControl>
                 </Grid>
 
@@ -375,13 +381,14 @@ const NewEmpleado = () => {
                     />
                 </Grid>
             </Grid>
+
             <Stack spacing={2} sx={{ width: '10%', margin: 'auto' }}>
                 <Button variant="contained" color='success' onClick={AddSocio}>
-                    Registrar Empleado
+                    Editar Empleado
                 </Button>
             </Stack>
         </Box>
     );
 }
 
-export default NewEmpleado;
+export default EditEmpleado;

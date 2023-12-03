@@ -5,14 +5,14 @@ import { DataGrid } from '@mui/x-data-grid'
 import EditIcon from '@mui/icons-material/Edit';
 import { getAllEmpleados } from '../../api/Emplados/EmpleadosApiCalls';
 import { rootPath } from '../../App';
+import { useNavigate } from 'react-router-dom';
 
 const ListadoEmplados = () => {
 
-    const history = useHistory();
+    const navigate = useNavigate();
     const [Empleados, setEmpleados] = useState([]);
     const [loadingData, setLoadingData] = useState(false);
     const [selectionModel, setSelectionModel] = useState([]);
-
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 50, headerAlign: 'center', hidden: true },
@@ -65,7 +65,8 @@ const ListadoEmplados = () => {
             renderCell: (params) => {
                 const onEdit = (e) => {
                     const currentRow = params.row;
-                    history.push(rootPath + '/Empleados/EditEmpleado/' + currentRow.id)
+                    let id = currentRow.id;
+                    goToEditEmpleado(id);
                 };
                 return (
                     <Stack direction="row" spacing={2}>
@@ -108,7 +109,11 @@ const ListadoEmplados = () => {
 
 
     const goToNewEmpleado = () => {
-        history.push(rootPath + '/Empleados/NewEmpleado')
+        navigate('/empleados/newempleado');
+    };
+
+    const goToEditEmpleado = ( id ) => {
+        navigate('/empleados/'+id);
     };
     return (
         <Box>

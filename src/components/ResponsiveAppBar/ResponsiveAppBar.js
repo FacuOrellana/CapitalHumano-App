@@ -1,16 +1,20 @@
 import * as React from 'react';
-import { AppBar,Box,Toolbar,IconButton,Typography,Menu,Container,Avatar,Button,Tooltip,MenuItem,} from '@mui/material';
+import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Button, Tooltip, MenuItem, } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AdbIcon from '@mui/icons-material/Adb';
 import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
-import { useHistory } from 'react-router-dom';
-import { rootPath } from '../../App';
+import { Link } from 'react-router-dom';
 
-const pages = ['Empleados', 'Asistencias', 'Entrada'];
+const pages = ['inicio', 'empleados', 'asistencias', 'entrada','contratos','areas'];
 const settings = ['Logout'];
 
+const generateLinkComponent = (to, text) => (
+  <Link to={to}>
+    {text}
+  </Link>
+);
+
 function ResponsiveAppBar() {
-  const history = useHistory();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -29,17 +33,18 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
+  console.log(pages);
+
   return (
-    <AppBar position="static" sx={{backgroundColor:'lightblue'}}>
+    <AppBar position="static" sx={{ backgroundColor: 'lightblue' }}>
       <Container maxWidth="xl" >
         <Toolbar disableGutters >
-          <PermContactCalendarIcon sx={{ display: { xs: 'none', md: 'flex',color:'black' }, mr: 1 }} />
+          <PermContactCalendarIcon sx={{ display: { xs: 'none', md: 'flex', color: 'black' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
             component="a"
-            style={{color:'black'}}
-            onClick={()=>history.push(rootPath+'/Inicio')}
+            style={{ color: 'black' }}
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -52,6 +57,18 @@ function ResponsiveAppBar() {
           >
             CAPITAL-HUMANO
           </Typography>
+          <Link to="/empleados" style={{ display: 'flex', alignItems: 'center' }}>
+            {pages.map((page, index) => (
+              <React.Fragment key={page}>
+                {index > 0 && <span style={{ margin: '0 8px' }}>|</span>}
+                <MenuItem>
+                  <Typography textAlign="center" display={'inline'}>
+                    {generateLinkComponent(page, page.toUpperCase())}
+                  </Typography>
+                </MenuItem>
+              </React.Fragment>
+            ))}
+          </Link>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -83,8 +100,10 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page}  onClick={()=>history.push(rootPath+'/'+page)}>
-                  <Typography textAlign="center"> {page}</Typography>
+                <MenuItem key={page}>
+                  <Typography textAlign="center">
+                    {generateLinkComponent(page, page.toUpperCase())}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -108,19 +127,8 @@ function ResponsiveAppBar() {
           >
             LOGO
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={()=>history.push(rootPath+'/'+page)}
-                sx={{ my: 2, color: 'black', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ flexGrow: 0 }} alignItems='right'>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Alert, Avatar, Box, Button, CircularProgress, Grid, Paper, TextField } from '@mui/material';
-import { Redirect } from 'react-router-dom';
+import { Alert, Avatar, Button, CircularProgress, Grid, Paper, TextField } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import axios from 'axios';
 
@@ -8,7 +7,6 @@ const Login = (props) => {
     const [user, setUser] = useState('');
     const [pass, setPass] = useState('');
     const session=props.session;
-    // const [succeed, setSucceed] = useState(false);
     const [errorMessage, setErrorMessage] = useState(false);
     const [loading, setLoading] = useState(false);
     const [mayus, setMayus] = useState(false);
@@ -18,6 +16,7 @@ const Login = (props) => {
     const scaniaImage = { backgroundImage: '#041E42' }
     const textfieldStyle = { margin: "10px auto" }
     const btnstyle = { margin: '8px 0' }
+    console.log('LOGIN')
 
 
 
@@ -121,7 +120,7 @@ const Login = (props) => {
                 <Grid align='center'>
               
                
-                <h1>SPARTA-GYM</h1>
+                <h1>Gestion Capital Humano</h1>
                     <h2>Inicio de Sesión</h2>
                 </Grid>
                 <TextField onChange={onChangeUser} style={textfieldStyle} id="outlined-basic" label="Usuario" variant="outlined" placeholder='Enter username' fullWidth required />
@@ -163,7 +162,7 @@ const Login = (props) => {
             </Paper>
         </Grid>
     ) : (
-        <Redirect to={'/Inicio'} push></Redirect>
+        <></>
     );
 };
 export default Login
