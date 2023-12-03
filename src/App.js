@@ -12,6 +12,10 @@ import NewArea from './pages/Areas/NewArea';
 import EditArea from './pages/Areas/EditArea';
 import ListadoSindicatos from './pages/Sindicato/ListadoSindicatos';
 import NewSindicato from './pages/Sindicato/NewSindicato';
+import EditSindicato from './pages/Sindicato/EditSindicato';
+import ListadoPuestoTrabajo from './pages/PuestoTrabajo/ListadoPuestoTrabajo';
+import NewPuestoTrabajo from './pages/PuestoTrabajo/NewPuestoTrabajo';
+import EditPuestoTrabajo from './pages/PuestoTrabajo/EditPuestoTrabajo';
 
 
 
@@ -33,6 +37,11 @@ function App() {
         <Route exact path={'/areas/:id'} element={<EditArea />} />        
         <Route path='/sindicatos' element={<ListadoSindicatos />} />        
         <Route path='/sindicatos/newsindicato' element={<NewSindicato />} />
+        <Route exact path={'/sindicatos/:id'} element={<EditSindicato />} />
+        <Route path='/puestotrabajo' element={< ListadoPuestoTrabajo />} />        
+        <Route path='/puestotrabajo/newpuestotrabajo' element={<NewPuestoTrabajo />} />
+        <Route exact path={'/puestotrabajo/:id'} element={<EditPuestoTrabajo />} />        
+
       </Routes>
     </>
   );

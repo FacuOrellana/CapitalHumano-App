@@ -5,7 +5,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
 import { Link } from 'react-router-dom';
 
-const pages = ['inicio', 'empleados', 'asistencias', 'entrada','contratos','areas','sindicatos'];
+const pages = ['inicio', 'empleados', 'asistencias', 'entrada','contratos','areas','sindicatos','puestotrabajo'];
 const settings = ['Logout'];
 
 const generateLinkComponent = (to, text) => (
