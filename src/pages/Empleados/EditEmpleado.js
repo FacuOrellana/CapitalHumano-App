@@ -1,6 +1,6 @@
 import { Autocomplete, Box, Breadcrumbs, Button, Chip, FormControl, Grid, Stack, TextField, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2';
 import { getEmpleadoById, postNewEmpleado } from '../../api/Emplados/EmpleadosApiCalls';
 import { getAllPuestosTrabajo } from '../../api/PuestosTrabajo/PuestosTrabajoApiCalls';
@@ -15,7 +15,7 @@ import axios from "axios";
 
 
 const EditEmpleado = () => {
-
+    const navigate = useNavigate();
     const [empleado, setEmpleado] = useState({});
     const [Nombre, setNombre] = useState();
     const [Apellido, setApellido] = useState();
@@ -203,6 +203,11 @@ const EditEmpleado = () => {
             });
 
     }
+    function goToBack() {
+        navigate('/empleados');
+    }
+
+    // if (empleado !== null) return <h1>CARGANDO</h1>;
 
     return (
         <Box>
