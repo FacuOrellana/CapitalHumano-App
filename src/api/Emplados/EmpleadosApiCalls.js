@@ -13,17 +13,6 @@ export const getAllEmpleados = async () => {
     }
 }
 
-export const getEmpleadoById = async (id) => {
-    try {
-        const response = await axios.get(rootApiPath + "/" + id);
-        //d/ebugger;
-        return response.data;
-    } catch (error) {
-        console.log(error);
-        throw error;
-    }
-}
-
 
 export const postNewEmpleado = async (nombre, apellido, hotmail, edad, domicilio, fechaNacimiento, dni, celular, telFijo, estado) => {
     const body = {
@@ -46,5 +35,17 @@ export const postNewEmpleado = async (nombre, apellido, hotmail, edad, domicilio
         console.log(error);
         throw error;
 
+    }
+}
+
+export const getEmpleadoById = async (id) => {
+    try {
+        const response = await axios.get(rootApiPath+"/"+id);
+        return response;
+        
+    } catch (error) {
+        console.log(error);
+        throw error;
+        
     }
 }

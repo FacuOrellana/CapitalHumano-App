@@ -1,6 +1,6 @@
 import './App.css';
 import ResponsiveAppBar from './components/ResponsiveAppBar/ResponsiveAppBar';
-import { Route, Routes, Link } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import Inicio from './pages/Inicio/Inicio';
 import ListadoEmplados from './pages/Empleados/ListadoEmpleados';
