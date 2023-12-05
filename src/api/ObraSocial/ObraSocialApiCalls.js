@@ -14,4 +14,18 @@ export const getAllObras = async () =>{
     }
 }
 
+export const postNewObraSocial = async ( descripcion, aporte ) => {
+    const body = {
+        descripcion: descripcion,
+        aporte: aporte
+    }
+    try {
+        const response = await axios.post(rootApiPath, body);
+        return response;
+
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
 

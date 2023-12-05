@@ -112,11 +112,16 @@ const ListadoEmplados = () => {
         navigate('/empleados/newempleado');
     };
 
+    const goToInicio = () => {
+        navigate('/inicio');
+    };
+
     const goToEditEmpleado = ( id ) => {
         navigate('/empleados/'+id);
     };
     return (
         <Box>
+            <Button color="primary" onClick={goToInicio} variant='outlined' size='small'>Volver a inicio</Button>
             <Breadcrumbs aria-label="breadcrumb" style={{ margin: 15 }}>
                 {/* <Link underline="hover" color="inherit" onClick={() => history.push(rootPath + "/Inicio")}>
                     Inicio

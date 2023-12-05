@@ -33,9 +33,7 @@ export const postNewArea = async ( descripcion ) => {
     } catch (error) {
         console.log(error);
         throw error;
-
     }
-
 }
 
 export const putEditArea = async ( descripcion ) => {
