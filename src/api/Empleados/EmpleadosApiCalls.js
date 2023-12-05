@@ -47,6 +47,7 @@ export const postNewEmpleado = async (Nombre, Apellido, Email,DNI,Legajo, Celula
 export const getEmpleadoById = async (id) => {
     try {
         const response = await axios.get(rootApiPath+"/"+id);
+        console.log(response);
         return response;
         
     } catch (error) {

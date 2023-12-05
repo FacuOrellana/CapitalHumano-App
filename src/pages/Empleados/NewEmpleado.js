@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2';
 import { rootPath } from '../../App'
-import { postNewEmpleado } from '../../api/Emplados/EmpleadosApiCalls';
+import { postNewEmpleado } from '../../api/Empleados/EmpleadosApiCalls';
 import { getAllPuestosTrabajo } from '../../api/PuestosTrabajo/PuestosTrabajoApiCalls';
 import { getAllEquiposTrabajo } from '../../api/EquiposTrabajo/EquiposTrabajoApiCalls';
 import { getAllSindicatos } from '../../api/Sindicatos/SindicatosApiCalls';

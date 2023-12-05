@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid'
 import EditIcon from '@mui/icons-material/Edit';
-import { getAllEmpleados } from '../../api/Emplados/EmpleadosApiCalls';
+import { getAllEmpleados } from '../../api/Empleados/EmpleadosApiCalls';
 import { rootPath } from '../../App';
 import { useNavigate } from 'react-router-dom';
 
