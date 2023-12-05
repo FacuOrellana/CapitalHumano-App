@@ -1,61 +1,28 @@
 import { Box, Breadcrumbs, Button, CircularProgress, Stack, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid'
 import EditIcon from '@mui/icons-material/Edit';
-import { getAllEmpleados } from '../../api/Emplados/EmpleadosApiCalls';
-import { rootPath } from '../../App';
+import { getAllPuestosTrabajo } from '../../api/PuestosTrabajo/PuestosTrabajoApiCalls';
 import { useNavigate } from 'react-router-dom';
 
-const ListadoEmplados = () => {
-
+const ListadoPuestoTrabajo = () => {
     const navigate = useNavigate();
-    const [Empleados, setEmpleados] = useState([]);
+    const [puestoTrabajo, setPuestoTrabajo] = useState([]);
     const [loadingData, setLoadingData] = useState(false);
     const [selectionModel, setSelectionModel] = useState([]);
+
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 50, headerAlign: 'center', hidden: true },
         {
             field: 'nombre',
             headerName: 'Nombre',
-            width: 125,
-        },
-        {
-            field: 'apellido',
-            headerName: 'Apellido',
-            width: 150,
-        },
-        {
-            field: 'dni',
-            headerName: 'DNI',
-            width: 150,
-        }
-        ,
-        {
-            field: 'celular',
-            headerName: 'Celular',
-            width: 150,
-        },
-        {
-            field: 'idObrasocial',
-            headerName: 'Obra Social',
-            width: 150,
-        },
-        {
-            field: 'idSindicato',
-            headerName: 'Sindicato',
             width: 250,
         },
         {
-            field: 'idPuestoTrabajo',
-            headerName: 'Puesto de Trabajo',
-            width: 380,
-        },
-        {
-            field: 'idEquipoTrabajo',
-            headerName: 'Equipo de Trabajo',
-            width: 200,
+            field: 'descripcion',
+            headerName: 'Descripcion',
+            width: 550,
         },
         {
             field: 'acciones',
@@ -65,8 +32,7 @@ const ListadoEmplados = () => {
             renderCell: (params) => {
                 const onEdit = (e) => {
                     const currentRow = params.row;
-                    let id = currentRow.id;
-                    goToEditEmpleado(id);
+                    navigate('/puestotrabajo/' + currentRow.id)
                 };
                 return (
                     <Stack direction="row" spacing={2}>
@@ -85,39 +51,28 @@ const ListadoEmplados = () => {
 
     useEffect(() => {
         setLoadingData(true)
-        getAllEmpleados().then((response) => {
-            const parsedData = response.map((Empleado) => {
+        getAllPuestosTrabajo().then((response) => {
+            const parsedData = response.map((PuestoTrabajo) => {
                 return {
-                    id: Empleado.idEmpleado,
-                    nombre: Empleado.nombre,
-                    apellido: Empleado.apellido,
-                    dni: Empleado.dni,
-                    celular: Empleado.celular,
-                    idObrasocial: Empleado.obraSocial.descripcion,
-                    idSindicato: Empleado.sindicato.descripcion,
-                    idPuestoTrabajo: Empleado.puestoTrabajo.descripcion,
-                    idEquipoTrabajo: Empleado.equipoTrabajo.descripcion
+                    id: PuestoTrabajo.idPuestoTrabajo,
+                    nombre: PuestoTrabajo.nombre,
+                    descripcion: PuestoTrabajo.descripcion
                 };
             });
-            setEmpleados(parsedData);
+            setPuestoTrabajo(parsedData);
             setLoadingData(false)
         }).catch((error) => {
-            setError(error, 'Error al listar Emplados.');
+            setError(error, 'Error al listar Puestos de Trabajo.');
         });
 
     }, [])
-
-
-    const goToNewEmpleado = () => {
-        navigate('/empleados/newempleado');
-    };
 
     const goToInicio = () => {
         navigate('/inicio');
     };
 
-    const goToEditEmpleado = ( id ) => {
-        navigate('/empleados/'+id);
+    const goToNewPuestoTrabajo = () => {
+        navigate('/puestotrabajo/newpuestotrabajo')
     };
     return (
         <Box>
@@ -126,9 +81,9 @@ const ListadoEmplados = () => {
                 {/* <Link underline="hover" color="inherit" onClick={() => history.push(rootPath + "/Inicio")}>
                     Inicio
                 </Link> */}
-                <Typography color="text.primary">Listado de Empleados</Typography>
+                <Typography color="text.primary">Listado de Puestos de Trabajo</Typography>
             </Breadcrumbs>
-            <Button color="primary" onClick={goToNewEmpleado} variant="contained" size='small'>Nuevo Empleado</Button>
+            <Button color="primary" onClick={goToNewPuestoTrabajo} variant="contained" size='small'>Nuevo Puesto de Trabajo</Button>
             {loadingData === true ?
                 (<><Box sx={{ display: 'flex', justifyContent: "center", marginTop: "10rem" }}>
                     <CircularProgress size={"10rem"} />
@@ -136,7 +91,7 @@ const ListadoEmplados = () => {
                 :
                 <Box sx={{ height: 1000, width: '100%' }}>
                     <DataGrid
-                        rows={Empleados}
+                        rows={puestoTrabajo}
                         columns={columns}
                         pageSize={20}
                         rowsPerPageOptions={[20]}
@@ -152,4 +107,4 @@ const ListadoEmplados = () => {
     );
 }
 
-export default ListadoEmplados;
+export default ListadoPuestoTrabajo;

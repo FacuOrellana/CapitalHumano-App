@@ -32,7 +32,7 @@ const ListadoSindicatos = () => {
             renderCell: (params) => {
                 const onEdit = (e) => {
                     const currentRow = params.row;
-                    navigate('/sindicatos/EditSindicatos/' + currentRow.id)
+                    navigate('/sindicatos/' + currentRow.id)
                 };
                 return (
                     <Stack direction="row" spacing={2}>
@@ -67,12 +67,16 @@ const ListadoSindicatos = () => {
 
     }, [])
 
+    const goToInicio = () => {
+        navigate('/inicio');
+    };
 
     const goToNewSindicato = () => {
         navigate('/sindicatos/newsindicato')
     };
     return (
         <Box>
+            <Button sx={{margin: 1}} color="primary" onClick={goToInicio} variant='outlined' size='small'>Volver a inicio</Button>
             <Breadcrumbs aria-label="breadcrumb" style={{ margin: 15 }}>
                 {/* <Link underline="hover" color="inherit" onClick={() => history.push(rootPath + "/Inicio")}>
                     Inicio
