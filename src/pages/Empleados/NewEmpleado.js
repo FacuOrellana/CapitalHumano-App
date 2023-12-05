@@ -184,14 +184,11 @@ const NewEmpleado = () => {
             });
 
     }
-    function goToBack() {
-        // history.push(rootPath + '/Empleados')
-    }
 
     return (
         <Box>
             <Breadcrumbs aria-label="breadcrumb" style={{ margin: 15 }}>
-                <Link underline="hover" color="inherit" onClick={goToBack}>
+                <Link underline="hover" color="inherit" >
                     Listado de Empleados
                 </Link>
                 <Typography color="text.primary">Nuevo Empleado</Typography>
