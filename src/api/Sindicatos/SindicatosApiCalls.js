@@ -5,7 +5,6 @@ const rootApiPath = "https://localhost:7145/api/sindicatos"
 export const getAllSindicatos = async () =>{
     try {
         const response = await axios.get(rootApiPath);
-        console.log(response);
         return response.data;
        
     } catch (error) {
@@ -33,7 +32,6 @@ export const postNewSindicato = async (descripcion,aporte) => {
         aporte: aporte            
     }
     try {
-        console.log(rootApiPath,body)
         const response = await axios.post(rootApiPath, body);
         return response;
 
