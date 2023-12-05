@@ -1,13 +1,14 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { putEditArea } from "../../api/Areas/AreaApiCalls";
 import { Box, Button, FormControl, Grid, Stack, TextField, Typography } from "@mui/material";
 
 
 const EditArea = () => {
+    const navigate = useNavigate();
     const [area, setArea] = useState({});
     const [Descripcion, setDescripcion] = useState();
 
@@ -65,10 +66,14 @@ const EditArea = () => {
             })
         }
     }
+    const goToAreaList = () => {
+        navigate('/areas');
+    };
 
     return (
         <>
             <Box>
+                <Button sx={{ margin: 1 }} color="primary" onClick={goToAreaList} variant='outlined' size='small'>Volver a inicio</Button>
                 <Typography align="center" variant="h5" component="h2">
                     Editar area
                 </Typography>

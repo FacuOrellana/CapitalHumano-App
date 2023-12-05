@@ -1,6 +1,6 @@
 import { Autocomplete, Box, Breadcrumbs, Button, Chip, FormControl, Grid, Stack, TextField, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useHistory, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2';
 import { rootPath } from '../../App'
 import { postNewEmpleado } from '../../api/Emplados/EmpleadosApiCalls';
@@ -13,6 +13,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDatePicker } from '@mui/x-date-pickers';
 
 const NewEmpleado = () => {
+
+    const navigate = useNavigate();
 
     // const history = useHistory()
     const [Nombre, setNombre] = useState();
@@ -251,15 +253,13 @@ const NewEmpleado = () => {
 
     }
 
+    const goToEmpleadosList = () => {
+        navigate('/empleados');
+    };
+
     return (
         <Box>
-            <Breadcrumbs aria-label="breadcrumb" style={{ margin: 15 }}>
-                <Link underline="hover" color="inherit" >
-                    Listado de Empleados
-                </Link>
-                <Typography color="text.primary">Nuevo Empleado</Typography>
-            </Breadcrumbs>
-
+            <Button sx={{margin: 1}} color="primary" onClick={goToEmpleadosList} variant='outlined' size='small'>Volver a empleados</Button>
             <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
                 <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
                     <FormControl sx={{ width: '20rem' }} >

@@ -2,9 +2,11 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import { postNewArea } from "../../api/Areas/AreaApiCalls";
 import { Box, Button, FormControl, Grid, Stack, TextField, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 
 const NewArea = () => {
+    const navigate = useNavigate();
     const [Descripcion, setDescripcion] = useState();
 
     const handleChangeDescripcion = (event) => {
@@ -42,10 +44,13 @@ const NewArea = () => {
             })
         });
     }
+    const goToAreaList = () => {
+        navigate('/areas');
+    };
 
-
-    return (
+    return (    
         <Box sx={{ margin: '20px', marginTop: '25px' }}>
+            <Button sx={{margin: 1}} color="primary" onClick={goToAreaList} variant='outlined' size='small'>Volver a area</Button>
             <Typography align="center" variant="h5" gutterBottom>
                 Nueva área
             </Typography>

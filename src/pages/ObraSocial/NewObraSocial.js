@@ -2,9 +2,11 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import { postNewObraSocial } from "../../api/ObraSocial/ObraSocialApiCalls";
 import { Box, Button, FormControl, Grid, Stack, TextField, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 
 const NewObraSocial = () => {
+    const navigate = useNavigate();
     const [Descripcion, setDescripcion] = useState();    
     const [Aporte, setAporte] = useState();
 
@@ -54,10 +56,13 @@ const NewObraSocial = () => {
             })
         });
     }
-
+    const goToObraSocialList = () => {
+        navigate('/obrasociales');
+    };
 
     return (
         <Box sx={{ margin: '20px', marginTop: '25px' }}>
+            <Button sx={{margin: 1}} color="primary" onClick={goToObraSocialList} variant='outlined' size='small'>Volver a obras sociales</Button>
             <Typography align="center" variant="h5" gutterBottom>
                 Nueva Obra Social
             </Typography>
