@@ -288,7 +288,7 @@ const EditEmpleado = () => {
             });
 
     }
-    function goToBack() {
+    function goToEmpleadosList() {
         navigate('/empleados');
     }
 
@@ -296,32 +296,26 @@ const EditEmpleado = () => {
 
     return (
         <Box>
-        <Breadcrumbs aria-label="breadcrumb" style={{ margin: 15 }}>
-            <Link underline="hover" color="inherit" >
-                Listado de Empleados
-            </Link>
-            <Typography color="text.primary">Nuevo Empleado</Typography>
-        </Breadcrumbs>
-
-        <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
-            <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
-                <FormControl sx={{ width: '20rem' }} >
-                    <TextField id="nombre" label="Nombre" variant="filled" sx={{
-                        ".css-1wc848c-MuiFormHelperText-root": {
-                            fontSize: "1rem",
-                        },
-                    }} helperText="Ingrese el nombre" value={Nombre} onChange={handleChangeNombre} />
-                </FormControl>
-            </Grid>
-            <Grid md={6} xs={10}  >
-                <FormControl fullWidth>
-                    <TextField id="descripcion" label="Apellido" sx={{
-                        ".css-1wc848c-MuiFormHelperText-root": {
-                            fontSize: "1rem",
-                        },
-                    }} helperText="Ingrese apellido" variant="filled" value={Apellido} onChange={handleChangeDescripcion} />
-                </FormControl>
-            </Grid>
+            <Button sx={{margin: 1}} color="primary" onClick={goToEmpleadosList} variant='outlined' size='small'>Volver a empleados</Button>
+            <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
+                <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
+                    <FormControl sx={{ width: '20rem' }} >
+                        <TextField id="nombre" label="Nombre" variant="filled" sx={{
+                            ".css-1wc848c-MuiFormHelperText-root": {
+                                fontSize: "1rem",
+                            },
+                        }} helperText="Ingrese el nombre" value={empleado.nombre} onChange={handleChangeNombre} />
+                    </FormControl>
+                </Grid>
+                <Grid md={6} xs={10}  >
+                    <FormControl fullWidth>
+                        <TextField id="descripcion" label="Apellido" sx={{
+                            ".css-1wc848c-MuiFormHelperText-root": {
+                                fontSize: "1rem",
+                            },
+                        }} helperText="Ingrese apellido" variant="filled" value={empleado.apellido} onChange={handleChangeDescripcion} />
+                    </FormControl>
+                </Grid>
 
         </Grid>
         <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>

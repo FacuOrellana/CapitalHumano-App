@@ -75,12 +75,9 @@ const ListadoAreas = () => {
             <Box>
                 <Button sx={{ margin: 1 }} color="primary" onClick={goToInicio} variant='outlined' size='small'>Volver a inicio</Button>
                 <Breadcrumbs aria-label="breadcrumb" style={{ margin: 15 }}>
-                    {/* <Link underline="hover" color="inherit" onClick={() => history.push(rootPath + "/Inicio")}>
-                    Inicio
-                </Link> */}
                     <Typography color="text.primary">Listado de Areas</Typography>
                 </Breadcrumbs>
-                <Button color="primary" onClick={goToNewArea} variant="contained" size='small'>Nueva Area</Button>
+                <Button sx={{margin: 1}} color="primary" onClick={goToNewArea} variant="contained" size='small'>Nueva Area</Button>
                 {loadingData === true ?
                     (<><Box sx={{ display: 'flex', justifyContent: "center", marginTop: "10rem" }}>
                         <CircularProgress size={"10rem"} />

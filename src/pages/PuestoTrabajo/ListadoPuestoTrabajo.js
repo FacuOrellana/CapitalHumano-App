@@ -83,7 +83,7 @@ const ListadoPuestoTrabajo = () => {
                 </Link> */}
                 <Typography color="text.primary">Listado de Puestos de Trabajo</Typography>
             </Breadcrumbs>
-            <Button color="primary" onClick={goToNewPuestoTrabajo} variant="contained" size='small'>Nuevo Puesto de Trabajo</Button>
+            <Button sx={{margin: 1}} color="primary" onClick={goToNewPuestoTrabajo} variant="contained" size='small'>Nuevo Puesto de Trabajo</Button>
             {loadingData === true ?
                 (<><Box sx={{ display: 'flex', justifyContent: "center", marginTop: "10rem" }}>
                     <CircularProgress size={"10rem"} />
