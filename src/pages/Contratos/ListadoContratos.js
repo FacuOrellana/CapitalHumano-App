@@ -6,6 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { getAllContratos } from '../../api/Contratos/ContratosApiCalls';
 import { rootPath } from '../../App';
 import { useNavigate } from 'react-router-dom';
+import { ContactEmergency } from '@mui/icons-material';
 
 const ListadoEmplados = () => {
     const navigate = useNavigate();
@@ -19,17 +20,14 @@ const ListadoEmplados = () => {
     useEffect(() => {
         setLoadingData(true)
         getAllContratos().then((response) => {
-            const parsedData = response.map((Empleado) => {
+            const parsedData = response.map((Contrato) => {
                 return {
-                    id: Empleado.idEmpleado,
-                    nombre: Empleado.nombre,
-                    apellido: Empleado.apellido,
-                    dni: Empleado.dni,
-                    celular: Empleado.celular,
-                    idObrasocial: Empleado.obraSocial.descripcion,
-                    idSindicato: Empleado.sindicato.descripcion,
-                    idPuestoTrabajo: Empleado.puestoTrabajo.descripcion,
-                    idEquipoTrabajo: Empleado.equipoTrabajo.descripcion
+                    id: Contrato.idContrato,
+                    fechaInicio: Contrato.fechaInicio,
+                    fechaFin: Contrato.fechaFin,
+                    seniority: Contrato.seniority,
+                    sueldo: Contrato.sueldo,
+                    empleado: Contrato.empleado.idEmpleado
                 };
             });
             setContratos(parsedData);
@@ -64,8 +62,8 @@ const ListadoEmplados = () => {
             width: 150,
         },
         {
-            field: 'idEmpleado',
-            headerName: 'Empleado',
+            field: 'empleado',
+            headerName: 'idEmpleado',
             width: 150,
         }/*
         {
