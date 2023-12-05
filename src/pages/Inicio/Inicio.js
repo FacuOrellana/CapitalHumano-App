@@ -14,7 +14,7 @@ const Inicio = () => {
     {
       name: 'empleados',
       title: 'Empleados',
-      description: 'Explora la información sobre los empleados de la empresa.',
+      description: 'Gestion de la informacion relacionada a los empleados.',
       image: '/imagenes/employee.jpg',
       but: "Ir a empleados",
       link: "/empleados"
@@ -22,7 +22,7 @@ const Inicio = () => {
     {
       name: 'areas',
       title: 'Areas',
-      description: 'Consulta el registro de asistencias de los empleados.',
+      description: 'Gestion de areas.',
       image: '/imagenes/area.jpg',
       but: "Ir a areas",
       link: "/areas"
@@ -30,7 +30,7 @@ const Inicio = () => {
     {
       name: 'contratos',
       title: 'Contratos',
-      description: 'Consulta el registro de asistencias de los empleados.',
+      description: 'Gestion de los contratos que estan asociados a los empleados.',
       image: "/imagenes/contrato.jpg",
       but: "Ir a contratos",
       link: "/contratos"
@@ -38,7 +38,7 @@ const Inicio = () => {
     {
       name: 'obrasociales',
       title: 'Obras Sociales',
-      description: 'Consulta el registro de asistencias de los empleados.',
+      description: 'Gestion de obras sociales.',
       image: '/imagenes/obrasocial.jpg',
       but: "Ir a obra social",
       link: "/obrasociales"
@@ -46,7 +46,7 @@ const Inicio = () => {
     {
       name: 'sindicatos',
       title: 'Sindicatos',
-      description: 'Consulta el registro de asistencias de los empleados.',
+      description: 'Gestion de sindicatos.',
       image: '/imagenes/sindicato.jpg',
       but: "Ir a Sindicatos",
       link: "/sindicatos"
@@ -54,7 +54,7 @@ const Inicio = () => {
     {
       name: 'puestotrabajo',
       title: 'Puesto de trabajo',
-      description: 'Consulta el registro de asistencias de los empleados.',
+      description: 'Gestion de puestos de trabajo.',
       image: '/imagenes/puestotrabajo.jpg',
       but: "Ir a puestos de trabajo",
       link: "/puestotrabajo"
@@ -66,7 +66,7 @@ const Inicio = () => {
       {pages.map((page, index) => (
         <>
         <Grid item key={index} spacing={10} gap={1} sx={{margin: '1rem'}}  >
-          <Card sx={{ maxWidth: 300 }}>
+          <Card sx={{ width: 300, height: 400 }}>
             <CardMedia sx={{ height: 250, objectFit: 'cover' }} image={page.image} title={page.title} />
             <CardContent>
               <Typography align='center' gutterBottom variant="h5" component="div">
