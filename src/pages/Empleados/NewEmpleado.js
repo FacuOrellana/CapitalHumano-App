@@ -22,6 +22,7 @@ const NewEmpleado = () => {
     const [Ciudad, setCiudad] = useState();
     const [fechaNacimiento, setfechaNacimiento] = useState('');
     const [DNI, setDNI] = useState();
+    const [Legajo, setLegajo] = useState();
     const [Celular, setCelular] = useState();
     const [PuestosTrabajo, setPuestosTrabajo] = useState([]);
     const [EquiposTrabajo, setEquiposTrabajo] = useState([]);
@@ -105,6 +106,9 @@ const NewEmpleado = () => {
     const handleChangeDNI = (event) => {
         setDNI(event.target.value);
     };
+    const handleChangeLegajo = (event) => {
+        setLegajo(event.target.value);
+    };
     const handleChangeCelular = (event) => {
         setCelular(event.target.value);
     };
@@ -170,6 +174,13 @@ const NewEmpleado = () => {
                 
             })
         }
+        if (Legajo === undefined) {
+            return Swal.fire({
+                title: 'Por favor ingresar Legajo del empleado.',
+                icon: 'error',
+                
+            })
+        }
         if (Celular === undefined) {
             return Swal.fire({
                 title: 'Por favor ingresar Celular del empleado.',
@@ -227,7 +238,7 @@ const NewEmpleado = () => {
             })
         }
 
-        postNewEmpleado(Nombre, Apellido, Email,DNI, Celular, fechaNacimiento, Direccion, Ciudad, selectedPuestoTrabajo,selectedEquipoTrabajo,selectedSindicato,selectedObraSocial).then((response) => {
+        postNewEmpleado(Nombre, Apellido, Email,DNI,Legajo,Celular, fechaNacimiento, Direccion, Ciudad, selectedPuestoTrabajo,selectedEquipoTrabajo,selectedSindicato,selectedObraSocial).then((response) => {
             Swal.fire({
                 title: "Empleado registrado con exito!",
                 icon: 'success',
@@ -351,6 +362,15 @@ const NewEmpleado = () => {
                                 fontSize: "1rem",
                             },
                         }} helperText="Ingrese Nro. Celular" value={Celular} onChange={handleChangeCelular} />
+                    </FormControl>
+                </Grid>
+                <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
+                <FormControl >
+                        <TextField id="legajo" label="Legajo" type={'number'} sx={{
+                            ".css-1wc848c-MuiFormHelperText-root": {
+                                fontSize: "1rem",
+                            },
+                        }} helperText="Ingrese Legajo" variant="filled" value={Legajo} onChange={handleChangeLegajo} />
                     </FormControl>
                 </Grid>
             </Grid>
