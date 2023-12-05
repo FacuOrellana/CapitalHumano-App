@@ -17,6 +17,16 @@ import EditSindicato from './pages/Sindicato/EditSindicato';
 import ListadoPuestoTrabajo from './pages/PuestoTrabajo/ListadoPuestoTrabajo';
 import NewPuestoTrabajo from './pages/PuestoTrabajo/NewPuestoTrabajo';
 import EditPuestoTrabajo from './pages/PuestoTrabajo/EditPuestoTrabajo';
+import ListadoHabilidad from './pages/Habilidades/ListadoHabilidad';
+import NewHabilidad from './pages/Habilidades/NewHabilidad';
+import EditHabilidad from './pages/Habilidades/EditHabilidad';
+import ListadoTipoExperiencia from './pages/TiposExperiencias/ListadoTipoExperiencia';
+import NewTipoExperiencia from './pages/TiposExperiencias/NewTipoExperiencia';
+import EditTipoExperiencia from './pages/TiposExperiencias/EditTipoExperiencia';
+import ListadoExperiencia from './pages/Experiencias/ListadoExperiencia';
+import NewExperiencia from './pages/Experiencias/NewExperiencia';
+import EditExperiencia from './pages/Experiencias/EditExperiencia';
+
 
 
 
@@ -45,6 +55,15 @@ function App() {
         <Route path='/puestotrabajo' element={< ListadoPuestoTrabajo />} />        
         <Route path='/puestotrabajo/newpuestotrabajo' element={<NewPuestoTrabajo />} />
         <Route exact path={'/puestotrabajo/:id'} element={<EditPuestoTrabajo />} />        
+        <Route path='/habilidad' element={< ListadoHabilidad />} />        
+        <Route path='/habilidad/newhabilidad' element={<NewHabilidad />} />
+        <Route exact path={'/habilidad/:id'} element={<EditHabilidad />} />        
+        <Route path='/tipoexperiencia' element={< ListadoTipoExperiencia />} />        
+        <Route path='/tipoexperiencia/newtipoexperiencia' element={<NewTipoExperiencia />} />
+        <Route exact path={'/tipoexperiencia/:id'} element={<EditTipoExperiencia />} /> 
+        <Route path='/experiencia' element={< ListadoExperiencia />} />        
+        <Route path='/experiencia/newexperiencia' element={<NewExperiencia />} />
+        <Route exact path={'/experiencia/:id'} element={<EditExperiencia />} />        
 
       </Routes>
     </>
