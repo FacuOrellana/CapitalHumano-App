@@ -1,7 +1,6 @@
 import './App.css';
 import ResponsiveInicioBar from './components/ResponsiveAppBar/ResponsiveInicioBar';
 import { Route, Routes } from 'react-router-dom';
-import Login from './pages/Login/Login';
 import Inicio from './pages/Inicio/Inicio';
 import ListadoEmplados from './pages/Empleados/ListadoEmpleados';
 import NewEmpleado from './pages/Empleados/NewEmpleado';
@@ -14,6 +13,11 @@ import ListadoSindicatos from './pages/Sindicato/ListadoSindicatos';
 import NewSindicato from './pages/Sindicato/NewSindicato';
 import ListadoObraSocial from './pages/ObraSocial/ListadoObraSocial';
 import NewObraSocial from './pages/ObraSocial/NewObraSocial';
+import EditSindicato from './pages/Sindicato/EditSindicato';
+import ListadoPuestoTrabajo from './pages/PuestoTrabajo/ListadoPuestoTrabajo';
+import NewPuestoTrabajo from './pages/PuestoTrabajo/NewPuestoTrabajo';
+import EditPuestoTrabajo from './pages/PuestoTrabajo/EditPuestoTrabajo';
+
 
 
 //export const rootPath = '/App';
@@ -37,7 +41,11 @@ function App() {
         <Route path='/sindicatos/newsindicato' element={<NewSindicato />} />
         <Route path='/obrasociales' element={<ListadoObraSocial />} />
         <Route path='/obrasociales/newobrasocial' element={<NewObraSocial />} />
-        {/* <Route path='/*' element={<NotFound />} /> */}
+        <Route exact path={'/sindicatos/:id'} element={<EditSindicato />} />
+        <Route path='/puestotrabajo' element={< ListadoPuestoTrabajo />} />        
+        <Route path='/puestotrabajo/newpuestotrabajo' element={<NewPuestoTrabajo />} />
+        <Route exact path={'/puestotrabajo/:id'} element={<EditPuestoTrabajo />} />        
+
       </Routes>
     </>
   );

@@ -2,12 +2,12 @@ import { Box, Breadcrumbs, Button, CircularProgress, Stack, Typography } from '@
 import React, { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid'
 import EditIcon from '@mui/icons-material/Edit';
-import { getAllSindicatos } from '../../api/Sindicatos/SindicatosApiCalls';
+import { getAllPuestosTrabajo } from '../../api/PuestosTrabajo/PuestosTrabajoApiCalls';
 import { useNavigate } from 'react-router-dom';
 
-const ListadoSindicatos = () => {
+const ListadoPuestoTrabajo = () => {
     const navigate = useNavigate();
-    const [Sindicatos, setSindicatos] = useState([]);
+    const [puestoTrabajo, setPuestoTrabajo] = useState([]);
     const [loadingData, setLoadingData] = useState(false);
     const [selectionModel, setSelectionModel] = useState([]);
 
@@ -15,14 +15,14 @@ const ListadoSindicatos = () => {
     const columns = [
         { field: 'id', headerName: 'ID', width: 50, headerAlign: 'center', hidden: true },
         {
-            field: 'descripcion',
-            headerName: 'Descripcion',
-            width: 125,
+            field: 'nombre',
+            headerName: 'Nombre',
+            width: 250,
         },
         {
-            field: 'aporte',
-            headerName: 'Aporte',
-            width: 150,
+            field: 'descripcion',
+            headerName: 'Descripcion',
+            width: 550,
         },
         {
             field: 'acciones',
@@ -32,7 +32,7 @@ const ListadoSindicatos = () => {
             renderCell: (params) => {
                 const onEdit = (e) => {
                     const currentRow = params.row;
-                    navigate('/sindicatos/' + currentRow.id)
+                    navigate('/puestotrabajo/' + currentRow.id)
                 };
                 return (
                     <Stack direction="row" spacing={2}>
@@ -51,39 +51,35 @@ const ListadoSindicatos = () => {
 
     useEffect(() => {
         setLoadingData(true)
-        getAllSindicatos().then((response) => {
-            const parsedData = response.map((Sindicato) => {
+        getAllPuestosTrabajo().then((response) => {
+            const parsedData = response.map((PuestoTrabajo) => {
                 return {
-                    id: Sindicato.idSindicato,
-                    descripcion: Sindicato.descripcion,
-                    aporte: Sindicato.aporte
+                    id: PuestoTrabajo.idPuestoTrabajo,
+                    nombre: PuestoTrabajo.nombre,
+                    descripcion: PuestoTrabajo.descripcion
                 };
             });
-            setSindicatos(parsedData);
+            setPuestoTrabajo(parsedData);
             setLoadingData(false)
         }).catch((error) => {
-            setError(error, 'Error al listar Sindicatos.');
+            setError(error, 'Error al listar Puestos de Trabajo.');
         });
 
     }, [])
 
-    const goToInicio = () => {
-        navigate('/inicio');
-    };
 
-    const goToNewSindicato = () => {
-        navigate('/sindicatos/newsindicato')
+    const goToNewPuestoTrabajo = () => {
+        navigate('/puestotrabajo/newpuestotrabajo')
     };
     return (
         <Box>
-            <Button sx={{margin: 1}} color="primary" onClick={goToInicio} variant='outlined' size='small'>Volver a inicio</Button>
             <Breadcrumbs aria-label="breadcrumb" style={{ margin: 15 }}>
                 {/* <Link underline="hover" color="inherit" onClick={() => history.push(rootPath + "/Inicio")}>
                     Inicio
                 </Link> */}
-                <Typography color="text.primary">Listado de Sindicatos</Typography>
+                <Typography color="text.primary">Listado de Puestos de Trabajo</Typography>
             </Breadcrumbs>
-            <Button color="primary" onClick={goToNewSindicato} variant="contained" size='small'>Nuevo Sindicato</Button>
+            <Button color="primary" onClick={goToNewPuestoTrabajo} variant="contained" size='small'>Nuevo Puesto de Trabajo</Button>
             {loadingData === true ?
                 (<><Box sx={{ display: 'flex', justifyContent: "center", marginTop: "10rem" }}>
                     <CircularProgress size={"10rem"} />
@@ -91,7 +87,7 @@ const ListadoSindicatos = () => {
                 :
                 <Box sx={{ height: 1000, width: '100%' }}>
                     <DataGrid
-                        rows={Sindicatos}
+                        rows={puestoTrabajo}
                         columns={columns}
                         pageSize={20}
                         rowsPerPageOptions={[20]}
@@ -107,4 +103,4 @@ const ListadoSindicatos = () => {
     );
 }
 
-export default ListadoSindicatos;
+export default ListadoPuestoTrabajo;

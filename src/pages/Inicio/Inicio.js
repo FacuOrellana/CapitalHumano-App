@@ -57,7 +57,7 @@ const Inicio = () => {
       description: 'Consulta el registro de asistencias de los empleados.',
       image: '/imagenes/puestotrabajo.jpg',
       but: "Ir a puestos de trabajo",
-      link: ""
+      link: "/puestotrabajo"
     },
   ];
 
