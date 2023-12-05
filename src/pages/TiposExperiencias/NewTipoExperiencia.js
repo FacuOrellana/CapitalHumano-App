@@ -68,7 +68,13 @@ const NewPuestoTrabajo = () => {
 
     return (
         <Box>
-            <Button sx={{margin: 1}} color="primary" onClick={goToBack} variant='outlined' size='small'>Volver a puestos de trabajo</Button>
+            <Breadcrumbs aria-label="breadcrumb" style={{ margin: 15 }}>
+                <Link underline="hover" color="inherit" onClick={goToBack}>
+                    Listado de Puesto de Trabajo
+                </Link>
+                <Typography color="text.primary">Nuevo Puesto de Trabajo</Typography>
+            </Breadcrumbs>
+
             <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
                 <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
                     <FormControl sx={{ width: '20rem' }} >

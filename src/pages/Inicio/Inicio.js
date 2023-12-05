@@ -59,6 +59,30 @@ const Inicio = () => {
       but: "Ir a puestos de trabajo",
       link: "/puestotrabajo"
     },
+    {
+      name: 'habilidad',
+      title: 'Habilidades',
+      description: 'Explora la información sobre las Habilidades.',
+      image: '/imagenes/employee.jpg',
+      but: "Ir a habilidades",
+      link: "/habilidad"
+    },
+    {
+      name: 'tipoexperiencia',
+      title: 'Tipos de Experiencias',
+      description: 'Explora la información sobre los Tipos de Experiencias.',
+      image: '/imagenes/employee.jpg',
+      but: "Ir a tipos Experiencias",
+      link: "/tipoexperiencia"
+    },
+    {
+      name: 'experiencia',
+      title: 'Experiencias',
+      description: 'Explora la información sobre las Experiencias.',
+      image: '/imagenes/employee.jpg',
+      but: "Ir a Experiencias",
+      link: "/experiencia"
+    },
   ];
 
   return (
