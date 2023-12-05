@@ -23,14 +23,14 @@ const NewEmpleado = () => {
     const [fechaNacimiento, setfechaNacimiento] = useState('');
     const [DNI, setDNI] = useState();
     const [Celular, setCelular] = useState();
-    const [telFijo, settelFijo] = useState();
-    const [Edad, setEdad] = useState();
     const [PuestosTrabajo, setPuestosTrabajo] = useState([]);
-    const [PuestoTrabajoValue, setPuestoTrabajoValue] = React.useState([]);
     const [EquiposTrabajo, setEquiposTrabajo] = useState([]);
-    const [EquiposTrabajoValue, setEquiposTrabajoValue] = React.useState([]);
     const [Sindicatos, setSindicatos] = useState([])
     const [ObraSocial, setObraSocial] = useState([])
+    const [selectedPuestoTrabajo, setSelectedPuestoTrabajo] = useState(null);
+    const [selectedEquipoTrabajo, setSelectedEquipoTrabajo] = useState(null);
+    const [selectedSindicato, setSelectedSindicato] = useState(null);
+    const [selectedObraSocial, setSelectedObraSocial] = useState(null);
 
     const setError = (error, header) => {
         console.log(error);
@@ -109,59 +109,125 @@ const NewEmpleado = () => {
         setCelular(event.target.value);
     };
 
-    const handleChangeTelFijo = (event) => {
-        settelFijo(event.target.value);
-    };
+    function handlePuestoTrabajoChange(event, newValue) {
+        if (newValue) {
+            setSelectedPuestoTrabajo(newValue.idPuestoTrabajo);
+        } else {
+            setSelectedPuestoTrabajo(null);
+        }
+    }
 
-    const handleChangeEdad = (event) => {
-        setEdad(event.target.value);
-    };
+    function handleEquipoTrabajoChange(event, newValue) {
+        if (newValue) {
+            setSelectedEquipoTrabajo(newValue.idEquipoTrabajo);
+        } else {
+            setSelectedEquipoTrabajo(null);
+        }
+    }
 
-    function AddSocio() {
+    function handleSindicatoChange(event, newValue) {
+        if (newValue) {
+            setSelectedSindicato(newValue.idSindicato);
+        } else {
+            setSelectedSindicato(null);
+        }
+    }
+
+    function handleObraSocialChange(event, newValue) {
+        if (newValue) {
+            setSelectedObraSocial(newValue.idObraSocial);
+        } else {
+            setSelectedObraSocial(null);
+        }
+    }
+
+    function AddEmpleado() {
         if (Nombre === undefined) {
             return Swal.fire({
-                title: 'Por favor ingresar nombre del socio.',
+                title: 'Por favor ingresar nombre del empleado.',
                 icon: 'error',
-
+                
             })
         }
         if (Apellido === undefined) {
             return Swal.fire({
-                title: 'Por favor ingresar apellido del socio.',
+                title: 'Por favor ingresar apellido del empleado.',
+                icon: 'error',
+                
+            })
+        }
+        if (Email === undefined) {
+            return Swal.fire({
+                title: 'Por favor ingresar email del empleado.',
+                icon: 'error',
+                
+            })
+        }
+        if (DNI === undefined) {
+            return Swal.fire({
+                title: 'Por favor ingresar DNI del empleado.',
+                icon: 'error',
+                
+            })
+        }
+        if (Celular === undefined) {
+            return Swal.fire({
+                title: 'Por favor ingresar Celular del empleado.',
+                icon: 'error',
+                
+            })
+        }
+        if (fechaNacimiento === '') {
+            return Swal.fire({
+                title: 'Por favor ingresar fecha de nacimiento del empleado.',
                 icon: 'error',
 
             })
         }
         if (Direccion === undefined) {
             return Swal.fire({
-                title: 'Por favor ingresar Direccion del socio.',
+                title: 'Por favor ingresar Direccion del empleado.',
                 icon: 'error',
 
             })
         }
-        if (Edad === undefined) {
+        if (Ciudad === undefined) {
             return Swal.fire({
-                title: 'Por favor ingresar edad del socio.',
+                title: 'Por favor ingresar Ciudad del empleado.',
                 icon: 'error',
 
             })
         }
-
-        if (fechaNacimiento === '') {
+        if (selectedPuestoTrabajo === undefined) {
             return Swal.fire({
-                title: 'Por favor ingresar fecha de nacimiento del socio.',
+                title: 'Por favor ingresar al menos un puesto de trabajo del empleado.',
                 icon: 'error',
 
             })
         }
-        if (DNI === undefined) {
+        if (selectedEquipoTrabajo=== undefined) {
             return Swal.fire({
-                title: 'Por favor ingresar DNI del socio.',
+                title: 'Por favor ingresar al menos un equipo de trabajo del empleado.',
                 icon: 'error',
 
             })
         }
-        postNewEmpleado(Nombre, Apellido, Email, Edad, Direccion, fechaNacimiento, DNI, Celular, telFijo, "ACTIVO").then((response) => {
+        if (selectedSindicato === undefined) {
+            return Swal.fire({
+                title: 'Por favor ingresar sindicato de trabajo del empleado.',
+                icon: 'error',
+
+            })
+        }
+        if (selectedObraSocial === undefined) {
+            return Swal.fire({
+                title: 'Por favor ingresar obra social de trabajo del empleado.',
+                icon: 'error',
+
+            })
+        }
+
+        postNewEmpleado(Nombre, Apellido, Email,DNI, Celular, fechaNacimiento, Direccion, Ciudad, selectedPuestoTrabajo,selectedEquipoTrabajo,selectedSindicato,selectedObraSocial).then((response) => {
             Swal.fire({
                 title: "Empleado registrado con exito!",
                 icon: 'success',
@@ -272,17 +338,6 @@ const NewEmpleado = () => {
                         }} helperText="Ingrese DNI" variant="filled" value={DNI} onChange={handleChangeDNI} />
                     </FormControl>
                 </Grid>
-
-                <Grid md={3} xs={10}  >
-                    <FormControl >
-                        <TextField id="edad" label="Edad" type={'number'} sx={{
-                            ".css-1wc848c-MuiFormHelperText-root": {
-                                fontSize: "1rem",
-                            },
-                        }} helperText="Ingrese la edad" variant="filled" value={Edad} onChange={handleChangeEdad} />
-                    </FormControl>
-                </Grid>
-
             </Grid>
 
             <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
@@ -299,81 +354,55 @@ const NewEmpleado = () => {
 
             <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
                 <Grid xs={12} md={6} style={{ marginBottom: 10 }} >
-                    <Autocomplete
-                        multiple
-                        id="fixed-tags-demo"
-                        PuestoTrabajoValue={PuestoTrabajoValue}
-                        onChange={(event, newValue) => {
-                            setPuestoTrabajoValue(newValue);
-                        }}
-
+                <Autocomplete
+                        disablePortal
+                        id="puesto-trabajo-autocomplete"
                         options={PuestosTrabajo}
-                        getOptionLabel={(option) => option.nombrePuesto}
-                        renderTags={(tagValue, getTagProps) =>
-                            tagValue.map((option, index) => (
-                                <Chip
-                                    label={option.nombrePuesto}
-                                    {...getTagProps({ index })}
-                                />
-                            ))
-                        }
-                        style={{ width: 500 }}
-                        renderInput={(params) => (
-                            <TextField {...params} placeholder="Puestos" />
-                        )}
+                        getOptionLabel={(option) => typeof option === 'object' ? option.nombrePuesto || '' : option}
+                        sx={{ width: 300 }}
+                        onChange={handlePuestoTrabajoChange}
+                        renderInput={(params) => <TextField {...params} label="Puestos de Trabajo" />}
                     />
                 </Grid>
                 <Grid xs={12} md={6} style={{ marginBottom: 10 }} >
-                    <Autocomplete
-                        multiple
-                        id="fixed-tags-demo"
-                        EquiposTrabajoValue={EquiposTrabajoValue}
-                        onChange={(event, newValue) => {
-                            setEquiposTrabajoValue(newValue);
-                        }}
-
+                <Autocomplete
+                        disablePortal
+                        id="equipo-trabajo-autocomplete"
                         options={EquiposTrabajo}
-                        getOptionLabel={(option) => option.descripcionEquipoTrabajo}
-                        renderTags={(tagValue, getTagProps) =>
-                            tagValue.map((option, index) => (
-                                <Chip
-                                    label={option.descripcionEquipoTrabajo}
-                                    {...getTagProps({ index })}
-                                />
-                            ))
-                        }
-                        style={{ width: 500 }}
-                        renderInput={(params) => (
-                            <TextField {...params} placeholder="Equipos" />
-                        )}
+                        getOptionLabel={(option) => typeof option === 'object' ? option.descripcionEquipoTrabajo || '' : option}
+                        sx={{ width: 300 }}
+                        onChange={handleEquipoTrabajoChange}
+                        renderInput={(params) => <TextField {...params} label="Equipos de Trabajo" />}
                     />
                 </Grid>
             </Grid>
             <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
                 <Grid xs={12} md={6} style={{ marginBottom: 10 }} >
-                    <Autocomplete
+                <Autocomplete
                         disablePortal
-                        id="combo-box-demo"
+                        id="sindicato-autocomplete"
                         options={Sindicatos}
                         getOptionLabel={(option) => typeof option === 'object' ? option.descripcion || '' : option}
                         sx={{ width: 300 }}
+                        onChange={handleSindicatoChange}
                         renderInput={(params) => <TextField {...params} label="Sindicatos" />}
                     />
 
                 </Grid>
                 <Grid xs={12} md={6} style={{ marginBottom: 10 }} >
-                    <Autocomplete
+                <Autocomplete
                         disablePortal
-                        id="combo-box-demo"
+                        id="obra-social-autocomplete"
                         options={ObraSocial}
                         getOptionLabel={(option) => typeof option === 'object' ? option.descripcion || '' : option}
                         sx={{ width: 300 }}
+                        onChange={handleObraSocialChange}
                         renderInput={(params) => <TextField {...params} label="Obras Sociales" />}
                     />
                 </Grid>
             </Grid>
             <Stack spacing={2} sx={{ width: '10%', margin: 'auto' }}>
-                <Button variant="contained" color='success' onClick={AddSocio}>
+                <Button variant="contained" color='success' onClick={AddEmpleado}>
                     Registrar Empleado
                 </Button>
             </Stack>
