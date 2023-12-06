@@ -1,8 +1,8 @@
-import { Autocomplete, Box, Breadcrumbs, Button, Chip, FormControl, Grid, Stack, TextField, Typography } from '@mui/material'
+import { Box, Button, FormControl, Grid, Stack, TextField } from '@mui/material'
 import React, { useState } from 'react'
 import Swal from 'sweetalert2';
 import { postNewPuestoTrabajo } from '../../api/PuestosTrabajo/PuestosTrabajoApiCalls';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 const NewPuestoTrabajo = () => {
@@ -68,11 +68,13 @@ const NewPuestoTrabajo = () => {
 
     return (
         <Box>
+        <Button sx={{margin: 1}} color="primary" onClick={goToBack} variant='outlined' size='small'>Volver a Puestos de Trabajos</Button>
+
             <Button sx={{margin: 1}} color="primary" onClick={goToBack} variant='outlined' size='small'>Volver a puestos de trabajo</Button>
             <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
                 <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
                     <FormControl sx={{ width: '20rem' }} >
-                        <TextField id="nombre" label="Nombre" variant="filled" sx={{
+                        <TextField id="nombre" label="Puesto de Trabajo" variant="filled" sx={{
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },

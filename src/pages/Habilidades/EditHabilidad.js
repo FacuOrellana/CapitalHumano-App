@@ -35,9 +35,6 @@ const EditHabilidad = () => {
     const handleChangeDescripcion = (event) => {
         setDescripcion(event.target.value);
     };
- 
-
-
 
     function AddHabilidad() {
         if (descripcion === undefined) {
@@ -79,17 +76,13 @@ const EditHabilidad = () => {
 
     return (
         <Box>
-            <Breadcrumbs aria-label="breadcrumb" style={{ margin: 15 }}>
-                <Link underline="hover" color="inherit" onClick={goToBack}>
-                    Listado de Habilidades
-                </Link>
-                <Typography color="text.primary">Editar Habilidad</Typography>
-            </Breadcrumbs>
+            <Button sx={{margin: 1}} color="primary" onClick={goToBack} variant='outlined' size='small'>Volver a Habilidades</Button>
+
 
             <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
                 <Grid md={6} xs={10}  >
                     <FormControl fullWidth>
-                        <TextField id="descripcion" label="Descripcion" sx={{
+                        <TextField id="descripcion" label="Habilidad" sx={{
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },

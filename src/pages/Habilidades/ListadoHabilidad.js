@@ -66,8 +66,15 @@ const ListadoHabilidad = () => {
     const goToNewHabilidad = () => {
         navigate('/habilidad/newhabilidad')
     };
+
+    const goToInicio = () => {
+        navigate('/');
+    };
+
     return (
         <Box>
+            <Button sx={{margin: 1}} color="primary" onClick={goToInicio} variant='outlined' size='small'>Volver a inicio</Button>
+
             <Breadcrumbs aria-label="breadcrumb" style={{ margin: 15 }}>
                 {/* <Link underline="hover" color="inherit" onClick={() => history.push(rootPath + "/Inicio")}>
                     Inicio

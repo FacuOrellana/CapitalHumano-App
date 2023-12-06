@@ -12,6 +12,7 @@ import EditArea from './pages/Areas/EditArea';
 import ListadoSindicatos from './pages/Sindicato/ListadoSindicatos';
 import NewSindicato from './pages/Sindicato/NewSindicato';
 import ListadoObraSocial from './pages/ObraSocial/ListadoObraSocial';
+import EditObraSocial from './pages/ObraSocial/EditObraSocial';
 import NewObraSocial from './pages/ObraSocial/NewObraSocial';
 import EditSindicato from './pages/Sindicato/EditSindicato';
 import ListadoPuestoTrabajo from './pages/PuestoTrabajo/ListadoPuestoTrabajo';
@@ -23,6 +24,10 @@ import EditHabilidad from './pages/Habilidades/EditHabilidad';
 import ListadoTipoExperiencia from './pages/TiposExperiencias/ListadoTipoExperiencia';
 import NewTipoExperiencia from './pages/TiposExperiencias/NewTipoExperiencia';
 import EditTipoExperiencia from './pages/TiposExperiencias/EditTipoExperiencia';
+import NewContrato from './pages/Contratos/NewContrato';
+
+
+
 
 //export const rootPath = '/App';
 
@@ -44,7 +49,9 @@ function App() {
         <Route path='/sindicatos' element={<ListadoSindicatos />} />
         <Route path='/sindicatos/newsindicato' element={<NewSindicato />} />
         <Route path='/obrasociales' element={<ListadoObraSocial />} />
-        <Route path='/obrasociales/newobrasocial' element={<NewObraSocial />} />
+        <Route path='/obrasociales/newobrasocial' element={<NewObraSocial />} />        
+        <Route path='/obrasociales/:id' element={<EditObraSocial />} />
+        <Route exact path={'/obrasociales/:id'} element={<EditObraSocial />} />
         <Route exact path={'/sindicatos/:id'} element={<EditSindicato />} />
         <Route path='/puestotrabajo' element={< ListadoPuestoTrabajo />} />        
         <Route path='/puestotrabajo/newpuestotrabajo' element={<NewPuestoTrabajo />} />
@@ -54,8 +61,8 @@ function App() {
         <Route exact path={'/habilidad/:id'} element={<EditHabilidad />} />        
         <Route path='/tipoexperiencia' element={< ListadoTipoExperiencia />} />        
         <Route path='/tipoexperiencia/newtipoexperiencia' element={<NewTipoExperiencia />} />
-        <Route exact path={'/tipoexperiencia/:id'} element={<EditTipoExperiencia />} /> 
-   
+        <Route exact path={'/tipoexperiencia/:id'} element={<EditTipoExperiencia />} />
+        <Route exact path={'/contratos/:id'} element={<NewContrato />} />         
 
       </Routes>
     </>

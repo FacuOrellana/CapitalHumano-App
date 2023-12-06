@@ -1,10 +1,9 @@
-import { Autocomplete, Box, Breadcrumbs, Button, Chip, FormControl, Grid, Stack, TextField, Typography } from '@mui/material'
+import { Box, Button, FormControl, Grid, Stack, TextField } from '@mui/material'
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2';
 import { postNewSindicato } from '../../api/Sindicatos/SindicatosApiCalls';
 import { useParams } from 'react-router-dom';
-import axios from "axios";
 
 
 const EditSindicato = () => {
@@ -12,7 +11,7 @@ const EditSindicato = () => {
     const [sindicato, setSindicato] = useState({});
     const [descripcion, setDescripcion] = useState({});
     const [aporte, setAporte] = useState({});
-    
+
     const setError = (error, header) => {
         console.log(error);
     };
@@ -31,11 +30,11 @@ const EditSindicato = () => {
     }, [id])
     console.log(sindicato);
 
- 
+
     const handleChangeDescripcion = (event) => {
         setDescripcion(event.target.value);
     };
- 
+
     const handleChangeAporte = (event) => {
         setAporte(event.target.value);
     };
@@ -56,8 +55,8 @@ const EditSindicato = () => {
 
             })
         }
-  
-        postNewSindicato(descripcion,aporte).then((response) => {
+
+        postNewSindicato(descripcion, aporte).then((response) => {
             Swal.fire({
                 title: "Sindicato registrado con exito!",
                 icon: 'success',
@@ -80,13 +79,14 @@ const EditSindicato = () => {
             });
 
     }
+
     function goToSindicatos() {
         navigate('/sindicatos');
     }
 
     return (
         <Box>
-            <Button sx={{margin: 1}} color="primary" onClick={goToSindicatos} variant='outlined' size='small'>Volver a sindicatos</Button>
+            <Button sx={{ margin: 1 }} color="primary" onClick={goToSindicatos} variant='outlined' size='small'>Volver a sindicatos</Button>
             <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
                 <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
                     <FormControl sx={{ width: '20rem' }} >

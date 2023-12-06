@@ -272,6 +272,13 @@ const EditEmpleado = () => {
     function goToEmpleadosList() {
         navigate('/empleados');
     }
+
+    // if (empleado !== null) return <h1>CARGANDO</h1>;
+
+    const goToInicio = () => {
+        navigate('/empleados');
+    };
+
     return (
         <Box>
             <Button sx={{margin: 1}} color="primary" onClick={goToEmpleadosList} variant='outlined' size='small'>Volver a empleados</Button>
