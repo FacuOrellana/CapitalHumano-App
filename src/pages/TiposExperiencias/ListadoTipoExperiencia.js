@@ -47,6 +47,7 @@ const ListadoTipoExperiencia = () => {
     useEffect(() => {
         setLoadingData(true)
         getAllTiposExperiencias().then((response) => {
+            console.log(response);
             const parsedData = response.map((TipoExperiencia) => {
                 return {
                     id: TipoExperiencia.idTipoExperiencia,

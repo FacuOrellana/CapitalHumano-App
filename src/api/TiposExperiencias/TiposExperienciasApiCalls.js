@@ -4,6 +4,7 @@ const rootApiPath = "https://localhost:7145/api/tiposexperiencia"
  
 export const getAllTiposExperiencias = async () =>{
     try {
+        console.log(rootApiPath);
         const response = await axios.get(rootApiPath);
         return response.data;
        

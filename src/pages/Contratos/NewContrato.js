@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, Grid, TextField } from "@mui/material";
+import { Autocomplete, Box, Button, FormControl, Grid, TextField } from "@mui/material";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +17,7 @@ const NewContrato = () => {
     const [Sueldo, setSueldo] = useState();
     const [Seniority, setSeniority] = useState();
     const [Empleados, setEmpleados] = useState([]);
-    const [selectedEmpleado, setSelectedEmpleado] = useState(null);
+    const [selectedEmpleado, setSelectedEmpleado] = useState({});
 
     const setError = (error, header) => {
         console.log(error);
@@ -25,6 +25,7 @@ const NewContrato = () => {
 
     useEffect(() => {
         getAllEmpleados().then((response) => {
+            console.log(response);
             const parsedData = response.map((Empleado) => {
                 return {
                     id: Empleado.idEmpleado,
@@ -147,6 +148,38 @@ const NewContrato = () => {
                             />
                         </LocalizationProvider>
                     </FormControl>
+                </Grid>
+                <Grid md={3} xs={10}  >
+                    <FormControl >
+                        <TextField id="sueldo" label="Sueldo" type={'number'} sx={{
+                            ".css-1wc848c-MuiFormHelperText-root": {
+                                fontSize: "1rem",
+                            },
+                        }} helperText="Ingrese el sueldo" variant="filled" value={Sueldo} onChange={handleChangeSueldo} />
+                    </FormControl>
+                </Grid>
+            </Grid>
+            <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
+                <Grid md={3} xs={10}  >
+                    <FormControl fullWidth>
+                        <TextField id="seniority" label="Seniority" sx={{
+                            ".css-1wc848c-MuiFormHelperText-root": {
+                                fontSize: "1rem",
+                            },
+                        }} helperText="Ingrese seniority" variant="filled" value={Seniority} onChange={handleChangeSeniority} />
+                    </FormControl>
+                </Grid>
+
+                <Grid xs={12} md={6} style={{ margin: 10 }} >
+                    <Autocomplete
+                        disablePortal
+                        id="empleado-autocomplete"
+                        options={Empleados}
+                        getOptionLabel={(option) => typeof option === 'object' ? option.nombre + " "+ option.apellido || '' : option}
+                        sx={{ width: 300 }}
+                        onChange={handleEmpleado}
+                        renderInput={(params) => <TextField {...params} label="Empleados" />}
+                    />
                 </Grid>
             </Grid>
         </Box>
