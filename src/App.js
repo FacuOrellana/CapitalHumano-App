@@ -23,12 +23,6 @@ import EditHabilidad from './pages/Habilidades/EditHabilidad';
 import ListadoTipoExperiencia from './pages/TiposExperiencias/ListadoTipoExperiencia';
 import NewTipoExperiencia from './pages/TiposExperiencias/NewTipoExperiencia';
 import EditTipoExperiencia from './pages/TiposExperiencias/EditTipoExperiencia';
-import ListadoExperiencia from './pages/Experiencias/ListadoExperiencia';
-import NewExperiencia from './pages/Experiencias/NewExperiencia';
-import EditExperiencia from './pages/Experiencias/EditExperiencia';
-
-
-
 
 //export const rootPath = '/App';
 
@@ -61,9 +55,7 @@ function App() {
         <Route path='/tipoexperiencia' element={< ListadoTipoExperiencia />} />        
         <Route path='/tipoexperiencia/newtipoexperiencia' element={<NewTipoExperiencia />} />
         <Route exact path={'/tipoexperiencia/:id'} element={<EditTipoExperiencia />} /> 
-        <Route path='/experiencia' element={< ListadoExperiencia />} />        
-        <Route path='/experiencia/newexperiencia' element={<NewExperiencia />} />
-        <Route exact path={'/experiencia/:id'} element={<EditExperiencia />} />        
+   
 
       </Routes>
     </>

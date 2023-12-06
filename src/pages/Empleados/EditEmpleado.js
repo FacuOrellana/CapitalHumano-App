@@ -2,7 +2,7 @@ import { Autocomplete, Box, Breadcrumbs, Button, Chip, FormControl, Grid, Stack,
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2';
-import { getEmpleadoById, postNewEmpleado } from '../../api/Empleados/EmpleadosApiCalls';
+import { getEmpleadoById, postNewEmpleado, updateEmpleado } from '../../api/Empleados/EmpleadosApiCalls';
 import { getAllPuestosTrabajo } from '../../api/PuestosTrabajo/PuestosTrabajoApiCalls';
 import { getAllEquiposTrabajo } from '../../api/EquiposTrabajo/EquiposTrabajoApiCalls';
 import { getAllSindicatos } from '../../api/Sindicatos/SindicatosApiCalls';
@@ -15,64 +15,37 @@ import axios from "axios";
 
 
 const EditEmpleado = () => {
+    let { id } = useParams();
     const navigate = useNavigate();
-    const [empleado, setEmpleado] = useState({});
-    const [Nombre, setNombre] = useState();
-    const [Apellido, setApellido] = useState();
-    const [Email, setEmail] = useState();
-    const [Direccion, setDireccion] = useState();
-    const [Ciudad, setCiudad] = useState();
+    const [Nombre, setNombre] = useState("");
+    const [Apellido, setApellido] = useState("");
+    const [Email, setEmail] = useState("");
+    const [Direccion, setDireccion] = useState("");
+    const [Ciudad, setCiudad] = useState("");
     const [fechaNacimiento, setfechaNacimiento] = useState('');
-    const [DNI, setDNI] = useState();
-    const [Legajo, setLegajo] = useState();
-    const [Celular, setCelular] = useState();
+    const [DNI, setDNI] = useState("");
+    const [Legajo, setLegajo] = useState("");
+    const [Celular, setCelular] = useState("");
     const [PuestosTrabajo, setPuestosTrabajo] = useState([]);
     const [EquiposTrabajo, setEquiposTrabajo] = useState([]);
     const [Sindicatos, setSindicatos] = useState([])
     const [ObraSocial, setObraSocial] = useState([])
-    const [selectedPuestoTrabajo, setSelectedPuestoTrabajo] = useState(null);
-    const [selectedEquipoTrabajo, setSelectedEquipoTrabajo] = useState(null);
-    const [selectedSindicato, setSelectedSindicato] = useState(null);
-    const [selectedObraSocial, setSelectedObraSocial] = useState(null);
+    const [selectedPuestoTrabajo, setSelectedPuestoTrabajo] = useState({});
+    const [selectedEquipoTrabajo, setSelectedEquipoTrabajo] = useState({});
+    const [selectedSindicato, setSelectedSindicato] = useState({});
+    const [selectedObraSocial, setSelectedObraSocial] = useState({});
     const setError = (error, header) => {
         console.log(error);
     };
 
-    const { id } = useParams();
-
-    useEffect(() => {
-        getEmpleadoById(id).then((response) => {
-             response.map((empleado) => {
-            setEmpleado(response.data);            
-            setNombre(empleado.nombre);
-            setApellido(empleado.apellido);
-            setEmail(empleado.email);
-            setDireccion(empleado.direccion);
-            setCiudad(empleado.ciudad);
-            setfechaNacimiento(empleado.fechaNacimiento);
-            setDNI(empleado.dni);
-            setLegajo(empleado.legajo);
-            setCelular(empleado.celular);
-            setSelectedPuestoTrabajo(empleado.puestoTrabajo.idPuestoTrabajo)
-            setSelectedEquipoTrabajo(empleado.equipoTrabajo.idEquipoTrabajo)
-            setSelectedObraSocial(empleado.obrasocial.idObraSocial)
-            setSelectedSindicato(empleado.sindicato.idSindicato)
-            });
-        }).catch((error) => {
-            setError(error, 'Error al mostrar datos del empleado.');
-        });
-           
-        
-    }, [id])
-    console.log(empleado);
 
     useEffect(() => {
         getAllPuestosTrabajo().then((response) => {
             const parsedData = response.map((Puesto) => {
                 return {
                     idPuestoTrabajo: Puesto.idPuestoTrabajo,
-                    nombrePuesto: Puesto.nombre,
-                    descripcionPuesto: Puesto.descripcion
+                    nombre: Puesto.nombre,
+                    descripcion: Puesto.descripcion
                 };
             });
             setPuestosTrabajo(parsedData);
@@ -83,7 +56,7 @@ const EditEmpleado = () => {
             const parsedData = response.map((Equipo) => {
                 return {
                     idEquipoTrabajo: Equipo.idEquipoTrabajo,
-                    descripcionEquipoTrabajo: Equipo.descripcion
+                    descripcion: Equipo.descripcion
                 };
             });
             setEquiposTrabajo(parsedData);
@@ -114,6 +87,31 @@ const EditEmpleado = () => {
         });
 
     }, []);
+
+
+    
+    useEffect(() => {
+        getEmpleadoById(id).then((response) => {
+            setNombre(response.data.nombre);
+            setApellido(response.data.apellido);
+            setEmail(response.data.email);
+            setDireccion(response.data.direccion);
+            setCiudad(response.data.ciudad);
+            setfechaNacimiento(response.data.fechaNacimiento);
+            setDNI(response.data.dni);
+            setLegajo(response.data.legajo);
+            setCelular(response.data.celular);
+            setSelectedPuestoTrabajo(response.data.puestoTrabajo)
+            setSelectedEquipoTrabajo(response.data.equipoTrabajo)
+            setSelectedObraSocial(response.data.obraSocial)
+            setSelectedSindicato(response.data.sindicato)
+        }).catch((error) => {
+            setError(error, 'Error al mostrar datos del empleado.');
+        });
+           
+        
+    }, [])
+
     const handleChangeNombre = (event) => {
         setNombre(event.target.value);
     };
@@ -141,38 +139,22 @@ const EditEmpleado = () => {
     };
 
     function handlePuestoTrabajoChange(event, newValue) {
-        if (newValue) {
-            setSelectedPuestoTrabajo(newValue.idPuestoTrabajo);
-        } else {
-            setSelectedPuestoTrabajo(null);
-        }
+        setSelectedPuestoTrabajo(newValue);
     }
 
     function handleEquipoTrabajoChange(event, newValue) {
-        if (newValue) {
-            setSelectedEquipoTrabajo(newValue.idEquipoTrabajo);
-        } else {
-            setSelectedEquipoTrabajo(null);
-        }
+            setSelectedEquipoTrabajo(newValue);
     }
 
     function handleSindicatoChange(event, newValue) {
-        if (newValue) {
-            setSelectedSindicato(newValue.idSindicato);
-        } else {
-            setSelectedSindicato(null);
-        }
+            setSelectedSindicato(newValue);
     }
 
     function handleObraSocialChange(event, newValue) {
-        if (newValue) {
-            setSelectedObraSocial(newValue.idObraSocial);
-        } else {
-            setSelectedObraSocial(null);
-        }
+            setSelectedObraSocial(newValue);
     }
     
-    function AddEmpleado() {
+    function EditEmpleado() {
         if (Nombre === undefined) {
             return Swal.fire({
                 title: 'Por favor ingresar nombre del empleado.',
@@ -265,9 +247,9 @@ const EditEmpleado = () => {
             })
         }
 
-        postNewEmpleado(Nombre, Apellido, Email,DNI,Legajo,Celular, fechaNacimiento, Direccion, Ciudad, selectedPuestoTrabajo,selectedEquipoTrabajo,selectedSindicato,selectedObraSocial).then((response) => {
+        updateEmpleado(Nombre, Apellido, Email,DNI,Legajo,Celular, fechaNacimiento, Direccion, Ciudad, selectedPuestoTrabajo,selectedEquipoTrabajo,selectedSindicato,selectedObraSocial).then((response) => {
             Swal.fire({
-                title: "Empleado registrado con exito!",
+                title: "Empleado editado con exito!",
                 icon: 'success',
                 willClose: () => {
                     setTimeout(() => {
@@ -276,7 +258,6 @@ const EditEmpleado = () => {
                 }
             })
 
-            console.log(response);
         })
 
             .catch((error) => {
@@ -291,9 +272,6 @@ const EditEmpleado = () => {
     function goToEmpleadosList() {
         navigate('/empleados');
     }
-
-    // if (empleado !== null) return <h1>CARGANDO</h1>;
-
     return (
         <Box>
             <Button sx={{margin: 1}} color="primary" onClick={goToEmpleadosList} variant='outlined' size='small'>Volver a empleados</Button>
@@ -304,7 +282,7 @@ const EditEmpleado = () => {
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },
-                        }} helperText="Ingrese el nombre" value={empleado.nombre} onChange={handleChangeNombre} />
+                        }} helperText="Ingrese el nombre" value={Nombre} onChange={handleChangeNombre} />
                     </FormControl>
                 </Grid>
                 <Grid md={6} xs={10}  >
@@ -313,7 +291,7 @@ const EditEmpleado = () => {
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },
-                        }} helperText="Ingrese apellido" variant="filled" value={empleado.apellido} onChange={handleChangeDescripcion} />
+                        }} helperText="Ingrese apellido" variant="filled" value={Apellido} onChange={handleChangeDescripcion} />
                     </FormControl>
                 </Grid>
 
@@ -401,13 +379,15 @@ const EditEmpleado = () => {
         <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
             <Grid xs={12} md={6} style={{ marginBottom: 10 }} >
             <Autocomplete
-                    disablePortal
-                    id="puesto-trabajo-autocomplete"
-                    options={PuestosTrabajo}
-                    getOptionLabel={(option) => typeof option === 'object' ? option.nombrePuesto || '' : option}
-                    sx={{ width: 300 }}
-                    onChange={handlePuestoTrabajoChange}
-                    renderInput={(params) => <TextField {...params} label="Puestos de Trabajo" />}
+                  disablePortal
+                  id="puesto-trabajo-autocomplete"
+                  options={PuestosTrabajo}
+                  value={selectedPuestoTrabajo}
+                  getOptionLabel={(option) => option.descripcion || ''}
+                  sx={{ width: 300 }}
+                  onChange={handlePuestoTrabajoChange}
+                  renderInput={(params) => <TextField {...params} label="Puestos de Trabajo" />}
+             
                 />
             </Grid>
             <Grid xs={12} md={6} style={{ marginBottom: 10 }} >
@@ -415,7 +395,8 @@ const EditEmpleado = () => {
                     disablePortal
                     id="equipo-trabajo-autocomplete"
                     options={EquiposTrabajo}
-                    getOptionLabel={(option) => typeof option === 'object' ? option.descripcionEquipoTrabajo || '' : option}
+                    value={selectedEquipoTrabajo}
+                    getOptionLabel={(option) => typeof option === 'object' ? option.descripcion || '' : option}
                     sx={{ width: 300 }}
                     onChange={handleEquipoTrabajoChange}
                     renderInput={(params) => <TextField {...params} label="Equipos de Trabajo" />}
@@ -428,6 +409,7 @@ const EditEmpleado = () => {
                     disablePortal
                     id="sindicato-autocomplete"
                     options={Sindicatos}
+                    value={selectedSindicato}
                     getOptionLabel={(option) => typeof option === 'object' ? option.descripcion || '' : option}
                     sx={{ width: 300 }}
                     onChange={handleSindicatoChange}
@@ -440,6 +422,7 @@ const EditEmpleado = () => {
                     disablePortal
                     id="obra-social-autocomplete"
                     options={ObraSocial}
+                    value={selectedObraSocial}
                     getOptionLabel={(option) => typeof option === 'object' ? option.descripcion || '' : option}
                     sx={{ width: 300 }}
                     onChange={handleObraSocialChange}
@@ -448,8 +431,8 @@ const EditEmpleado = () => {
             </Grid>
         </Grid>
         <Stack spacing={2} sx={{ width: '10%', margin: 'auto' }}>
-            <Button variant="contained" color='success' onClick={AddEmpleado}>
-                Registrar Empleado
+            <Button variant="contained" color='warning' onClick={EditEmpleado}>
+                Editar Empleado
             </Button>
         </Stack>
     </Box>

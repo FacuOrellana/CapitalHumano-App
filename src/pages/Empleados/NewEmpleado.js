@@ -89,6 +89,7 @@ const NewEmpleado = () => {
         });
 
     }, []);
+    
     const handleChangeNombre = (event) => {
         setNombre(event.target.value);
     };

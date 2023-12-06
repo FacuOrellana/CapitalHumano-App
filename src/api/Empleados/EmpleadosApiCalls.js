@@ -56,3 +56,31 @@ export const getEmpleadoById = async (id) => {
         
     }
 }
+
+export const updateEmpleado = async (Nombre, Apellido, Email,DNI,Legajo,Celular, fechaNacimiento, Direccion, Ciudad, selectedPuestoTrabajo,selectedEquipoTrabajo,selectedSindicato,selectedObraSocial) => {
+    const body ={
+        Nombre:Nombre,
+        Apellido:Apellido,
+        Email:Email,
+        DNI:DNI,
+        Legajo:Legajo,
+        Celular: Celular,
+        fechaNacimiento: fechaNacimiento,
+        Direccion: Direccion,
+        Ciudad: Ciudad,
+        IdPuestoTrabajo:selectedPuestoTrabajo.idPuestoTrabajo,
+        IdEquipoTrabajo:selectedEquipoTrabajo.idEquipoTrabajo,
+        IdSindicato: selectedSindicato.idSindicato,
+        IdObraSocial: selectedObraSocial.idObraSocial
+    }
+    console.log(body);
+    // try {
+    //     const response = await axios.put(rootApiPath+"/socio/"+id,body);
+    //     return response;
+        
+    // } catch (error) {
+    //     console.log(error);
+    //     throw error;
+        
+    // }
+}
