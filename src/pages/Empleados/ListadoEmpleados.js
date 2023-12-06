@@ -3,16 +3,43 @@ import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid'
 import EditIcon from '@mui/icons-material/Edit';
-import { getAllEmpleados } from '../../api/Empleados/EmpleadosApiCalls';
+import { deleteEmpleado, getAllEmpleados } from '../../api/Empleados/EmpleadosApiCalls';
 import { rootPath } from '../../App';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const ListadoEmplados = () => {
 
     const navigate = useNavigate();
     const [Empleados, setEmpleados] = useState([]);
     const [loadingData, setLoadingData] = useState(false);
+    const [refresh, setRefresh] = useState(false);
     const [selectionModel, setSelectionModel] = useState([]);
+
+    
+    useEffect(() => {
+        setLoadingData(true)
+        getAllEmpleados().then((response) => {
+            const parsedData = response.map((Empleado) => {
+                return {
+                    id: Empleado.idEmpleado,
+                    nombre: Empleado.nombre,
+                    apellido: Empleado.apellido,
+                    dni: Empleado.dni,
+                    celular: Empleado.celular,
+                    idObrasocial: Empleado.obraSocial.descripcion,
+                    idSindicato: Empleado.sindicato.descripcion,
+                    idPuestoTrabajo: Empleado.puestoTrabajo.descripcion,
+                    idEquipoTrabajo: Empleado.equipoTrabajo.descripcion
+                };
+            });
+            setEmpleados(parsedData);
+            setLoadingData(false)
+        }).catch((error) => {
+            setError(error, 'Error al listar Emplados.');
+        });
+
+    }, [refresh])
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 50, headerAlign: 'center', hidden: true },
@@ -60,7 +87,7 @@ const ListadoEmplados = () => {
         {
             field: 'acciones',
             headerName: 'Acciones',
-            width: 100,
+            width: 250,
             disableClickEventBubbling: true,
             renderCell: (params) => {
                 const onEdit = (e) => {
@@ -68,44 +95,46 @@ const ListadoEmplados = () => {
                     let id = currentRow.id;
                     goToEditEmpleado(id);
                 };
+                const onDelete = (e) => {
+                    const currentRow = params.row;
+                    let id = currentRow.id;
+                    Swal.fire({
+                        title: "Estas seguro que quieres eliminar el empleado?",
+                        text: "Una vez eliminado el empleado no se podra revertir.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Si, eliminar!"
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          Swal.fire({
+                            title: "Eliminado!",
+                            text: "El empleado ha sido eliminado con exito.",
+                            icon: "success",
+                            willClose: () => {
+                                deleteEmpleado(id);
+                                setRefresh(!refresh)
+                            }
+                          });
+                        }
+                      });
+               
+                };
                 return (
                     <Stack direction="row" spacing={2}>
                         <Button variant="contained" startIcon={<EditIcon></EditIcon>} color="warning" size="small" onClick={onEdit}>Editar</Button>
+                        <Button variant="contained" startIcon={<EditIcon></EditIcon>} color="error" size="small" onClick={onDelete}>Eliminar</Button>
                     </Stack>
+                    
                 );
             },
         }
     ];
 
-
-
     const setError = (error, header) => {
         console.log(error);
     };
-
-    useEffect(() => {
-        setLoadingData(true)
-        getAllEmpleados().then((response) => {
-            const parsedData = response.map((Empleado) => {
-                return {
-                    id: Empleado.idEmpleado,
-                    nombre: Empleado.nombre,
-                    apellido: Empleado.apellido,
-                    dni: Empleado.dni,
-                    celular: Empleado.celular,
-                    idObrasocial: Empleado.obraSocial.descripcion,
-                    idSindicato: Empleado.sindicato.descripcion,
-                    idPuestoTrabajo: Empleado.puestoTrabajo.descripcion,
-                    idEquipoTrabajo: Empleado.equipoTrabajo.descripcion
-                };
-            });
-            setEmpleados(parsedData);
-            setLoadingData(false)
-        }).catch((error) => {
-            setError(error, 'Error al listar Emplados.');
-        });
-
-    }, [])
 
 
     const goToNewEmpleado = () => {

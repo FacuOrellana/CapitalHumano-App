@@ -73,9 +73,21 @@ export const updateEmpleado = async (id,Nombre, Apellido, Email,DNI,Legajo,Celul
         IdSindicato: selectedSindicato.idSindicato,
         IdObraSocial: selectedObraSocial.idObraSocial
     }
-    console.log(body);
     try {
         const response = await axios.put(rootApiPath+"/"+id,body);
+        return response;
+        
+    } catch (error) {
+        console.log(error);
+        throw error;
+        
+    }
+}
+export const deleteEmpleado = async (id) => {
+    console.log(id);
+   
+    try {
+        const response = await axios.delete(rootApiPath+"/"+id);
         return response;
         
     } catch (error) {
