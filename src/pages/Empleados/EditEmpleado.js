@@ -247,7 +247,7 @@ const EditEmpleado = () => {
             })
         }
 
-        updateEmpleado(Nombre, Apellido, Email,DNI,Legajo,Celular, fechaNacimiento, Direccion, Ciudad, selectedPuestoTrabajo,selectedEquipoTrabajo,selectedSindicato,selectedObraSocial).then((response) => {
+        updateEmpleado(id,Nombre, Apellido, Email,DNI,Legajo,Celular, fechaNacimiento, Direccion, Ciudad, selectedPuestoTrabajo,selectedEquipoTrabajo,selectedSindicato,selectedObraSocial).then((response) => {
             Swal.fire({
                 title: "Empleado editado con exito!",
                 icon: 'success',

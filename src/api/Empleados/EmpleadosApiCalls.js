@@ -57,7 +57,7 @@ export const getEmpleadoById = async (id) => {
     }
 }
 
-export const updateEmpleado = async (Nombre, Apellido, Email,DNI,Legajo,Celular, fechaNacimiento, Direccion, Ciudad, selectedPuestoTrabajo,selectedEquipoTrabajo,selectedSindicato,selectedObraSocial) => {
+export const updateEmpleado = async (id,Nombre, Apellido, Email,DNI,Legajo,Celular, fechaNacimiento, Direccion, Ciudad, selectedPuestoTrabajo,selectedEquipoTrabajo,selectedSindicato,selectedObraSocial) => {
     const body ={
         Nombre:Nombre,
         Apellido:Apellido,
@@ -74,13 +74,13 @@ export const updateEmpleado = async (Nombre, Apellido, Email,DNI,Legajo,Celular,
         IdObraSocial: selectedObraSocial.idObraSocial
     }
     console.log(body);
-    // try {
-    //     const response = await axios.put(rootApiPath+"/socio/"+id,body);
-    //     return response;
+    try {
+        const response = await axios.put(rootApiPath+"/"+id,body);
+        return response;
         
-    // } catch (error) {
-    //     console.log(error);
-    //     throw error;
+    } catch (error) {
+        console.log(error);
+        throw error;
         
-    // }
+    }
 }
