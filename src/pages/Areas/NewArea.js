@@ -31,8 +31,8 @@ const NewArea = () => {
                 icon: 'success',
                 willClose: () => {
                     setTimeout(() => {
-                        // history.push(rootPath + '/Empleados');
-                    }, 1500);
+                        goToAreaList();
+                    }, 250);
                 }
             })
             console.log(response);

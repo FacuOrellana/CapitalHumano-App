@@ -1,13 +1,14 @@
 import { Box, Breadcrumbs, Button, CircularProgress, Stack, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
-import { useNavigate } from 'react-router-dom';
-import { getAllAreas } from '../../api/Areas/AreaApiCalls';
+import { resolvePath, useNavigate } from 'react-router-dom';
+import { deleteArea, getAllAreas } from '../../api/Areas/AreaApiCalls';
 import { DataGrid } from '@mui/x-data-grid';
 
 
 const ListadoAreas = () => {
-    const navigate = useNavigate();
+    const navigate = useNavigate();    
+    const [refresh,setRefresh] = useState(false);
     const [Area, setArea] = useState();
     const [Areas, setAreas] = useState([]);
     const [selectionModel, setSelectionModel] = useState([]);
@@ -26,7 +27,7 @@ const ListadoAreas = () => {
         {
             field: 'acciones',
             headerName: 'Acciones',
-            width: 100,
+            width: 300,
             disableClickEventBubbling: true,
             renderCell: (params) => {
                 const onEdit = (e) => {
@@ -34,10 +35,19 @@ const ListadoAreas = () => {
                     let id = currentRow.id;
                     goToEditArea(id);
                 };
-                return (
+                const onDelete = (e) => {
+                    const currentRow = params.row;
+                    let id = currentRow.id;
+                    deleteArea(id);
+                    setRefresh(!refresh);                    
+                };
+                return (<>
+
                     <Stack direction="row" spacing={2}>
                         <Button variant="contained" startIcon={<EditIcon></EditIcon>} color="warning" size="small" onClick={onEdit}>Editar</Button>
+                        <Button variant="contained" startIcon={<EditIcon></EditIcon>} color='error' size="small" onClick={onDelete}>Borrar</Button>
                     </Stack>
+                </>
                 );
             },
         }];
@@ -57,7 +67,7 @@ const ListadoAreas = () => {
             setError(error, 'Error al listar Areas');
         });
 
-    }, [])
+    }, [refresh])
     const goToNewArea = () => {
         navigate('/areas/newarea');
     };
@@ -77,7 +87,7 @@ const ListadoAreas = () => {
                 <Breadcrumbs aria-label="breadcrumb" style={{ margin: 15 }}>
                     <Typography color="text.primary">Listado de Areas</Typography>
                 </Breadcrumbs>
-                <Button sx={{margin: 1}} color="primary" onClick={goToNewArea} variant="contained" size='small'>Nueva Area</Button>
+                <Button sx={{ margin: 1 }} color="primary" onClick={goToNewArea} variant="contained" size='small'>Nueva Area</Button>
                 {loadingData === true ?
                     (<><Box sx={{ display: 'flex', justifyContent: "center", marginTop: "10rem" }}>
                         <CircularProgress size={"10rem"} />

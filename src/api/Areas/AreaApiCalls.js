@@ -36,12 +36,25 @@ export const postNewArea = async ( descripcion ) => {
     }
 }
 
-export const putEditArea = async ( descripcion ) => {
+export const putEditArea = async ( id, descripcion ) => {
     const body = {
         descripcion: descripcion
     }
     try {
-        const response = await axios.put(rootApiPath, body);
+        console.log(rootApiPath+"/"+id);
+        const response = await axios.put(rootApiPath+"/"+id, body);
+        return response;
+
+    } catch (error) {
+        console.log(error);
+        throw error;
+
+    }
+}
+
+export const deleteArea = async ( id ) => {
+    try {
+        const response = await axios.delete(rootApiPath+"/"+id);
         return response;
 
     } catch (error) {

@@ -19,9 +19,8 @@ const EditArea = () => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.get("https://localhost:7145/api/areas/" + id);
-            console.log(response.data);
             setArea(response.data);
-            setDescripcion(area.nombre);
+            setDescripcion(response.data.descripcion);
         }
         if (id) fetchData();
     }, [id])
@@ -38,14 +37,14 @@ const EditArea = () => {
 
             })
         }
-        putEditArea(Descripcion).then((response) => {
+        putEditArea(id,Descripcion).then((response) => {
             Swal.fire({
                 title: "Area editada con exito!",
                 icon: 'success',
                 willClose: () => {
                     setTimeout(() => {
-                        // history.push(rootPath + '/Empleados');
-                    }, 1500);
+                        goToAreaList();
+                    }, 250);
                 }
             })
             console.log(response);
@@ -56,15 +55,6 @@ const EditArea = () => {
 
             })
         });
-    }
-
-    function editArea() {
-        if (Descripcion === undefined) {
-            return Swal.fire({
-                title: 'Por favor ingresar la descripcion del area.',
-                icon: 'error',
-            })
-        }
     }
     const goToAreaList = () => {
         navigate('/areas');
@@ -80,16 +70,16 @@ const EditArea = () => {
                 <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
                     <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
                         <FormControl sx={{ width: '20rem' }} >
-                            <TextField id="nombre" label="Nombre" variant="filled" sx={{
+                            <TextField id="descripcion" label="Descripcion" variant="filled" sx={{
                                 ".css-1wc848c-MuiFormHelperText-root": {
                                     fontSize: "1rem",
                                 },
-                            }} helperText="Ingrese el nombre" value={area.descripcion} onChange={handleChangeDescripcion} />
+                            }} helperText="Ingrese la descripcion" value={Descripcion} onChange={handleChangeDescripcion} />
                         </FormControl>
                     </Grid>
                 </Grid>
                 <Stack spacing={2} sx={{ width: '10%', margin: 'auto' }}>
-                    <Button variant="contained" color='success' onClick={editArea}>
+                    <Button variant="contained" color='success' onClick={EditArea}>
                         Editar Area
                     </Button>
                 </Stack>

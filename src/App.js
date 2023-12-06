@@ -24,6 +24,7 @@ import EditHabilidad from './pages/Habilidades/EditHabilidad';
 import ListadoTipoExperiencia from './pages/TiposExperiencias/ListadoTipoExperiencia';
 import NewTipoExperiencia from './pages/TiposExperiencias/NewTipoExperiencia';
 import EditTipoExperiencia from './pages/TiposExperiencias/EditTipoExperiencia';
+import NewContrato from './pages/Contratos/NewContrato';
 
 
 
@@ -60,7 +61,8 @@ function App() {
         <Route exact path={'/habilidad/:id'} element={<EditHabilidad />} />        
         <Route path='/tipoexperiencia' element={< ListadoTipoExperiencia />} />        
         <Route path='/tipoexperiencia/newtipoexperiencia' element={<NewTipoExperiencia />} />
-        <Route exact path={'/tipoexperiencia/:id'} element={<EditTipoExperiencia />} />     
+        <Route exact path={'/tipoexperiencia/:id'} element={<EditTipoExperiencia />} />
+        <Route exact path={'/contratos/:id'} element={<NewContrato />} />         
 
       </Routes>
     </>

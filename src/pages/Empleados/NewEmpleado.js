@@ -247,8 +247,6 @@ const NewEmpleado = () => {
                     }, 1500);
                 }
             })
-
-            console.log(response);
         })
 
             .catch((error) => {

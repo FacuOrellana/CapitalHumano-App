@@ -43,7 +43,7 @@ const ListadoEmplados = () => {
         {
             field: 'fechaInicio',
             headerName: 'Fecha Inicio',
-            width: 125,
+            width: 150,
         },
         {
             field: 'fechaFin',
@@ -65,7 +65,7 @@ const ListadoEmplados = () => {
             field: 'empleado',
             headerName: 'idEmpleado',
             width: 150,
-        }/*
+        },
         {
             field: 'acciones',
             headerName: 'Acciones',
@@ -75,7 +75,7 @@ const ListadoEmplados = () => {
                 const onEdit = (e) => {
                     const currentRow = params.row;
                     let id = currentRow.id;
-                    goToEditEmpleado(id);
+                    goToEditContrato(id);
                 };
                 return (
                     <Stack direction="row" spacing={2}>
@@ -83,22 +83,28 @@ const ListadoEmplados = () => {
                     </Stack>
                 );
             },
-        }*/
+        }
     ];
+    
     const goToInicio = () => {
         navigate('/');
+    };
+
+    const goToEditContrato = ( id ) => {
+        navigate('/contratos/'+id);
+    };
+
+    const goToNewContrato = () => {
+        navigate('/contratos/newcontrato');
     };
 
     return (
         <Box>
             <Button sx={{margin: 1}} color="primary" onClick={goToInicio} variant='outlined' size='small'>Volver a inicio</Button>
             <Breadcrumbs aria-label="breadcrumb" style={{ margin: 15 }}>
-                {/* <Link underline="hover" color="inherit" onClick={() => history.push(rootPath + "/Inicio")}>
-                    Inicio
-                </Link> */}
                 <Typography color="text.primary">Listado de Contratos</Typography>
             </Breadcrumbs>
-            <Button color="primary" /*onClick={goToNewEmpleado}*/ variant="contained" size='small'>Nuevo Contrato</Button>
+            <Button sx={{margin: 1}} color="primary" onClick={goToNewContrato} variant="contained" size='small'>Nuevo Contrato</Button>
             {loadingData === true ?
                 (<><Box sx={{ display: 'flex', justifyContent: "center", marginTop: "10rem" }}>
                     <CircularProgress size={"10rem"} />
