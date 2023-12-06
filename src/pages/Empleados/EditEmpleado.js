@@ -206,14 +206,13 @@ const EditEmpleado = () => {
 
     // if (empleado !== null) return <h1>CARGANDO</h1>;
 
+    const goToInicio = () => {
+        navigate('/empleados');
+    };
+
     return (
         <Box>
-            <Breadcrumbs aria-label="breadcrumb" style={{ margin: 15 }}>
-                <Link underline="hover" color="inherit" onClick={goToBack}>
-                    Listado de Empleados
-                </Link>
-                <Typography color="text.primary">Editar Empleado</Typography>
-            </Breadcrumbs>
+            <Button sx={{margin: 1}} color="primary" onClick={goToInicio} variant='outlined' size='small'>Volver a Empleados</Button>
 
             <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
                 <Grid xs={12} md={3} style={{ marginBottom: 10 }} >

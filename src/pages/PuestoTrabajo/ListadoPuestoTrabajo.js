@@ -71,13 +71,18 @@ const ListadoPuestoTrabajo = () => {
     const goToNewPuestoTrabajo = () => {
         navigate('/puestotrabajo/newpuestotrabajo')
     };
+
+    const goToInicio = () => {
+        navigate('/');
+    };
     return (
         <Box>
-            <Breadcrumbs aria-label="breadcrumb" style={{ margin: 15 }}>
+        <Button sx={{margin: 1}} color="primary" onClick={goToInicio} variant='outlined' size='small'>Volver a Inicio</Button>
+        <Breadcrumbs aria-label="breadcrumb" style={{ margin: 15 }}>
                 {/* <Link underline="hover" color="inherit" onClick={() => history.push(rootPath + "/Inicio")}>
                     Inicio
                 </Link> */}
-                <Typography color="text.primary">Listado de Puestos de Trabajo</Typography>
+                <Typography color="text.primary">Listado de Puestos de Trabajos</Typography>
             </Breadcrumbs>
             <Button color="primary" onClick={goToNewPuestoTrabajo} variant="contained" size='small'>Nuevo Puesto de Trabajo</Button>
             {loadingData === true ?

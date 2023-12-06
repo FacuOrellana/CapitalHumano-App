@@ -89,17 +89,12 @@ const EditSindicato = () => {
 
     return (
         <Box>
-            <Breadcrumbs aria-label="breadcrumb" style={{ margin: 15 }}>
-                <Link underline="hover" color="inherit" onClick={goToBack}>
-                    Listado de Sindicatos
-                </Link>
-                <Typography color="text.primary">Editar Sindicato</Typography>
-            </Breadcrumbs>
+<Button sx={{margin: 1}} color="primary" onClick={goToBack} variant='outlined' size='small'>Volver a Puestos de Trabajos</Button>
 
             <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
                 <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
                     <FormControl sx={{ width: '20rem' }} >
-                        <TextField id="nombre" label="Nombre" variant="filled" sx={{
+                        <TextField id="nombre" label="Puesto de Trabajo" variant="filled" sx={{
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },

@@ -38,7 +38,7 @@ const NewPuestoTrabajo = () => {
 
             })
         }
- 
+
         postNewPuestoTrabajo(Descripcion, Nombre).then((response) => {
             Swal.fire({
                 title: "Puesto de Trabajo registrado con exito!",
@@ -68,17 +68,11 @@ const NewPuestoTrabajo = () => {
 
     return (
         <Box>
-            <Breadcrumbs aria-label="breadcrumb" style={{ margin: 15 }}>
-                <Link underline="hover" color="inherit" onClick={goToBack}>
-                    Listado de Puesto de Trabajo
-                </Link>
-                <Typography color="text.primary">Nuevo Puesto de Trabajo</Typography>
-            </Breadcrumbs>
-
+            <Button sx={{ margin: 1 }} color="primary" onClick={goToBack} variant='outlined' size='small'>Volver a Puestos de Trabajo</Button>
             <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
                 <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
                     <FormControl sx={{ width: '20rem' }} >
-                        <TextField id="nombre" label="Nombre" variant="filled" sx={{
+                        <TextField id="nombre" label="Puesto de Trabajo" variant="filled" sx={{
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },
@@ -96,7 +90,7 @@ const NewPuestoTrabajo = () => {
                 </Grid>
 
             </Grid>
- 
+
             <Stack spacing={2} sx={{ width: '100%' }}>
                 <Button variant="contained" color='success' onClick={AddPuestoTrabajo}>
                     Registrar Puesto Trabajo

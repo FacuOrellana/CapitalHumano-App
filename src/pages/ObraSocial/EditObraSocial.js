@@ -2,14 +2,15 @@ import { Autocomplete, Box, Breadcrumbs, Button, Chip, FormControl, Grid, Stack,
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2';
-import { postNewSindicato } from '../../api/Sindicatos/SindicatosApiCalls';
+import { postNewObraSocial } from '../../api/ObraSocial/ObraSocialApiCalls';
 import { useParams } from 'react-router-dom';
 import axios from "axios";
+import { Add } from '@mui/icons-material';
 
 
-const EditSindicato = () => {
+const EditObraSocial = () => {
     const navigate = useNavigate();
-    const [sindicato, setSindicato] = useState({});
+    const [obrasocial, setObrasocial] = useState({});
     const [descripcion, setDescripcion] = useState({});
     const [aporte, setAporte] = useState({});
     
@@ -21,7 +22,7 @@ const EditSindicato = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            // const response = await axios.get("https://localhost:7145/api/sindicatos/"+id);
+            // const response = await axios.get("https://localhost:7145/api/obrasociales/"+id);
             // setSindicato(response.data);            
             // setDescripcion(response.descripcion)
             // setAporte(response.aporte)
@@ -29,7 +30,7 @@ const EditSindicato = () => {
 
         if (id) fetchData();
     }, [id])
-    console.log(sindicato);
+    console.log(obrasocial);
 
  
     const handleChangeDescripcion = (event) => {
@@ -41,25 +42,25 @@ const EditSindicato = () => {
     };
 
 
-    function AddSindicato() {
-        if (descripcion === undefined) {
+    function AddObraSocial() {
+        if (aporte === undefined) {
             return Swal.fire({
-                title: 'Por favor ingresar el sindicato.',
+                title: 'Por favor ingresar el Aporte de la Obra Social.',
                 icon: 'error',
 
             })
         }
-        if (aporte === undefined) {
+        if (descripcion === undefined) {
             return Swal.fire({
-                title: 'Por favor ingresar el aportre del sindicato.',
+                title: 'Por favor ingresar la Obra Social.',
                 icon: 'error',
 
             })
         }
   
-        postNewSindicato(descripcion,aporte).then((response) => {
+        postNewObraSocial(descripcion,aporte).then((response) => {
             Swal.fire({
-                title: "Sindicato registrado con exito!",
+                title: "Obra Social registrada con exito!",
                 icon: 'success',
                 willClose: () => {
                     setTimeout(() => {
@@ -80,15 +81,15 @@ const EditSindicato = () => {
             });
 
     }
-    function goToBack() {
-        navigate('/sindicatos');
-    }
+    const goToInicio = () => {
+        navigate('/obrasociales');
+    };
 
     // if (empleado !== null) return <h1>CARGANDO</h1>;
 
     return (
         <Box>
-            <Button sx={{margin: 1}} color="primary" onClick={goToBack} variant='outlined' size='small'>Volver a Sindicato</Button>
+            <Button sx={{margin: 1}} color="primary" onClick={goToInicio} variant='outlined' size='small'>Volver a Obra Social</Button>
 
             <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
                 <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
@@ -97,7 +98,7 @@ const EditSindicato = () => {
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },
-                        }} helperText="Ingrese el Sindicato" value={sindicato.descripcion} onChange={handleChangeDescripcion} />
+                        }} helperText="Ingrese la Obra Social" value={obrasocial.descripcion} onChange={handleChangeDescripcion} />
                     </FormControl>
                 </Grid>
                 <Grid md={6} xs={10}  >
@@ -106,7 +107,8 @@ const EditSindicato = () => {
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
                             },
-                        }} helperText="Ingrese el aporte" variant="filled" value={sindicato.aporte} onChange={handleChangeAporte} />
+                        }} helperText="Ingrese el Aporte" value={obrasocial.descripcion} onChange={handleChangeAporte} />
+
                     </FormControl>
                 </Grid>
 
@@ -114,12 +116,12 @@ const EditSindicato = () => {
 
 
             <Stack spacing={2} sx={{ width: '10%', margin: 'auto' }}>
-                <Button variant="contained" color='success' onClick={AddSindicato}>
-                    Editar Sindicato
+                <Button variant="contained" color='success' onClick={AddObraSocial}>
+                    Editar Obra Social
                 </Button>
             </Stack>
         </Box>
     );
 }
 
-export default EditSindicato;
+export default EditObraSocial;
