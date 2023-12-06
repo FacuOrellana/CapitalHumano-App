@@ -86,7 +86,7 @@ const ListadoEmplados = () => {
         }*/
     ];
     const goToInicio = () => {
-        navigate('/inicio');
+        navigate('/');
     };
 
     return (
@@ -98,7 +98,7 @@ const ListadoEmplados = () => {
                 </Link> */}
                 <Typography color="text.primary">Listado de Contratos</Typography>
             </Breadcrumbs>
-            <Button color="primary" /*onClick={goToNewEmpleado}*/ variant="contained" size='small'>Nuevo Empleado</Button>
+            <Button color="primary" /*onClick={goToNewEmpleado}*/ variant="contained" size='small'>Nuevo Contrato</Button>
             {loadingData === true ?
                 (<><Box sx={{ display: 'flex', justifyContent: "center", marginTop: "10rem" }}>
                     <CircularProgress size={"10rem"} />

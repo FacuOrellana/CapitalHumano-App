@@ -23,11 +23,6 @@ const NewSindicato = () => {
         setAporte(event.target.value);
     };
 
-
-
-
-
-
     function AddSindicato() {
         if (Descripcion === undefined) {
             return Swal.fire({
@@ -72,8 +67,11 @@ const NewSindicato = () => {
         navigate('/Sindicatos')
     }
 
+    
     return (
         <Box>
+            <Button sx={{margin: 1}} color="primary" onClick={goToBack} variant='outlined' size='small'>Volver a Sindicatos</Button>
+
             <Button sx={{margin: 1}} color="primary" onClick={goToSindicatos} variant='outlined' size='small'>Volver a sindicatos</Button>
             <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
                 <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
@@ -99,7 +97,7 @@ const NewSindicato = () => {
  
             <Stack spacing={2} sx={{ width: '100%' }}>
                 <Button variant="contained" color='success' onClick={AddSindicato}>
-                    Registrar Empleado
+                    Registrar Sindicato
                 </Button>
 
             </Stack>

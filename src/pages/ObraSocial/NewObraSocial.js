@@ -56,13 +56,22 @@ const NewObraSocial = () => {
             })
         });
     }
+<<<<<<< HEAD
     const goToObraSocialList = () => {
+=======
+
+    const goToInicio = () => {
+>>>>>>> sebi
         navigate('/obrasociales');
     };
 
     return (
         <Box sx={{ margin: '20px', marginTop: '25px' }}>
+<<<<<<< HEAD
             <Button sx={{margin: 1}} color="primary" onClick={goToObraSocialList} variant='outlined' size='small'>Volver a obras sociales</Button>
+=======
+            <Button sx={{margin: 1}} color="primary" onClick={goToInicio} variant='outlined' size='small'>Volver a Obra Social</Button>
+>>>>>>> sebi
             <Typography align="center" variant="h5" gutterBottom>
                 Nueva Obra Social
             </Typography>

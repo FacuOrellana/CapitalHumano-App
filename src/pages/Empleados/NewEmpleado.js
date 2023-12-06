@@ -1,8 +1,7 @@
-import { Autocomplete, Box, Breadcrumbs, Button, Chip, FormControl, Grid, Stack, TextField, Typography } from '@mui/material'
+import { Autocomplete, Box, Button, FormControl, Grid, Stack, TextField, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react'
-import { Link, useHistory, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2';
-import { rootPath } from '../../App'
 import { postNewEmpleado } from '../../api/Empleados/EmpleadosApiCalls';
 import { getAllPuestosTrabajo } from '../../api/PuestosTrabajo/PuestosTrabajoApiCalls';
 import { getAllEquiposTrabajo } from '../../api/EquiposTrabajo/EquiposTrabajoApiCalls';
@@ -15,8 +14,6 @@ import { MobileDatePicker } from '@mui/x-date-pickers';
 const NewEmpleado = () => {
 
     const navigate = useNavigate();
-
-    // const history = useHistory()
     const [Nombre, setNombre] = useState();
     const [Apellido, setApellido] = useState();
     const [Email, setEmail] = useState();

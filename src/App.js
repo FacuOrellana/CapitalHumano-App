@@ -12,6 +12,7 @@ import EditArea from './pages/Areas/EditArea';
 import ListadoSindicatos from './pages/Sindicato/ListadoSindicatos';
 import NewSindicato from './pages/Sindicato/NewSindicato';
 import ListadoObraSocial from './pages/ObraSocial/ListadoObraSocial';
+import EditObraSocial from './pages/ObraSocial/EditObraSocial';
 import NewObraSocial from './pages/ObraSocial/NewObraSocial';
 import EditSindicato from './pages/Sindicato/EditSindicato';
 import ListadoPuestoTrabajo from './pages/PuestoTrabajo/ListadoPuestoTrabajo';
@@ -51,6 +52,7 @@ function App() {
         <Route path='/sindicatos/newsindicato' element={<NewSindicato />} />
         <Route path='/obrasociales' element={<ListadoObraSocial />} />
         <Route path='/obrasociales/newobrasocial' element={<NewObraSocial />} />
+        <Route exact path={'/obrasociales/:id'} element={<EditObraSocial />} />
         <Route exact path={'/sindicatos/:id'} element={<EditSindicato />} />
         <Route path='/puestotrabajo' element={< ListadoPuestoTrabajo />} />        
         <Route path='/puestotrabajo/newpuestotrabajo' element={<NewPuestoTrabajo />} />
