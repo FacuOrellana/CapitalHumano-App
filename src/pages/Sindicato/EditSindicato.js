@@ -79,7 +79,7 @@ const EditSindicato = () => {
             });
 
     }
-    
+
     function goToSindicatos() {
         navigate('/sindicatos');
     }

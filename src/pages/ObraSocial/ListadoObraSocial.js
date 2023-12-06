@@ -69,7 +69,7 @@ const ListadoAreas = () => {
     };
 
     const goToEditObra = (id) => {
-        navigate('/obrasocial/' + id);
+        navigate('/obrasociales/' + id);
     };
 
     const goToInicio = () => {

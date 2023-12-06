@@ -70,8 +70,6 @@ const NewSindicato = () => {
     
     return (
         <Box>
-            <Button sx={{margin: 1}} color="primary" onClick={goToBack} variant='outlined' size='small'>Volver a Sindicatos</Button>
-
             <Button sx={{margin: 1}} color="primary" onClick={goToSindicatos} variant='outlined' size='small'>Volver a sindicatos</Button>
             <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
                 <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
