@@ -10,6 +10,9 @@ import { getAllObras } from '../../api/ObraSocial/ObraSocialApiCalls';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDatePicker } from '@mui/x-date-pickers';
+import dayjs from 'dayjs';
+import { getAllAreas } from '../../api/Areas/AreaApiCalls';
+import { getAllDepartamentos } from '../../api/Departamentos/DepartamentosApiCalls';
 
 const NewEmpleado = () => {
 
@@ -27,8 +30,14 @@ const NewEmpleado = () => {
     const [EquiposTrabajo, setEquiposTrabajo] = useState([]);
     const [Sindicatos, setSindicatos] = useState([])
     const [ObraSocial, setObraSocial] = useState([])
-    const [selectedPuestoTrabajo, setSelectedPuestoTrabajo] = useState(null);
-    const [selectedEquipoTrabajo, setSelectedEquipoTrabajo] = useState(null);
+    const [Areas, setAreas] = useState([])
+    const [selectedArea, setSelectedArea] = useState(null);
+    const [Departamentos, setDepartamentos] = useState([])
+    const [filteredDepartamentos, setFilteredDepartamentos] = useState([]);
+    const [filteredEquiposTrabajo, setFilteredEquiposTrabajo] = useState([]);
+    const [selectedDepartamento, setSelectedDepartamento] = useState({descripcion:""});
+    const [selectedPuestoTrabajo, setSelectedPuestoTrabajo] = useState({descripcion:""});
+    const [selectedEquipoTrabajo, setSelectedEquipoTrabajo] = useState({descripcion:""});
     const [selectedSindicato, setSelectedSindicato] = useState(null);
     const [selectedObraSocial, setSelectedObraSocial] = useState(null);
 
@@ -52,10 +61,12 @@ const NewEmpleado = () => {
             setError(error, 'Error al listar Puestos.');
         });
         getAllEquiposTrabajo().then((response) => {
+            console.log(response);
             const parsedData = response.map((Equipo) => {
                 return {
                     idEquipoTrabajo: Equipo.idEquipoTrabajo,
-                    descripcionEquipoTrabajo: Equipo.descripcion
+                    descripcionEquipoTrabajo: Equipo.descripcion,
+                    idDepartamento: Equipo.idDepartamento,
                 };
             });
             setEquiposTrabajo(parsedData);
@@ -84,9 +95,50 @@ const NewEmpleado = () => {
         }).catch((error) => {
             setError(error, 'Error al listar Obras Sociales.');
         });
+        getAllAreas().then((response) => {
+            const parsedData = response.map((Area) => {
+                return {
+                    idArea: Area.idArea,
+                    descripcion: Area.descripcion
+                };
+            });
+            setAreas(parsedData)
+        }).catch((error) => {
+            setError(error, 'Error al listar Areas.');
+        });
+        getAllDepartamentos().then((response) => {
+            const parsedData = response.map((Departamento) => {
+                return {
+                    idDepartamento: Departamento.idDepartamento,
+                    descripcion: Departamento.descripcion,
+                    idArea: Departamento.idArea
+                };
+            });
+            setDepartamentos(parsedData)
+        }).catch((error) => {
+            setError(error, 'Error al listar Departamentos.');
+        });
 
     }, []);
-    
+
+    // const departamentosIT = [{
+    //     descripcion: "hola",
+    //     id: 1
+    // },
+    // {
+    //     descripcion: "hola2",
+    //     id: 2
+    // }]
+    // useEffect(() => {
+    //     if(selectedArea===10)
+    //     {
+    //         setFilteredDepartamentos(departamentosIT)
+    //     }
+    //      else if(selectedArea===13){
+    //         setFilteredDepartamentos(departamentosIT)
+    //     }
+    // }, [selectedArea]);
+
     const handleChangeNombre = (event) => {
         setNombre(event.target.value);
     };
@@ -128,6 +180,31 @@ const NewEmpleado = () => {
             setSelectedEquipoTrabajo(null);
         }
     }
+    function handleAreaChange(event, newValue) {
+        if (newValue) {
+            setSelectedArea(newValue.idArea);
+            setSelectedDepartamento("");
+            setSelectedEquipoTrabajo("")
+            // Filtrar departamentos según el área seleccionada
+            const departamentosFiltrados = Departamentos.filter((departamento) => departamento.idArea === newValue.idArea);
+            setFilteredDepartamentos(departamentosFiltrados);
+        } else {
+            setSelectedArea(null);
+            setFilteredDepartamentos([]); // Limpiar la lista de departamentos filtrados cuando no hay área seleccionada
+        }
+    }
+    function handleDepartamentoChange(event, newValue) {
+        if (newValue) {
+            setSelectedDepartamento(newValue);
+            setSelectedEquipoTrabajo("")
+            // Filtrar equipos de trabajo según el departamento seleccionado
+            const equiposTrabajoFiltrados = EquiposTrabajo.filter((equipo) => equipo.idDepartamento === newValue.idDepartamento);
+            setFilteredEquiposTrabajo(equiposTrabajoFiltrados);
+        } else {
+            setSelectedDepartamento(null);
+            setFilteredEquiposTrabajo([]); // Limpiar la lista de equipos de trabajo filtrados cuando no hay departamento seleccionado
+        }
+    }
 
     function handleSindicatoChange(event, newValue) {
         if (newValue) {
@@ -150,42 +227,42 @@ const NewEmpleado = () => {
             return Swal.fire({
                 title: 'Por favor ingresar nombre del empleado.',
                 icon: 'error',
-                
+
             })
         }
         if (Apellido === undefined) {
             return Swal.fire({
                 title: 'Por favor ingresar apellido del empleado.',
                 icon: 'error',
-                
+
             })
         }
         if (Email === undefined) {
             return Swal.fire({
                 title: 'Por favor ingresar email del empleado.',
                 icon: 'error',
-                
+
             })
         }
         if (DNI === undefined) {
             return Swal.fire({
                 title: 'Por favor ingresar DNI del empleado.',
                 icon: 'error',
-                
+
             })
         }
         if (Legajo === undefined) {
             return Swal.fire({
                 title: 'Por favor ingresar Legajo del empleado.',
                 icon: 'error',
-                
+
             })
         }
         if (Celular === undefined) {
             return Swal.fire({
                 title: 'Por favor ingresar Celular del empleado.',
                 icon: 'error',
-                
+
             })
         }
         if (fechaNacimiento === '') {
@@ -209,28 +286,28 @@ const NewEmpleado = () => {
 
             })
         }
-        if (selectedPuestoTrabajo === undefined) {
+        if (selectedPuestoTrabajo == null) {
             return Swal.fire({
                 title: 'Por favor ingresar al menos un puesto de trabajo del empleado.',
                 icon: 'error',
 
             })
         }
-        if (selectedEquipoTrabajo=== undefined) {
+        if (selectedEquipoTrabajo === null) {
             return Swal.fire({
                 title: 'Por favor ingresar al menos un equipo de trabajo del empleado.',
                 icon: 'error',
 
             })
         }
-        if (selectedSindicato === undefined) {
+        if (selectedSindicato === null) {
             return Swal.fire({
                 title: 'Por favor ingresar sindicato de trabajo del empleado.',
                 icon: 'error',
 
             })
         }
-        if (selectedObraSocial === undefined) {
+        if (selectedObraSocial === null) {
             return Swal.fire({
                 title: 'Por favor ingresar obra social de trabajo del empleado.',
                 icon: 'error',
@@ -238,18 +315,28 @@ const NewEmpleado = () => {
             })
         }
 
-        postNewEmpleado(Nombre, Apellido, Email,DNI,Legajo,Celular, fechaNacimiento, Direccion, Ciudad, selectedPuestoTrabajo,selectedEquipoTrabajo,selectedSindicato,selectedObraSocial).then((response) => {
-            Swal.fire({
-                title: "Empleado registrado con exito!",
-                icon: 'success',
-                willClose: () => {
-                    setTimeout(() => {
-                        // history.push(rootPath + '/Empleados');
-                    }, 1500);
+        postNewEmpleado(Nombre, Apellido, Email, DNI, Legajo, Celular, fechaNacimiento, Direccion, Ciudad, selectedPuestoTrabajo, selectedEquipoTrabajo, selectedSindicato, selectedObraSocial)
+            .then((response) => {
+                console.log(response);
+                if (response.data == "Ya existe un empleado con ese DNI o Legajo.") {
+                    Swal.fire({
+                        title: response.data,
+                        icon: 'error',
+                    })
+
+                }
+                else {
+                    Swal.fire({
+                        title: "Empleado registrado con exito!",
+                        icon: 'success',
+                        willClose: () => {
+                            setTimeout(() => {
+                                navigate('/empleados');
+                            }, 1000);
+                        }
+                    })
                 }
             })
-        })
-
             .catch((error) => {
                 Swal.fire({
                     title: error.response.data.message,
@@ -257,7 +344,6 @@ const NewEmpleado = () => {
 
                 })
             });
-
     }
 
     const goToEmpleadosList = () => {
@@ -266,7 +352,7 @@ const NewEmpleado = () => {
 
     return (
         <Box>
-            <Button sx={{margin: 1}} color="primary" onClick={goToEmpleadosList} variant='outlined' size='small'>Volver a empleados</Button>
+            <Button sx={{ margin: 1 }} color="primary" onClick={goToEmpleadosList} variant='outlined' size='small'>Volver a empleados</Button>
             <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
                 <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
                     <FormControl sx={{ width: '20rem' }} >
@@ -332,6 +418,7 @@ const NewEmpleado = () => {
                                 }}
                                 inputFormat='DD/MM/YYYY'
                                 renderInput={(params) => <TextField {...params} helperText='Ingrese fecha de nacimiento' />}
+                                maxDate={dayjs().subtract(1, 'day')}  // Establece la fecha máxima como ayer
                             />
                         </LocalizationProvider>
                     </FormControl>
@@ -358,7 +445,7 @@ const NewEmpleado = () => {
                     </FormControl>
                 </Grid>
                 <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
-                <FormControl >
+                    <FormControl >
                         <TextField id="legajo" label="Legajo" type={'number'} sx={{
                             ".css-1wc848c-MuiFormHelperText-root": {
                                 fontSize: "1rem",
@@ -369,8 +456,56 @@ const NewEmpleado = () => {
             </Grid>
 
             <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
-                <Grid xs={12} md={6} style={{ marginBottom: 10 }} >
-                <Autocomplete
+                <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
+                    <Autocomplete
+                        disablePortal
+                        id="area-autocomplete"
+                        options={Areas}
+                        getOptionLabel={(option) => typeof option === 'object' ? option.descripcion || '' : option}
+                        sx={{ width: 300 }}
+                        onChange={handleAreaChange}
+                        renderInput={(params) => <TextField {...params} label="Areas" />}
+                    />
+                </Grid>
+                <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
+                    <Autocomplete
+                        disablePortal
+                        value={selectedDepartamento.descripcion}
+                        id="departamento-autocomplete"
+                        options={filteredDepartamentos}
+                        getOptionLabel={(option) => typeof option === 'object' ? option.descripcion || '' : option}
+                        sx={{ width: 300 }}
+                        onChange={handleDepartamentoChange}
+                        renderInput={(params) => <TextField {...params} label="Departamentos" />}
+                    />
+                </Grid>
+                <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
+                    <Autocomplete
+                        disablePortal
+                        id="equipo-trabajo-autocomplete"
+                        value={selectedEquipoTrabajo.descripcion}
+                        options={filteredEquiposTrabajo}
+                        getOptionLabel={(option) => typeof option === 'object' ? option.descripcionEquipoTrabajo || '' : option}
+                        sx={{ width: 300 }}
+                        onChange={handleEquipoTrabajoChange}
+                        renderInput={(params) => <TextField {...params} label="Equipos de Trabajo" />}
+                    />
+                </Grid>
+            </Grid>
+            <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
+                <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
+                    <Autocomplete
+                        disablePortal
+                        id="sindicato-autocomplete"
+                        options={Sindicatos}
+                        getOptionLabel={(option) => typeof option === 'object' ? option.descripcion || '' : option}
+                        sx={{ width: 300 }}
+                        onChange={handleSindicatoChange}
+                        renderInput={(params) => <TextField {...params} label="Sindicatos" />}
+                    />
+                </Grid>
+                <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
+                    <Autocomplete
                         disablePortal
                         id="puesto-trabajo-autocomplete"
                         options={PuestosTrabajo}
@@ -380,33 +515,8 @@ const NewEmpleado = () => {
                         renderInput={(params) => <TextField {...params} label="Puestos de Trabajo" />}
                     />
                 </Grid>
-                <Grid xs={12} md={6} style={{ marginBottom: 10 }} >
-                <Autocomplete
-                        disablePortal
-                        id="equipo-trabajo-autocomplete"
-                        options={EquiposTrabajo}
-                        getOptionLabel={(option) => typeof option === 'object' ? option.descripcionEquipoTrabajo || '' : option}
-                        sx={{ width: 300 }}
-                        onChange={handleEquipoTrabajoChange}
-                        renderInput={(params) => <TextField {...params} label="Equipos de Trabajo" />}
-                    />
-                </Grid>
-            </Grid>
-            <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
-                <Grid xs={12} md={6} style={{ marginBottom: 10 }} >
-                <Autocomplete
-                        disablePortal
-                        id="sindicato-autocomplete"
-                        options={Sindicatos}
-                        getOptionLabel={(option) => typeof option === 'object' ? option.descripcion || '' : option}
-                        sx={{ width: 300 }}
-                        onChange={handleSindicatoChange}
-                        renderInput={(params) => <TextField {...params} label="Sindicatos" />}
-                    />
-
-                </Grid>
-                <Grid xs={12} md={6} style={{ marginBottom: 10 }} >
-                <Autocomplete
+                <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
+                    <Autocomplete
                         disablePortal
                         id="obra-social-autocomplete"
                         options={ObraSocial}

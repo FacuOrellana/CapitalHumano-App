@@ -26,6 +26,7 @@ const ListadoEmplados = () => {
                     nombre: Empleado.nombre,
                     apellido: Empleado.apellido,
                     dni: Empleado.dni,
+                    legajo:Empleado.legajo,
                     celular: Empleado.celular,
                     idObrasocial: Empleado.obraSocial.descripcion,
                     idSindicato: Empleado.sindicato.descripcion,
@@ -56,6 +57,11 @@ const ListadoEmplados = () => {
         {
             field: 'dni',
             headerName: 'DNI',
+            width: 150,
+        },
+        {
+            field: 'legajo',
+            headerName: 'Legajo',
             width: 150,
         }
         ,
