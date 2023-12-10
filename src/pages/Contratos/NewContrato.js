@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, FormControl, Grid, TextField } from "@mui/material";
+import { Autocomplete, Box, Button, FormControl, Grid, Stack, TextField } from "@mui/material";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +6,7 @@ import { getAllEmpleados } from "../../api/Empleados/EmpleadosApiCalls";
 import Swal from "sweetalert2";
 import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { postNewContrato } from "../../api/Contratos/ContratosApiCalls";
 
 
 
@@ -64,13 +65,13 @@ const NewContrato = () => {
     };
     function handleEmpleado(event, newValue) {
         if (newValue) {
-            setSelectedEmpleado(newValue.idEmpleado);
+            setSelectedEmpleado(newValue.id);
         } else {
             setSelectedEmpleado(null);
         }
     }
 
-    function AddEmpleado() {
+    function AddContrato() {
         if (FechaInicio === undefined) {
             return Swal.fire({
                 title: 'Por favor ingresar la fecha de inicio.',
@@ -95,22 +96,22 @@ const NewContrato = () => {
                 icon: 'error',
             })
         }
-        // postNewEmpleado(FechaInicio, FechaFin, Sueldo, Seniority, selectedEmpleado).then((response) => {
-        //     Swal.fire({
-        //         title: "Contrato registrado con exito!",
-        //         icon: 'success',
-        //         willClose: () => {
-        //             setTimeout(() => {
-        //                 goToContratos();
-        //             }, 250);
-        //         }
-        //     })
-        // }).catch((error) => {
-        //     Swal.fire({
-        //         title: error.response.data.message,
-        //         icon: 'error',
-        //     })
-        // });
+        postNewContrato(FechaInicio, FechaFin, Sueldo, Seniority, selectedEmpleado).then((response) => {
+            Swal.fire({
+                title: "Contrato registrado con exito!",
+                icon: 'success',
+                willClose: () => {
+                    setTimeout(() => {
+                        goToContratos();
+                    }, 250);
+                }
+            })
+        }).catch((error) => {
+            Swal.fire({
+                title: error.response.data.message,
+                icon: 'error',
+            })
+        });
     }
     return (
         <Box>
@@ -175,13 +176,18 @@ const NewContrato = () => {
                         disablePortal
                         id="empleado-autocomplete"
                         options={Empleados}
-                        getOptionLabel={(option) => typeof option === 'object' ? option.nombre + " "+ option.apellido || '' : option}
+                        getOptionLabel={(option) => typeof option === 'object' ? option.nombre + " " + option.apellido || '' : option}
                         sx={{ width: 300 }}
                         onChange={handleEmpleado}
                         renderInput={(params) => <TextField {...params} label="Empleados" />}
                     />
                 </Grid>
             </Grid>
+            <Stack spacing={2} sx={{ width: '10%', margin: 'auto' }}>
+                <Button variant="contained" color='success' onClick={AddContrato}>
+                    Registrar Contrato
+                </Button>
+            </Stack>
         </Box>
     );
 }

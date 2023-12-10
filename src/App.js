@@ -25,6 +25,7 @@ import ListadoTipoExperiencia from './pages/TiposExperiencias/ListadoTipoExperie
 import NewTipoExperiencia from './pages/TiposExperiencias/NewTipoExperiencia';
 import EditTipoExperiencia from './pages/TiposExperiencias/EditTipoExperiencia';
 import NewContrato from './pages/Contratos/NewContrato';
+import EditContrato from './pages/Contratos/EditContrato';
 
 
 
@@ -42,7 +43,8 @@ function App() {
         <Route path='/empleados' element={<ListadoEmplados />} />
         <Route path='/empleados/newempleado' element={<NewEmpleado />} />
         <Route exact path={'/empleados/:id'} element={<EditEmpleado />} />
-        <Route path='/contratos' element={<ListadoContratos />} />
+        <Route path='/contratos' element={<ListadoContratos />} />        
+        <Route path='/contratos/newcontrato' element={<NewContrato />} />
         <Route path='/areas' element={<ListadoAreas />} />
         <Route path='/areas/newarea' element={<NewArea />} />
         <Route exact path={'/areas/:id'} element={<EditArea />} />
@@ -62,7 +64,8 @@ function App() {
         <Route path='/tipoexperiencia' element={< ListadoTipoExperiencia />} />        
         <Route path='/tipoexperiencia/newtipoexperiencia' element={<NewTipoExperiencia />} />
         <Route exact path={'/tipoexperiencia/:id'} element={<EditTipoExperiencia />} />
-        <Route exact path={'/contratos/:id'} element={<NewContrato />} />         
+        <Route exact path={'/contratos/:id'} element={<EditContrato />} />
+        
 
       </Routes>
     </>
