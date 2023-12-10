@@ -390,7 +390,7 @@ const EditEmpleado = () => {
                   id="puesto-trabajo-autocomplete"
                   options={PuestosTrabajo}
                   value={selectedPuestoTrabajo}
-                  getOptionLabel={(option) => option.descripcion || ''}
+                  getOptionLabel={(option) => option.nombre || ''}
                   sx={{ width: 300 }}
                   onChange={handlePuestoTrabajoChange}
                   renderInput={(params) => <TextField {...params} label="Puestos de Trabajo" />}
