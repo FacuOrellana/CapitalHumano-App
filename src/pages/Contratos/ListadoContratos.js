@@ -124,7 +124,6 @@ const ListadoEmplados = () => {
     const goToNewContrato = () => {
         navigate('/contratos/newcontrato');
     };
-
     return (
         <Box>
             <Button sx={{margin: 1}} color="primary" onClick={goToInicio} variant='outlined' size='small'>Volver a inicio</Button>

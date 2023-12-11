@@ -31,7 +31,7 @@ const Inicio = () => {
       name: 'departamentos',
       title: 'Departamentos',
       description: 'Gestion de departamentos.',
-      image: '/imagenes/area.jpg',
+      image: '/imagenes/departamento.jpg',
       but: "Ir a departamentos",
       link: "/departamentos"
     },
@@ -71,7 +71,7 @@ const Inicio = () => {
       name: 'habilidad',
       title: 'Habilidades',
       description: 'Explora la información sobre las Habilidades.',
-      image: '/imagenes/employee.jpg',
+      image: '/imagenes/habilidad.jpg',
       but: "Ir a habilidades",
       link: "/habilidad"
     },
@@ -79,7 +79,7 @@ const Inicio = () => {
       name: 'tipoexperiencia',
       title: 'Tipos de Experiencias',
       description: 'Explora la información sobre los Tipos de Experiencias.',
-      image: '/imagenes/employee.jpg',
+      image: '/imagenes/tipoexperiencia.jpg',
       but: "Ir a tipos Experiencias",
       link: "/tipoexperiencia"
     },
@@ -87,7 +87,7 @@ const Inicio = () => {
       name: 'experiencia',
       title: 'Experiencias',
       description: 'Explora la información sobre las Experiencias.',
-      image: '/imagenes/employee.jpg',
+      image: '/imagenes/experiencia.jpeg',
       but: "Ir a Experiencias",
       link: "/experiencia"
     },
@@ -95,7 +95,7 @@ const Inicio = () => {
       name: 'equipostrabajo',
       title: 'Equipos de trabajo',
       description: 'Gestion de equipos de trabajo.',
-      image: '/imagenes/sindicato.jpg',
+      image: '/imagenes/equipotrabajo.jpg',
       but: "Ir a equipos de trabajo",
       link: "/equipostrabajo"
     },

@@ -4,6 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
 import { deleteDepartamento, getAllDepartamentos } from '../../api/Departamentos/DepartamentosApiCalls';
+import Swal from 'sweetalert2';
 
 
 const ListadoDepartamentos = () => {
@@ -42,8 +43,27 @@ const ListadoDepartamentos = () => {
                 const onDelete = (e) => {
                     const currentRow = params.row;
                     let id = currentRow.id;
-                    deleteDepartamento(id);
-                    setRefresh(!refresh);                    
+                    Swal.fire({
+                        title: "Estas seguro que quieres eliminar el departamento?",
+                        text: "Una vez eliminado el departamento no se podra revertir.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Si, eliminar!"
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          Swal.fire({
+                            title: "Eliminado!",
+                            text: "El departamento ha sido eliminado con exito.",
+                            icon: "success",
+                            willClose: () => {
+                                deleteDepartamento(id);
+                                setRefresh(!refresh);       
+                            }
+                          });
+                        }
+                      });             
                 };
                 return (<>
                     <Stack direction="row" spacing={2}>

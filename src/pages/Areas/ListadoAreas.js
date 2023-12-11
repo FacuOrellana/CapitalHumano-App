@@ -4,6 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { resolvePath, useNavigate } from 'react-router-dom';
 import { deleteArea, getAllAreas } from '../../api/Areas/AreaApiCalls';
 import { DataGrid } from '@mui/x-data-grid';
+import Swal from 'sweetalert2';
 
 
 const ListadoAreas = () => {
@@ -37,9 +38,28 @@ const ListadoAreas = () => {
                 };
                 const onDelete = (e) => {
                     const currentRow = params.row;
-                    let id = currentRow.id;
-                    deleteArea(id);
-                    setRefresh(!refresh);                    
+                    let id = currentRow.id;                    
+                    Swal.fire({
+                        title: "Estas seguro que quieres eliminar el area?",
+                        text: "Una vez eliminado el area no se podra revertir.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Si, eliminar!"
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          Swal.fire({
+                            title: "Eliminado!",
+                            text: "El area ha sido eliminada con exito.",
+                            icon: "success",
+                            willClose: () => {
+                                deleteArea(id);
+                                setRefresh(!refresh);       
+                            }
+                          });
+                        }
+                      });                 
                 };
                 return (<>
 
