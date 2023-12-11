@@ -28,6 +28,14 @@ const Inicio = () => {
       link: "/areas"
     },
     {
+      name: 'departamentos',
+      title: 'Departamentos',
+      description: 'Gestion de departamentos.',
+      image: '/imagenes/area.jpg',
+      but: "Ir a departamentos",
+      link: "/departamentos"
+    },
+    {
       name: 'contratos',
       title: 'Contratos',
       description: 'Gestion de los contratos que estan asociados a los empleados.',
@@ -82,6 +90,14 @@ const Inicio = () => {
       image: '/imagenes/employee.jpg',
       but: "Ir a Experiencias",
       link: "/experiencia"
+    },
+    {
+      name: 'equipostrabajo',
+      title: 'Equipos de trabajo',
+      description: 'Gestion de equipos de trabajo.',
+      image: '/imagenes/sindicato.jpg',
+      but: "Ir a equipos de trabajo",
+      link: "/equipostrabajo"
     },
   ];
 

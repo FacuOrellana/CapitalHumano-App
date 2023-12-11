@@ -26,6 +26,10 @@ import NewTipoExperiencia from './pages/TiposExperiencias/NewTipoExperiencia';
 import EditTipoExperiencia from './pages/TiposExperiencias/EditTipoExperiencia';
 import NewContrato from './pages/Contratos/NewContrato';
 import EditContrato from './pages/Contratos/EditContrato';
+import ListadoEquipoTrabajo from './pages/EquipoTrabajo/ListadoEquipoTrabajo';
+import ListadoDepartamentos from './pages/Departamento/ListadoDepartamento';
+import NewDepartamento from './pages/Departamento/NewDepartamento';
+import EditDepartamento from './pages/Departamento/EditDepartamento';
 
 
 
@@ -65,8 +69,10 @@ function App() {
         <Route path='/tipoexperiencia/newtipoexperiencia' element={<NewTipoExperiencia />} />
         <Route exact path={'/tipoexperiencia/:id'} element={<EditTipoExperiencia />} />
         <Route exact path={'/contratos/:id'} element={<EditContrato />} />
-        
-
+        <Route path='/equipostrabajo' element={< ListadoEquipoTrabajo />} />        
+        <Route path='/departamentos' element={< ListadoDepartamentos />} />
+        <Route path='/departamentos/newdepartamento' element={<NewDepartamento />} />        
+        <Route exact path='/departamentos/:id' element={<EditDepartamento />} />
       </Routes>
     </>
   );

@@ -11,11 +11,6 @@ const NewSindicato = () => {
     const [Aporte, setAporte] = useState();
     const navigate = useNavigate();
 
-
-    // const setError = (error, header) => {
-    //     console.log(error);
-    // };
-
     const handleChangeDescripcion = (event) => {
         setDescripcion(event.target.value);
     };
