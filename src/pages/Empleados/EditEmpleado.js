@@ -316,15 +316,25 @@ const EditEmpleado = () => {
         }
 
         updateEmpleado(id,Nombre, Apellido, Email,DNI,Legajo,Celular, fechaNacimiento, Direccion, Ciudad, selectedPuestoTrabajo,selectedEquipoTrabajo,selectedSindicato,selectedObraSocial).then((response) => {
-            Swal.fire({
-                title: "Empleado editado con exito!",
-                icon: 'success',
-                willClose: () => {
-                    setTimeout(() => {
-                        navigate('/empleados');
-                    }, 1000);
-                }
-            })
+            console.log(response);
+            if (response.data === "Ya existe un empleado con ese DNI o Legajo." || response.data == "No se encontro un empleado con ese ID" ) {
+                Swal.fire({
+                    title: response.data,
+                    icon: 'error',
+                })
+
+            }
+            else {
+                Swal.fire({
+                    title: "Empleado editado con exito!",
+                    icon: 'success',
+                    willClose: () => {
+                        setTimeout(() => {
+                            navigate('/empleados');
+                        }, 1000);
+                    }
+                })
+            }
 
         })
 
