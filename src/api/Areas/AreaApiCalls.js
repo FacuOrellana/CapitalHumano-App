@@ -19,7 +19,7 @@ export const getAreaById = async (id) => {
     } catch (error) {
         console.log(error);
         throw error;
-    }
+    } 
 }
 
 export const postNewArea = async ( descripcion ) => {

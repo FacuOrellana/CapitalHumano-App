@@ -66,7 +66,7 @@ const NewEmpleado = () => {
                 return {
                     idEquipoTrabajo: Equipo.idEquipoTrabajo,
                     descripcionEquipoTrabajo: Equipo.descripcion,
-                    idDepartamento: Equipo.idDepartamento,
+                    idDepartamento: Equipo.departamentoIdDepartamento,
                 };
             });
             setEquiposTrabajo(parsedData);
@@ -111,7 +111,7 @@ const NewEmpleado = () => {
                 return {
                     idDepartamento: Departamento.idDepartamento,
                     descripcion: Departamento.descripcion,
-                    idArea: Departamento.idArea
+                    idArea: Departamento.areaIdArea
                 };
             });
             setDepartamentos(parsedData)
@@ -121,23 +121,7 @@ const NewEmpleado = () => {
 
     }, []);
 
-    // const departamentosIT = [{
-    //     descripcion: "hola",
-    //     id: 1
-    // },
-    // {
-    //     descripcion: "hola2",
-    //     id: 2
-    // }]
-    // useEffect(() => {
-    //     if(selectedArea===10)
-    //     {
-    //         setFilteredDepartamentos(departamentosIT)
-    //     }
-    //      else if(selectedArea===13){
-    //         setFilteredDepartamentos(departamentosIT)
-    //     }
-    // }, [selectedArea]);
+
 
     const handleChangeNombre = (event) => {
         setNombre(event.target.value);
@@ -176,11 +160,13 @@ const NewEmpleado = () => {
     function handleEquipoTrabajoChange(event, newValue) {
         if (newValue) {
             setSelectedEquipoTrabajo(newValue.idEquipoTrabajo);
+            console.log(selectedEquipoTrabajo);
         } else {
             setSelectedEquipoTrabajo(null);
         }
     }
     function handleAreaChange(event, newValue) {
+        console.log("hola");
         if (newValue) {
             setSelectedArea(newValue.idArea);
             setSelectedDepartamento("");
@@ -194,6 +180,7 @@ const NewEmpleado = () => {
         }
     }
     function handleDepartamentoChange(event, newValue) {
+        console.log("hola");
         if (newValue) {
             setSelectedDepartamento(newValue);
             setSelectedEquipoTrabajo("")
@@ -223,46 +210,46 @@ const NewEmpleado = () => {
     }
 
     function AddEmpleado() {
-        if (Nombre === undefined) {
+        if (Nombre === undefined || Nombre==="") {
             return Swal.fire({
                 title: 'Por favor ingresar nombre del empleado.',
                 icon: 'error',
-
+                
             })
         }
-        if (Apellido === undefined) {
+        if (Apellido === undefined || Apellido==="") {
             return Swal.fire({
                 title: 'Por favor ingresar apellido del empleado.',
                 icon: 'error',
-
+                
             })
         }
-        if (Email === undefined) {
+        if (Email === undefined || Email==="") {
             return Swal.fire({
                 title: 'Por favor ingresar email del empleado.',
                 icon: 'error',
-
+                
             })
         }
-        if (DNI === undefined) {
+        if (DNI === undefined || DNI==="") {
             return Swal.fire({
                 title: 'Por favor ingresar DNI del empleado.',
                 icon: 'error',
-
+                
             })
         }
-        if (Legajo === undefined) {
+        if (Legajo === undefined || Legajo==="") {
             return Swal.fire({
                 title: 'Por favor ingresar Legajo del empleado.',
                 icon: 'error',
-
+                
             })
         }
         if (Celular === undefined) {
             return Swal.fire({
                 title: 'Por favor ingresar Celular del empleado.',
                 icon: 'error',
-
+                
             })
         }
         if (fechaNacimiento === '') {
@@ -272,14 +259,14 @@ const NewEmpleado = () => {
 
             })
         }
-        if (Direccion === undefined) {
+        if (Direccion === undefined || Direccion==="") {
             return Swal.fire({
                 title: 'Por favor ingresar Direccion del empleado.',
                 icon: 'error',
 
             })
         }
-        if (Ciudad === undefined) {
+        if (Ciudad === undefined || Ciudad==="") {
             return Swal.fire({
                 title: 'Por favor ingresar Ciudad del empleado.',
                 icon: 'error',
@@ -293,7 +280,7 @@ const NewEmpleado = () => {
 
             })
         }
-        if (selectedEquipoTrabajo === null) {
+        if (selectedEquipoTrabajo === null || selectedEquipoTrabajo==="") {
             return Swal.fire({
                 title: 'Por favor ingresar al menos un equipo de trabajo del empleado.',
                 icon: 'error',
@@ -483,7 +470,7 @@ const NewEmpleado = () => {
                     <Autocomplete
                         disablePortal
                         id="equipo-trabajo-autocomplete"
-                        value={selectedEquipoTrabajo.descripcion}
+                        value={selectedEquipoTrabajo?.descripcionEquipoTrabajo}
                         options={filteredEquiposTrabajo}
                         getOptionLabel={(option) => typeof option === 'object' ? option.descripcionEquipoTrabajo || '' : option}
                         sx={{ width: 300 }}

@@ -12,6 +12,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDatePicker } from '@mui/x-date-pickers';
 import { useParams } from 'react-router-dom';
 import axios from "axios";
+import { getAllDepartamentos } from '../../api/Departamentos/DepartamentosApiCalls';
+import { getAllAreas } from '../../api/Areas/AreaApiCalls';
 
 
 const EditEmpleado = () => {
@@ -30,22 +32,29 @@ const EditEmpleado = () => {
     const [EquiposTrabajo, setEquiposTrabajo] = useState([]);
     const [Sindicatos, setSindicatos] = useState([])
     const [ObraSocial, setObraSocial] = useState([])
-    const [selectedPuestoTrabajo, setSelectedPuestoTrabajo] = useState({});
-    const [selectedEquipoTrabajo, setSelectedEquipoTrabajo] = useState({});
-    const [selectedSindicato, setSelectedSindicato] = useState({});
-    const [selectedObraSocial, setSelectedObraSocial] = useState({});
+    const [Areas, setAreas] = useState([])
+    const [selectedArea, setSelectedArea] = useState(null);
+    const [Departamentos, setDepartamentos] = useState([])
+    const [filteredDepartamentos, setFilteredDepartamentos] = useState([]);
+    const [filteredEquiposTrabajo, setFilteredEquiposTrabajo] = useState([]);
+    const [selectedDepartamento, setSelectedDepartamento] = useState({descripcion:""});
+    const [selectedPuestoTrabajo, setSelectedPuestoTrabajo] = useState({descripcion:""});
+    const [selectedEquipoTrabajo, setSelectedEquipoTrabajo] = useState({descripcion:""});
+    const [selectedSindicato, setSelectedSindicato] = useState(null);
+    const [selectedObraSocial, setSelectedObraSocial] = useState(null);
     const setError = (error, header) => {
         console.log(error);
     };
 
 
+  
     useEffect(() => {
         getAllPuestosTrabajo().then((response) => {
             const parsedData = response.map((Puesto) => {
                 return {
                     idPuestoTrabajo: Puesto.idPuestoTrabajo,
                     nombre: Puesto.nombre,
-                    descripcion: Puesto.descripcion
+                    descripcionPuesto: Puesto.descripcion
                 };
             });
             setPuestosTrabajo(parsedData);
@@ -56,7 +65,8 @@ const EditEmpleado = () => {
             const parsedData = response.map((Equipo) => {
                 return {
                     idEquipoTrabajo: Equipo.idEquipoTrabajo,
-                    descripcion: Equipo.descripcion
+                    descripcion: Equipo.descripcion,
+                    idDepartamento: Equipo.departamentoIdDepartamento,
                 };
             });
             setEquiposTrabajo(parsedData);
@@ -85,6 +95,30 @@ const EditEmpleado = () => {
         }).catch((error) => {
             setError(error, 'Error al listar Obras Sociales.');
         });
+        getAllAreas().then((response) => {
+            const parsedData = response.map((Area) => {
+                return {
+                    idArea: Area.idArea,
+                    descripcion: Area.descripcion
+                };
+            });
+            setAreas(parsedData)
+        }).catch((error) => {
+            setError(error, 'Error al listar Areas.');
+        });
+        getAllDepartamentos().then((response) => {
+            console.log(response);
+            const parsedData = response.map((Departamento) => {
+                return {
+                    idDepartamento: Departamento.idDepartamento,
+                    descripcion: Departamento.descripcion,
+                    idArea: Departamento.areaIdArea
+                };
+            });
+            setDepartamentos(parsedData)
+        }).catch((error) => {
+            setError(error, 'Error al listar Departamentos.');
+        });
 
     }, []);
 
@@ -92,6 +126,7 @@ const EditEmpleado = () => {
     
     useEffect(() => {
         getEmpleadoById(id).then((response) => {
+            console.log(response);
             setNombre(response.data.nombre);
             setApellido(response.data.apellido);
             setEmail(response.data.email);
@@ -103,6 +138,8 @@ const EditEmpleado = () => {
             setCelular(response.data.celular);
             setSelectedPuestoTrabajo(response.data.puestoTrabajo)
             setSelectedEquipoTrabajo(response.data.equipoTrabajo)
+            setSelectedArea(response.data.equipoTrabajo.departamento.area)
+            setSelectedDepartamento(response.data.equipoTrabajo.departamento)
             setSelectedObraSocial(response.data.obraSocial)
             setSelectedSindicato(response.data.sindicato)
         }).catch((error) => {
@@ -112,6 +149,41 @@ const EditEmpleado = () => {
         
     }, [])
 
+    function handleAreaChange(event, newValue) {
+        if (newValue) {
+            setSelectedArea(newValue);
+            setSelectedDepartamento("");
+            setSelectedEquipoTrabajo("")
+            // Filtrar departamentos según el área seleccionada
+            const departamentosFiltrados = Departamentos.filter((departamento) => departamento.idArea === newValue.idArea);
+            setFilteredDepartamentos(departamentosFiltrados);
+        } else {
+            setSelectedArea(null);
+            setFilteredDepartamentos([]); // Limpiar la lista de departamentos filtrados cuando no hay área seleccionada
+        }
+    }
+    function handleDepartamentoChange(event, newValue) {
+        if (newValue) {
+            setSelectedDepartamento(newValue);
+            console.log(newValue);
+            setSelectedEquipoTrabajo("")
+            // Filtrar equipos de trabajo según el departamento seleccionado
+            console.log(EquiposTrabajo);
+            const equiposTrabajoFiltrados = EquiposTrabajo.filter((equipo) => equipo.idDepartamento === newValue.idDepartamento);
+            console.log(equiposTrabajoFiltrados);
+            setFilteredEquiposTrabajo(equiposTrabajoFiltrados);
+        } else {
+            setSelectedDepartamento(null);
+            setFilteredEquiposTrabajo([]); // Limpiar la lista de equipos de trabajo filtrados cuando no hay departamento seleccionado
+        }
+    }
+    function handleEquipoTrabajoChange(event, newValue) {
+        if (newValue) {
+            setSelectedEquipoTrabajo(newValue);
+        } else {
+            setSelectedEquipoTrabajo(null);
+        }
+    }
     const handleChangeNombre = (event) => {
         setNombre(event.target.value);
     };
@@ -142,10 +214,6 @@ const EditEmpleado = () => {
         setSelectedPuestoTrabajo(newValue);
     }
 
-    function handleEquipoTrabajoChange(event, newValue) {
-            setSelectedEquipoTrabajo(newValue);
-    }
-
     function handleSindicatoChange(event, newValue) {
             setSelectedSindicato(newValue);
     }
@@ -155,35 +223,35 @@ const EditEmpleado = () => {
     }
     
     function EditEmpleado() {
-        if (Nombre === undefined) {
+        if (Nombre === undefined || Nombre==="") {
             return Swal.fire({
                 title: 'Por favor ingresar nombre del empleado.',
                 icon: 'error',
                 
             })
         }
-        if (Apellido === undefined) {
+        if (Apellido === undefined || Apellido==="") {
             return Swal.fire({
                 title: 'Por favor ingresar apellido del empleado.',
                 icon: 'error',
                 
             })
         }
-        if (Email === undefined) {
+        if (Email === undefined || Email==="") {
             return Swal.fire({
                 title: 'Por favor ingresar email del empleado.',
                 icon: 'error',
                 
             })
         }
-        if (DNI === undefined) {
+        if (DNI === undefined || DNI==="") {
             return Swal.fire({
                 title: 'Por favor ingresar DNI del empleado.',
                 icon: 'error',
                 
             })
         }
-        if (Legajo === undefined) {
+        if (Legajo === undefined || Legajo==="") {
             return Swal.fire({
                 title: 'Por favor ingresar Legajo del empleado.',
                 icon: 'error',
@@ -204,42 +272,42 @@ const EditEmpleado = () => {
 
             })
         }
-        if (Direccion === undefined) {
+        if (Direccion === undefined || Direccion==="") {
             return Swal.fire({
                 title: 'Por favor ingresar Direccion del empleado.',
                 icon: 'error',
 
             })
         }
-        if (Ciudad === undefined) {
+        if (Ciudad === undefined || Ciudad==="") {
             return Swal.fire({
                 title: 'Por favor ingresar Ciudad del empleado.',
                 icon: 'error',
 
             })
         }
-        if (selectedPuestoTrabajo === undefined) {
+        if (selectedPuestoTrabajo === null) {
             return Swal.fire({
                 title: 'Por favor ingresar al menos un puesto de trabajo del empleado.',
                 icon: 'error',
 
             })
         }
-        if (selectedEquipoTrabajo=== undefined) {
+        if (selectedEquipoTrabajo=== null) {
             return Swal.fire({
                 title: 'Por favor ingresar al menos un equipo de trabajo del empleado.',
                 icon: 'error',
 
             })
         }
-        if (selectedSindicato === undefined) {
+        if (selectedSindicato === null) {
             return Swal.fire({
                 title: 'Por favor ingresar sindicato de trabajo del empleado.',
                 icon: 'error',
 
             })
         }
-        if (selectedObraSocial === undefined) {
+        if (selectedObraSocial === null) {
             return Swal.fire({
                 title: 'Por favor ingresar obra social de trabajo del empleado.',
                 icon: 'error',
@@ -253,8 +321,8 @@ const EditEmpleado = () => {
                 icon: 'success',
                 willClose: () => {
                     setTimeout(() => {
-                        // history.push(rootPath + '/Empleados');
-                    }, 1500);
+                        navigate('/empleados');
+                    }, 1000);
                 }
             })
 
@@ -384,59 +452,81 @@ const EditEmpleado = () => {
         </Grid>
 
         <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
-            <Grid xs={12} md={6} style={{ marginBottom: 10 }} >
-            <Autocomplete
-                  disablePortal
-                  id="puesto-trabajo-autocomplete"
-                  options={PuestosTrabajo}
-                  value={selectedPuestoTrabajo}
-                  getOptionLabel={(option) => option.nombre || ''}
-                  sx={{ width: 300 }}
-                  onChange={handlePuestoTrabajoChange}
-                  renderInput={(params) => <TextField {...params} label="Puestos de Trabajo" />}
-             
-                />
+                <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
+                    <Autocomplete
+                        disablePortal
+                        id="area-autocomplete"
+                        value={selectedArea}
+                        options={Areas}
+                        getOptionLabel={(option) => typeof option === 'object' ? option.descripcion || '' : option}
+                        sx={{ width: 300 }}
+                        onChange={handleAreaChange}
+                        renderInput={(params) => <TextField {...params} label="Areas" />}
+                    />
+                </Grid>
+                <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
+                    <Autocomplete
+                        disablePortal
+                        value={selectedDepartamento?.descripcion}
+                        id="departamento-autocomplete"
+                        options={filteredDepartamentos}
+                        getOptionLabel={(option) => typeof option === 'object' ? option.descripcion || '' : option}
+                        sx={{ width: 300 }}
+                        onChange={handleDepartamentoChange}
+                        renderInput={(params) => <TextField {...params} label="Departamentos" />}
+                    />
+                </Grid>
+                <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
+                    <Autocomplete
+                        disablePortal
+                        id="equipo-trabajo-autocomplete"
+                        value={selectedEquipoTrabajo?.descripcion}
+                        options={filteredEquiposTrabajo}
+                        getOptionLabel={(option) => typeof option === 'object' ? option.descripcion || '' : option}
+                        sx={{ width: 300 }}
+                        onChange={handleEquipoTrabajoChange}
+                        renderInput={(params) => <TextField {...params} label="Equipos de Trabajo" />}
+                    />
+                </Grid>
             </Grid>
-            <Grid xs={12} md={6} style={{ marginBottom: 10 }} >
-            <Autocomplete
-                    disablePortal
-                    id="equipo-trabajo-autocomplete"
-                    options={EquiposTrabajo}
-                    value={selectedEquipoTrabajo}
-                    getOptionLabel={(option) => typeof option === 'object' ? option.descripcion || '' : option}
-                    sx={{ width: 300 }}
-                    onChange={handleEquipoTrabajoChange}
-                    renderInput={(params) => <TextField {...params} label="Equipos de Trabajo" />}
-                />
+            <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
+                <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
+                    <Autocomplete
+                        disablePortal
+                        id="sindicato-autocomplete"
+                        value={selectedSindicato}
+                        options={Sindicatos}
+                        getOptionLabel={(option) => typeof option === 'object' ? option.descripcion || '' : option}
+                        sx={{ width: 300 }}
+                        onChange={handleSindicatoChange}
+                        renderInput={(params) => <TextField {...params} label="Sindicatos" />}
+                    />
+                </Grid>
+                <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
+                    <Autocomplete
+                        disablePortal
+                        id="puesto-trabajo-autocomplete"
+                        options={PuestosTrabajo}
+                        value={selectedPuestoTrabajo}
+                        getOptionLabel={(option) => typeof option === 'object' ? option.nombre || '' : option}
+                        sx={{ width: 300 }}
+                        onChange={handlePuestoTrabajoChange}
+                        renderInput={(params) => <TextField {...params} label="Puestos de Trabajo" />}
+                    />
+                </Grid>
+                <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
+                    <Autocomplete
+                        disablePortal
+                        id="obra-social-autocomplete"
+                        options={ObraSocial}
+                        value={selectedObraSocial}
+                        getOptionLabel={(option) => typeof option === 'object' ? option.descripcion || '' : option}
+                        sx={{ width: 300 }}
+                        onChange={handleObraSocialChange}
+                        renderInput={(params) => <TextField {...params} label="Obras Sociales" />}
+                    />
+                </Grid>
             </Grid>
-        </Grid>
-        <Grid container spacing={2} style={{ margin: 10, marginLeft: 10 }}>
-            <Grid xs={12} md={6} style={{ marginBottom: 10 }} >
-            <Autocomplete
-                    disablePortal
-                    id="sindicato-autocomplete"
-                    options={Sindicatos}
-                    value={selectedSindicato}
-                    getOptionLabel={(option) => typeof option === 'object' ? option.descripcion || '' : option}
-                    sx={{ width: 300 }}
-                    onChange={handleSindicatoChange}
-                    renderInput={(params) => <TextField {...params} label="Sindicatos" />}
-                />
-
-            </Grid>
-            <Grid xs={12} md={6} style={{ marginBottom: 10 }} >
-            <Autocomplete
-                    disablePortal
-                    id="obra-social-autocomplete"
-                    options={ObraSocial}
-                    value={selectedObraSocial}
-                    getOptionLabel={(option) => typeof option === 'object' ? option.descripcion || '' : option}
-                    sx={{ width: 300 }}
-                    onChange={handleObraSocialChange}
-                    renderInput={(params) => <TextField {...params} label="Obras Sociales" />}
-                />
-            </Grid>
-        </Grid>
         <Stack spacing={2} sx={{ width: '10%', margin: 'auto' }}>
             <Button variant="contained" color='warning' onClick={EditEmpleado}>
                 Editar Empleado

@@ -43,7 +43,7 @@ const ListadoEmplados = () => {
     }, [refresh])
 
     const columns = [
-        { field: 'id', headerName: 'ID', width: 50, headerAlign: 'center', hidden: true },
+        { field: 'id', headerName: 'ID', width: 100, headerAlign: 'center', hidden: true },
         {
             field: 'nombre',
             headerName: 'Nombre',

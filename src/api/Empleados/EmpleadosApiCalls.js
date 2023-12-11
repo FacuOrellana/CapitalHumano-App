@@ -33,6 +33,7 @@ export const postNewEmpleado = async (Nombre, Apellido, Email,DNI,Legajo, Celula
         IdSindicato: selectedSindicato,
         IdObraSocial: selectedObraSocial
     }
+    console.log(body);
     try {
         const response = await axios.post(rootApiPath, body);
         return response;
