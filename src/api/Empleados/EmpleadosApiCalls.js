@@ -29,7 +29,7 @@ export const postNewEmpleado = async (Nombre, Apellido, Email,DNI,Legajo, Celula
         Direccion: Direccion,
         Ciudad: Ciudad,
         IdPuestoTrabajo:selectedPuestoTrabajo,
-        IdEquipoTrabajo:selectedEquipoTrabajo,
+        IdEquipoTrabajo:selectedEquipoTrabajo.idEquipoTrabajo,
         IdSindicato: selectedSindicato,
         IdObraSocial: selectedObraSocial
     }

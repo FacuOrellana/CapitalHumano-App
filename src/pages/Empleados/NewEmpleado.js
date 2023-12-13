@@ -61,11 +61,10 @@ const NewEmpleado = () => {
             setError(error, 'Error al listar Puestos.');
         });
         getAllEquiposTrabajo().then((response) => {
-            console.log(response);
             const parsedData = response.map((Equipo) => {
                 return {
                     idEquipoTrabajo: Equipo.idEquipoTrabajo,
-                    descripcionEquipoTrabajo: Equipo.descripcion,
+                    descripcion: Equipo.descripcion,
                     idDepartamento: Equipo.departamentoIdDepartamento,
                 };
             });
@@ -159,18 +158,16 @@ const NewEmpleado = () => {
 
     function handleEquipoTrabajoChange(event, newValue) {
         if (newValue) {
-            setSelectedEquipoTrabajo(newValue.idEquipoTrabajo);
-            console.log(selectedEquipoTrabajo);
+            setSelectedEquipoTrabajo(newValue);
         } else {
             setSelectedEquipoTrabajo(null);
         }
     }
     function handleAreaChange(event, newValue) {
-        console.log("hola");
         if (newValue) {
             setSelectedArea(newValue.idArea);
             setSelectedDepartamento("");
-            setSelectedEquipoTrabajo("")
+            setSelectedEquipoTrabajo("");
             // Filtrar departamentos según el área seleccionada
             const departamentosFiltrados = Departamentos.filter((departamento) => departamento.idArea === newValue.idArea);
             setFilteredDepartamentos(departamentosFiltrados);
@@ -180,10 +177,9 @@ const NewEmpleado = () => {
         }
     }
     function handleDepartamentoChange(event, newValue) {
-        console.log("hola");
         if (newValue) {
             setSelectedDepartamento(newValue);
-            setSelectedEquipoTrabajo("")
+            setSelectedEquipoTrabajo("");
             // Filtrar equipos de trabajo según el departamento seleccionado
             const equiposTrabajoFiltrados = EquiposTrabajo.filter((equipo) => equipo.idDepartamento === newValue.idDepartamento);
             setFilteredEquiposTrabajo(equiposTrabajoFiltrados);
@@ -304,7 +300,6 @@ const NewEmpleado = () => {
 
         postNewEmpleado(Nombre, Apellido, Email, DNI, Legajo, Celular, fechaNacimiento, Direccion, Ciudad, selectedPuestoTrabajo, selectedEquipoTrabajo, selectedSindicato, selectedObraSocial)
             .then((response) => {
-                console.log(response);
                 if (response.data == "Ya existe un empleado con ese DNI o Legajo.") {
                     Swal.fire({
                         title: response.data,
@@ -457,7 +452,7 @@ const NewEmpleado = () => {
                 <Grid xs={12} md={3} style={{ marginBottom: 10 }} >
                     <Autocomplete
                         disablePortal
-                        value={selectedDepartamento.descripcion}
+                        value={selectedDepartamento?.descripcion}
                         id="departamento-autocomplete"
                         options={filteredDepartamentos}
                         getOptionLabel={(option) => typeof option === 'object' ? option.descripcion || '' : option}
@@ -470,9 +465,9 @@ const NewEmpleado = () => {
                     <Autocomplete
                         disablePortal
                         id="equipo-trabajo-autocomplete"
-                        value={selectedEquipoTrabajo?.descripcionEquipoTrabajo}
+                        value={selectedEquipoTrabajo?.descripcion}
                         options={filteredEquiposTrabajo}
-                        getOptionLabel={(option) => typeof option === 'object' ? option.descripcionEquipoTrabajo || '' : option}
+                        getOptionLabel={(option) => typeof option === 'object' ? option.descripcion || '' : option}
                         sx={{ width: 300 }}
                         onChange={handleEquipoTrabajoChange}
                         renderInput={(params) => <TextField {...params} label="Equipos de Trabajo" />}

@@ -42,10 +42,13 @@ const EditEmpleado = () => {
     const [selectedEquipoTrabajo, setSelectedEquipoTrabajo] = useState({descripcion:""});
     const [selectedSindicato, setSelectedSindicato] = useState(null);
     const [selectedObraSocial, setSelectedObraSocial] = useState(null);
+    const [bandera, setBandera] = useState(false);
     const setError = (error, header) => {
         console.log(error);
     };
 
+
+   
 
   
     useEffect(() => {
@@ -107,7 +110,6 @@ const EditEmpleado = () => {
             setError(error, 'Error al listar Areas.');
         });
         getAllDepartamentos().then((response) => {
-            console.log(response);
             const parsedData = response.map((Departamento) => {
                 return {
                     idDepartamento: Departamento.idDepartamento,
@@ -116,6 +118,7 @@ const EditEmpleado = () => {
                 };
             });
             setDepartamentos(parsedData)
+         
         }).catch((error) => {
             setError(error, 'Error al listar Departamentos.');
         });
@@ -123,10 +126,8 @@ const EditEmpleado = () => {
     }, []);
 
 
-    
     useEffect(() => {
         getEmpleadoById(id).then((response) => {
-            console.log(response);
             setNombre(response.data.nombre);
             setApellido(response.data.apellido);
             setEmail(response.data.email);
@@ -136,18 +137,30 @@ const EditEmpleado = () => {
             setDNI(response.data.dni);
             setLegajo(response.data.legajo);
             setCelular(response.data.celular);
-            setSelectedPuestoTrabajo(response.data.puestoTrabajo)
-            setSelectedEquipoTrabajo(response.data.equipoTrabajo)
-            setSelectedArea(response.data.equipoTrabajo.departamento.area)
-            setSelectedDepartamento(response.data.equipoTrabajo.departamento)
-            setSelectedObraSocial(response.data.obraSocial)
-            setSelectedSindicato(response.data.sindicato)
+            setSelectedPuestoTrabajo(response.data.puestoTrabajo);
+            setSelectedEquipoTrabajo(response.data.equipoTrabajo);
+            setSelectedArea(response.data.equipoTrabajo.departamento.area);
+            setSelectedDepartamento(response.data.equipoTrabajo.departamento);
+            setSelectedObraSocial(response.data.obraSocial);
+            setSelectedSindicato(response.data.sindicato);
+            setBandera(!bandera);
+         
         }).catch((error) => {
             setError(error, 'Error al mostrar datos del empleado.');
         });
            
         
     }, [])
+
+
+    useEffect(() => {
+        setFilteredDepartamentos(Departamentos.filter((departamento) => departamento.idArea === selectedArea.idArea))
+        setFilteredEquiposTrabajo(EquiposTrabajo.filter((equipo) => equipo.idEquipoTrabajo === selectedEquipoTrabajo.idEquipoTrabajo))
+    }, [bandera]);
+
+
+    
+ 
 
     function handleAreaChange(event, newValue) {
         if (newValue) {
@@ -165,12 +178,9 @@ const EditEmpleado = () => {
     function handleDepartamentoChange(event, newValue) {
         if (newValue) {
             setSelectedDepartamento(newValue);
-            console.log(newValue);
             setSelectedEquipoTrabajo("")
             // Filtrar equipos de trabajo según el departamento seleccionado
-            console.log(EquiposTrabajo);
             const equiposTrabajoFiltrados = EquiposTrabajo.filter((equipo) => equipo.idDepartamento === newValue.idDepartamento);
-            console.log(equiposTrabajoFiltrados);
             setFilteredEquiposTrabajo(equiposTrabajoFiltrados);
         } else {
             setSelectedDepartamento(null);
@@ -316,7 +326,6 @@ const EditEmpleado = () => {
         }
 
         updateEmpleado(id,Nombre, Apellido, Email,DNI,Legajo,Celular, fechaNacimiento, Direccion, Ciudad, selectedPuestoTrabajo,selectedEquipoTrabajo,selectedSindicato,selectedObraSocial).then((response) => {
-            console.log(response);
             if (response.data === "Ya existe un empleado con ese DNI o Legajo." || response.data == "No se encontro un empleado con ese ID" ) {
                 Swal.fire({
                     title: response.data,
