@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { postNewContrato } from "../../api/Contratos/ContratosApiCalls";
+import dayjs from "dayjs";
 
 
 
@@ -78,6 +79,14 @@ const NewContrato = () => {
                 icon: 'error',
             })
         }
+
+        if(FechaFin != undefined && !dayjs(FechaInicio).isBefore(dayjs(FechaFin))){
+            return Swal.fire({
+                title: 'La fecha de inicio no puede ser posterior a la fecha de fin de contrato.',
+                icon: 'error',
+            })
+        }
+
         if (Sueldo === undefined) {
             return Swal.fire({
                 title: 'Por favor ingresar el sueldo.',
@@ -102,7 +111,7 @@ const NewContrato = () => {
                 icon: 'success',
                 willClose: () => {
                     setTimeout(() => {
-                        goToContratos();
+                 //       goToContratos();
                     }, 250);
                 }
             })
