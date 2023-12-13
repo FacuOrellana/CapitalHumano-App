@@ -87,7 +87,13 @@ const NewContrato = () => {
             })
         }
 
-        if (Sueldo === undefined) {
+        if (Sueldo === undefined || Sueldo <= 0) {
+            if(Sueldo <= 0){
+                return Swal.fire({
+                    title: 'El sueldo debe ser mayor a 0.',
+                    icon: 'error',
+                })    
+            } 
             return Swal.fire({
                 title: 'Por favor ingresar el sueldo.',
                 icon: 'error',
