@@ -111,7 +111,7 @@ const NewContrato = () => {
                 icon: 'success',
                 willClose: () => {
                     setTimeout(() => {
-                 //       goToContratos();
+                       goToContratos();
                     }, 250);
                 }
             })
