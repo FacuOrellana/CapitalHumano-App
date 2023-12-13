@@ -115,7 +115,7 @@ const EditObraSocial = () => {
 
 
             <Stack spacing={2} sx={{ width: '10%', margin: 'auto' }}>
-                <Button variant="contained" color='success' onClick={AddObraSocial}>
+                <Button variant="contained" color='warning' onClick={AddObraSocial}>
                     Editar Obra Social
                 </Button>
             </Stack>

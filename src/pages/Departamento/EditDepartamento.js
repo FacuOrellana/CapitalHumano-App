@@ -133,7 +133,7 @@ const EditDepartamento = () => {
             <Grid container spacing={3}>
             </Grid>
             <Stack spacing={2} sx={{ width: '10%', margin: 'auto' }}>
-                <Button variant="contained" color='success' onClick={AddDepartamento}>
+                <Button variant="contained" color='warning' onClick={AddDepartamento}>
                     Editar Departamento
                 </Button>
             </Stack>

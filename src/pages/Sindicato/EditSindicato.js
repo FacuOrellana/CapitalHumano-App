@@ -111,7 +111,7 @@ const EditSindicato = () => {
 
 
             <Stack spacing={2} sx={{ width: '10%', margin: 'auto' }}>
-                <Button variant="contained" color='success' onClick={AddSindicato}>
+                <Button variant="contained" color='warning' onClick={AddSindicato}>
                     Editar Sindicato
                 </Button>
             </Stack>

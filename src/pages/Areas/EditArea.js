@@ -79,7 +79,7 @@ const EditArea = () => {
                     </Grid>
                 </Grid>
                 <Stack spacing={2} sx={{ width: '10%', margin: 'auto' }}>
-                    <Button variant="contained" color='success' onClick={EditArea}>
+                    <Button variant="contained" color='warning' onClick={EditArea}>
                         Editar Area
                     </Button>
                 </Stack>

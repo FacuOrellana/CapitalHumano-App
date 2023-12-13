@@ -95,7 +95,7 @@ const EditHabilidad = () => {
 
 
             <Stack spacing={2} sx={{ width: '10%', margin: 'auto' }}>
-                <Button variant="contained" color='success' onClick={AddHabilidad}>
+                <Button variant="contained" color='warning' onClick={AddHabilidad}>
                     Editar Puesto de Trabajo
                 </Button>
             </Stack>

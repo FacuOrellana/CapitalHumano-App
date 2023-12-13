@@ -202,7 +202,7 @@ const NewContrato = () => {
                 </Grid>
             </Grid>
             <Stack spacing={2} sx={{ width: '10%', margin: 'auto' }}>
-                <Button variant="contained" color='success' onClick={editContrato}>
+                <Button variant="contained" color='warning' onClick={editContrato}>
                     Editar Contrato
                 </Button>
             </Stack>
